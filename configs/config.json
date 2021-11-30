@@ -1,13 +1,31 @@
 """Model config in json format"""
 
 CFG = {
-    "NSBH data": {
+    "data": {
+        
+        "NSBH": {
+            
         "path_train_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_52k.hdf",
         "path_train_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_30k.hdf",
         "path_train_3": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_42-47.hdf",
         "path_train_4": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_48-50.hdf",
+            
+        "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_test.hdf"
+        }
+    }
+    "parameters": {
+    
+        "NSBH": {
+    
+            "path_train_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_52k.hdf",
+            "path_train_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_30k.hdf",
+            "path_train_3": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_42-47.hdf",
+            "path_train_4": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_48-50.hdf",
         
+            "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_parameters_NSBH_test.hdf"
+        }   
     },
+    
     "train": {
         "num_train": 100000,
         "num_test": 2000,
