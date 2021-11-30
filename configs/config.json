@@ -27,6 +27,7 @@ CFG = {
     },
     
     "train": {
+        "network": "WaveNet",
         "num_train": 100000,
         "num_test": 2000,
         "n_samples": 410,
@@ -37,13 +38,14 @@ CFG = {
             "type": "adam"
         },
     },
+
     "model": {
+        "num_bijectors": 7,
+        "MAF_hidden_units": [256, 256, 256, 256],
         "WaveNet": {
             "filters": 16,
             "kernel_size": 3,
-            "activation": 'relu',
-            "num_bijectors": 7,
-            "MAF_hidden_units": [256, 256, 256, 256],
+            "activation": "relu",
         },
         "ResNet": {
             "kernels_resnet_block": 32,
