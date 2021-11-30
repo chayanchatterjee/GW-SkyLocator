@@ -61,7 +61,7 @@ class DataLoader:
         
         return h1_real, l1_real, v1_real, h1_imag, l1_imag, v1_imag
     
-     @staticmethod
+    @staticmethod
     def load_train_parameters(data_config):
         """Loads train parameters from path"""
         f1 = h5py.File(data_config.NSBH.path_train_1, 'r')
@@ -92,21 +92,24 @@ class DataLoader:
     def load_test_data(data_config):
         """Loads dataset from path"""
         #Get the HDF5 group
-        group3 = f3['omf_injection_snr_samples']
+        f_test = h5py.File(data_config.NSBH.path_test, 'r')
+        group_test = f_test['omf_injection_snr_samples']
 
-        data_h1_3 = group3['h1_snr']
-        data_l1_3 = group3['l1_snr']
-        data_v1_3 = group3['v1_snr']
+        data_h1_test = group_test['h1_snr']
+        data_l1_test = group_test['l1_snr']
+        data_v1_test = group_test['v1_snr']
 
         for i in range(data_config.train.num_test):
-            h1_test_real[i] = abs(data_h1_3[str(i)][()][1840:2250])
-            l1_test_real[i] = abs(data_l1_3[str(i)][()][1840:2250])
-            v1_test_real[i] = abs(data_v1_3[str(i)][()][1840:2250])
+            h1_test_real[i] = abs(data_h1_test[str(i)][()][1840:2250])
+            l1_test_real[i] = abs(data_l1_test[str(i)][()][1840:2250])
+            v1_test_real[i] = abs(data_v1_test[str(i)][()][1840:2250])
     
-            h1_test_imag[i] = np.imag(data_h1_3[str(i)][()][1840:2250])
-            l1_test_imag[i] = np.imag(data_l1_3[str(i)][()][1840:2250])
-            v1_test_imag[i] = np.imag(data_v1_3[str(i)][()][1840:2250])
+            h1_test_imag[i] = np.imag(data_h1_test[str(i)][()][1840:2250])
+            l1_test_imag[i] = np.imag(data_l1_test[str(i)][()][1840:2250])
+            v1_test_imag[i] = np.imag(data_v1_test[str(i)][()][1840:2250])
         
+        f_test.close()
+       
         return h1_test_real, l1_test_real, v1_test_real, h1_test_imag, l1_test_imag, v1_test_imag
 
    
