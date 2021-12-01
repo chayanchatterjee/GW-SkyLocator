@@ -59,7 +59,18 @@ class DataLoader:
         f3.close()
         f4.close()
         
-        return h1_real, l1_real, v1_real, h1_imag, l1_imag, v1_imag
+        h1_real = h1_real[:,:,None]
+        l1_real = l1_real[:,:,None]
+        v1_real = v1_real[:,:,None]
+
+        h1_imag = h1_imag[:,:,None]
+        l1_imag = l1_imag[:,:,None]
+        v1_imag = v1_imag[:,:,None]
+
+        X_train_real = np.concatenate((h1_real, l1_real, v1_real), axis=2)
+        X_train_imag = np.concatenate((h1_imag, l1_imag, v1_imag), axis=2)
+        
+        return X_train_real, X_train_imag
     
     @staticmethod
     def load_train_parameters(data_config):
@@ -86,7 +97,12 @@ class DataLoader:
         f3.close()
         f4.close()
         
-        return ra, dec
+        ra = ra[:,None]
+        dec = dec[:,None]
+
+        y_train = np.concatenate((ra, dec), axis=1)
+
+        return y_train
     
     @staticmethod
     def load_test_data(data_config):
@@ -109,11 +125,21 @@ class DataLoader:
             v1_test_imag[i] = np.imag(data_v1_test[str(i)][()][1840:2250])
         
         f_test.close()
-       
-        return h1_test_real, l1_test_real, v1_test_real, h1_test_imag, l1_test_imag, v1_test_imag
-
-   
         
+        h1_test_real = h1_test_real[:,:,None]
+        l1_test_real = l1_test_real[:,:,None]
+        v1_test_real = v1_test_real[:,:,None]
+
+        h1_test_imag = h1_test_imag[:,:,None]
+        l1_test_imag = l1_test_imag[:,:,None]
+        v1_test_imag = v1_test_imag[:,:,None]
+
+        X_test_real = np.concatenate((h1_test_real, l1_test_real, v1_test_real), axis=2)
+        X_test_imag = np.concatenate((h1_test_imag, l1_test_imag, v1_test_imag), axis=2)
+       
+        return X_test_real, X_test_imag
+
+           
     @staticmethod
     def load_test_parameters(data_config):
         """Loads train parameters from path"""
@@ -126,8 +152,13 @@ class DataLoader:
 
         ra_test = 2.0*np.pi*data_ra
         dec_test = np.arcsin(1.0 - 2.0*data_dec)
+        
+        ra_test_new = ra_test_new[:,None]
+        dec_test_new = dec_test_new[:,None]
 
-        return ra_test, dec_test
+        y_test = np.concatenate((ra_test_new, dec_test_new), axis=1)
+
+        return y_test
         
         
         

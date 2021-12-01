@@ -15,7 +15,7 @@ class BaseModel(ABC):
         pass
     
     @abstractmethod
-    def build(self):
+    def construct_model(self):
         pass
 
     @abstractmethod

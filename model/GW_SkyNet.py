@@ -27,6 +27,9 @@
 
 from .base_model import BaseModel
 from dataloader.dataloader import DataLoader
+from .wavenet import WaveNet
+from .resnet import ResNet
+from utils.custom_checkpoint import CustomCheckpoint 
 
 # external
 
@@ -40,7 +43,15 @@ import seaborn as sns
 
 from scipy import stats
 import tensorflow as tf
+import tensorflow_probability as tfp
+import re
+tfd = tfp.distributions
+tfb = tfp.bijectors
+
 import healpy as hp
+from sklearn.preprocessing import StandardScaler
+
+# GPU specifications
 
 device_type = 'GPU'
 n_gpus = 2
@@ -64,27 +75,199 @@ class GW_SkyNet(BaseModel):
         self.n_samples = self.config.train.n_samples
         self.n_det = self.config.train.num_detectors
         self.epochs = self.config.train.epochs
+        self.lr = self.config.model.learning_rate
+        self.batch_size = self.config.model.batch_size
         
         if(self.network == 'WaveNet'):
             self.filters = self.config.model.WaveNet.filters
             self.kernel_size = self.config.model.WaveNet.kernel_size
             self.activation = self.config.model.WaveNet.activation
+            self.dilation_rate = self.config.model.WaveNet.dilation_rate
             
         elif(self.network == 'ResNet'):
             self.kernels_res = self.config.model.ResNet.kernels_resnet_block
             self.stride_res = self.config.model.ResNet.stride_resent_block
             self.kernel_size_res = self.config.model.ResNet.kernel_size_resnet_block
+            self.kernels = self.config.model.ResNet.kernel_size
             self.kernel_size = self.config.model.ResNet.kernel_size
             self.strides = self.config.model.ResNet.strides
             
         self.num_bijectors = self.config.model.num_bijectors
         self.MAF_hidden_units = self.config.model.MAF_hidden_units
         
-        self.lr = self.config.model.learning_rate
-        
     def load_data(self):
-         """Loads and Preprocess data """
+        """Loads and Preprocess data """
+        
+        self.X_train_real, self.X_train_imag = DataLoader().load_train_data(self.config.data)
+        self.X_test_real, self.X_test_imag = DataLoader().load_test_data(self.config.data)
+        
+        self.y_train = DataLoader().load_train_parameters(self.config.data)
+        self.y_test = DataLoader().load_test_parameters(self.config.data)
+        
+        self._preprocess_data()
+        
+    def _preprocess_data(self):
+        """ Scaling RA and Dec values """
+        
+        sc = StandardScaler()
+        self.y_train = sc.fit_transform(self.y_train)
+        self.y_test = sc.transform(self.y_test)
+        
+        self.X_train_real = self.X_train_real.astype("float32")
+        self.X_train_imag = self.X_train_imag.astype("float32")
+        self.y_train = self.y_train.astype("float32")
+
+        self.X_test_real = self.X_test_real.astype("float32")
+        self.X_test_imag = self.X_test_imag.astype("float32")
+        self.y_test = self.y_test.astype("float32")
+        
+    def construct_model(self):
+        """ Constructing the neural network encoder model
+        
+        Args:
+            model_type:     'wavenet' or 'resnet'
+            
+            kwargs:         Depends on the model_type
+            
+                'wavenet'   input_dim_real  [n_samples, n_detectors]
+                            input_dim_imag  [n_samples, n_detectors]
+                            filters         Number of filters in each layer
+                            kernel_size     Size of kernel in each layer
+                            activation      (relu)
+                            dilation_rate   Initial dilation rate for CNN layers
+                            
+                'resnet'    input_dim_real   [n_samples, n_detectors]
+                            input_dim_imag   [n_samples, n_detectors]
+                            kernels_res      Number of kernels in ResNet block
+                            stride_res       Stride in ResNet block
+                            kernel_size_res  Kernel size in ResNet block
+                            kernels          Number of kernels in CNN layers
+                            kernel_size      Kernel size in CNN layers
+                            strides          Strides in CNN layers
+                         
+        """
+
+        with strategy.scope():
+            
+            input1 = tf.keras.layers.Input([self.n_samples, self.n_det])
+            input2 = tf.keras.layers.Input([self.n_samples, self.n_det])
+            
+            if(self.network == 'WaveNet'):
+                
+                self.encoded_features = WaveNet().construct_model(input1, input2, 
+                                        self.filters, self.kernel_size, self.activation, self.dilation_rate)
+            
+            elif(self.network == 'ResNet'):
+                
+                self.encoded_features = ResNet().construct_model(input1, input2,
+                                                           self.kernels_res, self.kernel_size_res, self.stride_res,
+                                                           self.kernels, self.kernel_size, self.strides)
+                
+            
+             x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float32)
+        
+            # Define a more expressive model
+            bijectors = []
+
+            for i in range(self.num_bijectors):
+                masked_auto_i = self.make_masked_autoregressive_flow(i, hidden_units = self.hidden_units, activation = 'relu',
+                                            conditional_event_shape=self.encoded_features.shape[-1])
+                
+                bijectors.append(masked_auto_i)
+    
+                USE_BATCHNORM = True
+    
+                if USE_BATCHNORM and i % 2 == 0:
+                # BatchNorm helps to stabilize deep normalizing flows, esp. Real-NVP
+                    bijectors.append(tfb.BatchNormalization(name='batch_normalization'+str(i)))
+    
+                bijectors.append(tfb.Permute(permutation = [1, 0]))
+                flow_bijector = tfb.Chain(list(reversed(bijectors[:-1])))
+            
+            # Define the trainable distribution
+            trainable_distribution = tfd.TransformedDistribution(distribution=tfd.MultivariateNormalDiag(loc=tf.zeros(2)),
+                        bijector = flow_bijector)
+
+            log_prob_ = trainable_distribution.log_prob(x_, bijector_kwargs=
+                        self.make_bijector_kwargs(trainable_distribution.bijector, 
+                                             {'maf.': {'conditional_input':self.encoded_features}}))
+
+            self.model = tf.keras.Model([input1, input2, x_], log_prob_)
+            encoder = tf.keras.Model([input1, input2], self.encoded_features)  
+  
+            opt = tf.keras.optimizers.Adam(learning_rate=self.lr)  # optimizer
+            checkpoint = tf.train.Checkpoint(optimizer=opt, model=self.model)
+        
+        self.train(log_prob)
+    
+
+    # Define the trainable distribution
+    def make_masked_autoregressive_flow(self, index, hidden_units, activation, conditional_event_shape):
+    
+        made = tfp.bijectors.AutoregressiveNetwork(params=2,
+              hidden_units=hidden_units,
+              event_shape=(2,),
+              activation=activation,
+              conditional=True,
+              kernel_initializer=tf.keras.initializers.VarianceScaling(0.1),
+              conditional_event_shape=conditional_event_shape)
+    
+        return tfp.bijectors.MaskedAutoregressiveFlow(shift_and_log_scale_fn = made, name='maf'+str(index))
+
+    def make_bijector_kwargs(self, bijector, name_to_kwargs):
+        
+        if hasattr(bijector, 'bijectors'):
+            
+            return {b.name: make_bijector_kwargs(b, name_to_kwargs) for b in bijector.bijectors}
+    
+        else:
+            for name_regex, kwargs in name_to_kwargs.items():
+                if re.match(name_regex, bijector.name):
+                    return kwargs
+        return {}
+    
+    
+    def train(self, log_prob):
+        """Compiles and trains the model"""
+        
+        custom_checkpoint = CustomCheckpoint(filepath='model/NF_encoder_3_det.hdf5',encoder=self.encoder)
+        
+        model.compile(optimizer=tf.optimizers.Adam(lr=self.lr), loss=lambda _, log_prob: -log_prob)
+        model.summary()
+                                             
+        # initialize checkpoints
+        dataset_name = "checkpoints/NSBH_3_det"
+        checkpoint_directory = "{}/tmp_{}".format(dataset_name, str(hex(random.getrandbits(32))))
+        checkpoint_prefix = os.path.join(checkpoint_directory, "ckpt")
+
+        #opt = tf.keras.optimizers.Adam(learning_rate=1e-5)  # optimizer
+        #checkpoint = tf.train.Checkpoint(optimizer=opt, model=model)
+
+        callbacks_list=[custom_checkpoint]  
+    
+        batch_size = 2000
+
+        model.fit([self.X_train_real, self.y_train], np.zeros((len(self.X_train_real), 0), dtype=np.float32),
+              batch_size=self.batch_size,
+              epochs=100,
+              validation_split=0.05,
+              callbacks=callbacks_list,
+              shuffle=True,
+              verbose=True)
+
+        checkpoint.save(file_prefix=checkpoint_prefix)
+                                     
+                                             
+                                             
+                                             
+    
+    
+    
+
+                
+                
           
+        
             
             
             
