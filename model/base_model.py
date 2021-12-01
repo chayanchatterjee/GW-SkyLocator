@@ -23,11 +23,7 @@ class BaseModel(ABC):
         pass
 
     @abstractmethod
-    def evaluate(self):
-        pass
-    
-    @abstractmethod
-    def save(self):
+    def obtain_samples(self):
         pass
     
     

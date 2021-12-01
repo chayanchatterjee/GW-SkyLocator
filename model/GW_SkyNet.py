@@ -69,6 +69,15 @@ class GW_SkyNet(BaseModel):
         super().__init__(config)
         
         self.network = self.config.train.network
+        self.X_train_real = []
+        self.X_train_imag = []
+        self.X_test_real = []
+        self.X_test_imag = []
+        self.y_train = []
+        self.y_test = []
+        
+        self.encoded_features = None
+        self.model = None
         
         self.num_train = self.config.train.num_train
         self.num_test = self.config.train.num_test
@@ -77,6 +86,7 @@ class GW_SkyNet(BaseModel):
         self.epochs = self.config.train.epochs
         self.lr = self.config.model.learning_rate
         self.batch_size = self.config.model.batch_size
+        self.val_split = self.validation_split
         
         if(self.network == 'WaveNet'):
             self.filters = self.config.model.WaveNet.filters
@@ -240,23 +250,23 @@ class GW_SkyNet(BaseModel):
         checkpoint_directory = "{}/tmp_{}".format(dataset_name, str(hex(random.getrandbits(32))))
         checkpoint_prefix = os.path.join(checkpoint_directory, "ckpt")
 
-        #opt = tf.keras.optimizers.Adam(learning_rate=1e-5)  # optimizer
-        #checkpoint = tf.train.Checkpoint(optimizer=opt, model=model)
-
         callbacks_list=[custom_checkpoint]  
-    
-        batch_size = 2000
 
-        model.fit([self.X_train_real, self.y_train], np.zeros((len(self.X_train_real), 0), dtype=np.float32),
+        self.model.fit([self.X_train_real, self.y_train], np.zeros((len(self.X_train_real), 0), dtype=np.float32),
               batch_size=self.batch_size,
-              epochs=100,
-              validation_split=0.05,
+              epochs=self.epochs,
+              validation_split=self.validation_split,
               callbacks=callbacks_list,
               shuffle=True,
               verbose=True)
 
         checkpoint.save(file_prefix=checkpoint_prefix)
-                                     
+        
+     
+    def obtain_samples(self):
+        """Obtain samples from trained distribution"""
+        
+        
                                              
                                              
                                              
