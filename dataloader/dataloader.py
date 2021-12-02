@@ -11,10 +11,10 @@ class DataLoader:
     @staticmethod
     def load_train_data(data_config):
         """Loads dataset from path"""
-        f1 = h5py.File(data_config.NSBH.path_train_1, 'r')
-        f2 = h5py.File(data_config.NSBH.path_train_2, 'r')
-        f3 = h5py.File(data_config.NSBH.path_train_3, 'r')
-        f4 = h5py.File(data_config.NSBH.path_train_4, 'r')
+        f1 = h5py.File(data_config.path_train_1, 'r')
+        f2 = h5py.File(data_config.path_train_2, 'r')
+        f3 = h5py.File(data_config.path_train_3, 'r')
+        f4 = h5py.File(data_config.path_train_4, 'r')
 
         h1_real_52k = abs(f1['h1_snr_series'][()])
         l1_real_52k = abs(f1['l1_snr_series'][()])
@@ -78,10 +78,10 @@ class DataLoader:
     @staticmethod
     def load_train_parameters(data_config):
         """Loads train parameters from path"""
-        f1 = h5py.File(data_config.NSBH.path_train_1, 'r')
-        f2 = h5py.File(data_config.NSBH.path_train_2, 'r')
-        f3 = h5py.File(data_config.NSBH.path_train_3, 'r')
-        f4 = h5py.File(data_config.NSBH.path_train_4, 'r')
+        f1 = h5py.File(data_config.path_train_1, 'r')
+        f2 = h5py.File(data_config.path_train_2, 'r')
+        f3 = h5py.File(data_config.path_train_3, 'r')
+        f4 = h5py.File(data_config.path_train_4, 'r')
 
         ra_52k = 2.0*np.pi*f1['ra'][()]
         dec_52k = np.arcsin(1.0-2.0*f1['dec'][()])
@@ -108,17 +108,25 @@ class DataLoader:
         return y_train
     
     @staticmethod
-    def load_test_data(data_config):
+    def load_test_data(data_config, n_test, n_samples):
         """Loads dataset from path"""
         #Get the HDF5 group
-        f_test = h5py.File(data_config.NSBH.path_test, 'r')
+        f_test = h5py.File(data_config.path_test, 'r')
         group_test = f_test['omf_injection_snr_samples']
 
         data_h1_test = group_test['h1_snr']
         data_l1_test = group_test['l1_snr']
         data_v1_test = group_test['v1_snr']
 
-        for i in range(data_config.train.num_test):
+        h1_test_real = np.zeros([n_test, n_samples])
+        l1_test_real = np.zeros([n_test, n_samples])
+        v1_test_real = np.zeros([n_test, n_samples])
+        
+        h1_test_imag = np.zeros([n_test, n_samples])
+        l1_test_imag = np.zeros([n_test, n_samples])
+        v1_test_imag = np.zeros([n_test, n_samples])
+
+        for i in range(n_test):
             h1_test_real[i] = abs(data_h1_test[str(i)][()][1840:2250])
             l1_test_real[i] = abs(data_l1_test[str(i)][()][1840:2250])
             v1_test_real[i] = abs(data_v1_test[str(i)][()][1840:2250])
@@ -146,7 +154,7 @@ class DataLoader:
     @staticmethod
     def load_test_parameters(data_config):
         """Loads train parameters from path"""
-        f_test = h5py.File(data_config.NSBH.path_test, 'r')
+        f_test = h5py.File(data_config.path_test, 'r')
         
         data_ra = f_test['ra'][()]
         data_dec = f_test['dec'][()]

@@ -107,11 +107,11 @@ class GW_SkyNet(BaseModel):
     def load_data(self):
         """Loads and Preprocess data """
         
-        self.X_train_real, self.X_train_imag = DataLoader().load_train_data(self.config.train)
-        self.X_test_real, self.X_test_imag = DataLoader().load_test_data(self.config.train)
+        self.X_train_real, self.X_train_imag = DataLoader().load_train_data(self.config.data.NSBH)
+        self.X_test_real, self.X_test_imag = DataLoader().load_test_data(self.config.data.NSBH, self.num_test, self.n_samples)
         
-        self.y_train = DataLoader().load_train_parameters(self.config.train)
-        self.y_test = DataLoader().load_test_parameters(self.config.train)
+        self.y_train = DataLoader().load_train_parameters(self.config.parameters.NSBH)
+        self.y_test = DataLoader().load_test_parameters(self.config.parameters.NSBH)
         
         self._preprocess_data()
         
