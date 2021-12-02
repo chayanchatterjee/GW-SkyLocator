@@ -103,6 +103,7 @@ class GW_SkyNet(BaseModel):
             self.strides = self.config.model.ResNet.strides
             
         self.num_bijectors = self.config.model.num_bijectors
+        self.trainable_distribution = None
         self.MAF_hidden_units = self.config.model.MAF_hidden_units
         
     def load_data(self):
@@ -195,10 +196,10 @@ class GW_SkyNet(BaseModel):
                 flow_bijector = tfb.Chain(list(reversed(bijectors[:-1])))
             
             # Define the trainable distribution
-            trainable_distribution = tfd.TransformedDistribution(distribution=tfd.MultivariateNormalDiag(loc=tf.zeros(2)),
+            self.trainable_distribution = tfd.TransformedDistribution(distribution=tfd.MultivariateNormalDiag(loc=tf.zeros(2)),
                         bijector = flow_bijector)
 
-            log_prob_ = trainable_distribution.log_prob(x_, bijector_kwargs=
+            log_prob_ = self.trainable_distribution.log_prob(x_, bijector_kwargs=
                         self.make_bijector_kwargs(trainable_distribution.bijector, 
                                              {'maf.': {'conditional_input':self.encoded_features}}))
 
@@ -240,7 +241,7 @@ class GW_SkyNet(BaseModel):
     def train(self, log_prob):
         """Compiles and trains the model"""
         
-        custom_checkpoint = CustomCheckpoint(filepath='model/NF_encoder_3_det.hdf5',encoder=self.encoder)
+        custom_checkpoint = CustomCheckpoint(filepath='model/'+str(self.network)+'_encoder_3_det.hdf5',encoder=self.encoder)
         
         model.compile(optimizer=tf.optimizers.Adam(lr=self.lr), loss=lambda _, log_prob: -log_prob)
         model.summary()
@@ -262,9 +263,74 @@ class GW_SkyNet(BaseModel):
 
         checkpoint.save(file_prefix=checkpoint_prefix)
         
+    def kde2D(x, y, bandwidth, ra_pix, de_pix, xbins=150j, ybins=150j, **kwargs): 
+    """Build 2D kernel density estimate (KDE)."""
+
+    # create grid of sample locations (default: 100x100)
+#    xx, yy = np.mgrid[x.min():x.max():xbins, 
+#                      y.min():y.max():ybins]
+
+        xy_sample = np.vstack([de_pix, ra_pix]).T
+        xy_train  = np.vstack([y, x]).T
+
+        kde_skl = KernelDensity(kernel='gaussian', bandwidth=bandwidth, **kwargs)
+        kde_skl.fit(xy_train)
+    #    gm = GaussianMixture(n_components=10, random_state=0).fit(xy_train)
+
+        # score_samples() returns the log-likelihood of the samples
+        z = np.exp(kde_skl.score_samples(xy_sample))
+        return z
+
+        
      
     def obtain_samples(self):
         """Obtain samples from trained distribution"""
+        
+        self.encoder.load_weights("model/"+str(self.network)+"_encoder_3_det.hdf5")
+        
+        n_samples = 5000
+        probs = []
+        
+        nside=32
+        npix=hp.nside2npix(nside)
+        theta,phi = hp.pixelfunc.pix2ang(nside,np.arange(npix))
+
+        # ra_pix and de_pix are co-ordinates in the skuy where I want to find the probabilities
+        ra_pix = phi
+        de_pix = -theta + np.pi/2.0 
+
+        for i in range(len(self.y_test.shape[0])):
+            x_test_real = np.expand_dims(self.X_test_real[i],axis=0)
+            x_test_imag = np.expand_dims(self.X_test_imag[i],axis=0)
+    
+            preds = self.encoder.predict([x_test_real,x_test_imag])
+    
+            samples = self.trainable_distribution.sample((n_samples,),
+              bijector_kwargs=make_bijector_kwargs(trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
+    
+            samples = sc.inverse_transform(samples)
+    
+            ra_samples = samples[:,0]
+            dec_samples = samples[:,1]
+            
+            # A 2D Kernel Density Estimator is used to find the probability density at ra_pix and de_pix
+            zz = kde2D(ra_samples,dec_samples, 0.03, ra_pix,de_pix)
+            zz = zz/(np.sum(zz))
+
+            probs.append(zz)
+    
+        f1 = h5py.File('evaluation/Injection_run_SNR_time_series_NSBH_NF_3_det_new_model.hdf', 'w')
+        f1.create_dataset('Probabilities', data = probs)
+        f1.create_dataset('RA_test', data = ra_test_new)
+        f1.create_dataset('Dec_test', data = dec_test_new)
+
+        f1.close()    
+        
+        
+            
+            
+            
+    
         
         
                                              
