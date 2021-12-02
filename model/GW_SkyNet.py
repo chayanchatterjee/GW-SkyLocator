@@ -83,7 +83,7 @@ class GW_SkyNet(BaseModel):
         self.n_det = self.config.train.num_detectors
         self.epochs = self.config.train.epochs
         self.lr = self.config.model.learning_rate
-        self.batch_size = self.config.model.batch_size
+        self.batch_size = self.config.train.batch_size
         self.val_split = self.validation_split
         
         if(self.network == 'WaveNet'):
@@ -254,7 +254,7 @@ class GW_SkyNet(BaseModel):
         self.model.fit([self.X_train_real, self.y_train], np.zeros((len(self.X_train_real), 0), dtype=np.float32),
               batch_size=self.batch_size,
               epochs=self.epochs,
-              validation_split=self.validation_split,
+              validation_split=self.val_split,
               callbacks=callbacks_list,
               shuffle=True,
               verbose=True)
