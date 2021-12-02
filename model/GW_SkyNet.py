@@ -84,7 +84,7 @@ class GW_SkyNet(BaseModel):
         self.epochs = self.config.train.epochs
         self.lr = self.config.model.learning_rate
         self.batch_size = self.config.train.batch_size
-        self.val_split = self.validation_split
+        self.val_split = self.config.train.validation_split
         
         if(self.network == 'WaveNet'):
             self.filters = self.config.model.WaveNet.filters
