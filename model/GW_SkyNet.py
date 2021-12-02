@@ -32,8 +32,6 @@ from .resnet import ResNet
 from utils.custom_checkpoint import CustomCheckpoint 
 
 # external
-
-from __future__ import print_function
 from matplotlib import pyplot as plt
 plt.switch_backend('agg')
 
@@ -175,7 +173,7 @@ class GW_SkyNet(BaseModel):
                                                            self.kernels, self.kernel_size, self.strides)
                 
             
-             x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float32)
+            x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float32)
         
             # Define a more expressive model
             bijectors = []
@@ -263,8 +261,8 @@ class GW_SkyNet(BaseModel):
 
         checkpoint.save(file_prefix=checkpoint_prefix)
         
-    def kde2D(x, y, bandwidth, ra_pix, de_pix, xbins=150j, ybins=150j, **kwargs): 
-    """Build 2D kernel density estimate (KDE)."""
+    def kde2D(x, y, bandwidth, ra_pix, de_pix, xbins=150j, ybins=150j, **kwargs):
+        """Build 2D kernel density estimate (KDE)."""
 
     # create grid of sample locations (default: 100x100)
 #    xx, yy = np.mgrid[x.min():x.max():xbins, 

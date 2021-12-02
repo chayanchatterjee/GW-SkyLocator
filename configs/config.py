@@ -12,7 +12,7 @@ CFG = {
             
         "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_test.hdf"
         }
-    }
+    },
     "parameters": {
     
         "NSBH": {
