@@ -1,7 +1,6 @@
 """Data Loader"""
 
 # Imports
-
 import numpy as np
 import h5py
 
@@ -117,7 +116,7 @@ class DataLoader:
         data_h1_test = group_test['h1_snr']
         data_l1_test = group_test['l1_snr']
         data_v1_test = group_test['v1_snr']
-
+        
         h1_test_real = np.zeros([n_test, n_samples])
         l1_test_real = np.zeros([n_test, n_samples])
         v1_test_real = np.zeros([n_test, n_samples])
@@ -125,7 +124,7 @@ class DataLoader:
         h1_test_imag = np.zeros([n_test, n_samples])
         l1_test_imag = np.zeros([n_test, n_samples])
         v1_test_imag = np.zeros([n_test, n_samples])
-
+        
         for i in range(n_test):
             h1_test_real[i] = abs(data_h1_test[str(i)][()][1840:2250])
             l1_test_real[i] = abs(data_l1_test[str(i)][()][1840:2250])
@@ -164,10 +163,10 @@ class DataLoader:
         ra_test = 2.0*np.pi*data_ra
         dec_test = np.arcsin(1.0 - 2.0*data_dec)
         
-        ra_test_new = ra_test_new[:,None]
-        dec_test_new = dec_test_new[:,None]
+        ra_test = ra_test[:,None]
+        dec_test = dec_test[:,None]
 
-        y_test = np.concatenate((ra_test_new, dec_test_new), axis=1)
+        y_test = np.concatenate((ra_test, dec_test), axis=1)
 
         return y_test
         
