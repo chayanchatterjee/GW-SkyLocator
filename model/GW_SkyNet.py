@@ -163,8 +163,12 @@ class GW_SkyNet(BaseModel):
             
             if(self.network == 'WaveNet'):
                 
-                self.encoded_features = WaveNet().construct_model(input1, input2, 
-                                        self.filters, self.kernel_size, self.activation, self.dilation_rate)
+                filters = self.filters
+                kernel_size = self.kernel_size
+                activation = self.activation
+                dilation_rate = self.dilation_rate
+                
+                self.encoded_features = WaveNet(input1, input2, self.filters, self.kernel_size, self.activation, self.dilation_rate).construct_model()
             
             elif(self.network == 'ResNet'):
                 
@@ -179,7 +183,7 @@ class GW_SkyNet(BaseModel):
             bijectors = []
 
             for i in range(self.num_bijectors):
-                masked_auto_i = self.make_masked_autoregressive_flow(i, hidden_units = self.hidden_units, activation = 'relu',
+                masked_auto_i = self.make_masked_autoregressive_flow(i, hidden_units = self.MAF_hidden_units, activation = 'relu',
                                             conditional_event_shape=self.encoded_features.shape[-1])
                 
                 bijectors.append(masked_auto_i)
