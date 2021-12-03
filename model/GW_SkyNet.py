@@ -45,6 +45,8 @@ import tensorflow_probability as tfp
 import re
 tfd = tfp.distributions
 tfb = tfp.bijectors
+import random
+import os
 
 import healpy as hp
 from sklearn.preprocessing import StandardScaler
@@ -76,6 +78,7 @@ class GW_SkyNet(BaseModel):
         
         self.encoded_features = None
         self.model = None
+        self.encoder = None
         
         self.num_train = self.config.train.num_train
         self.num_test = self.config.train.num_test
@@ -202,7 +205,7 @@ class GW_SkyNet(BaseModel):
                         bijector = flow_bijector)
 
             log_prob_ = self.trainable_distribution.log_prob(x_, bijector_kwargs=
-                        self.make_bijector_kwargs(trainable_distribution.bijector, 
+                        self.make_bijector_kwargs(self.trainable_distribution.bijector, 
                                              {'maf.': {'conditional_input':self.encoded_features}}))
 
             self.model = tf.keras.Model([input1, input2, x_], log_prob_)
@@ -211,7 +214,7 @@ class GW_SkyNet(BaseModel):
             opt = tf.keras.optimizers.Adam(learning_rate=self.lr)  # optimizer
             checkpoint = tf.train.Checkpoint(optimizer=opt, model=self.model)
         
-        self.train(log_prob)
+        self.train(log_prob_)
     
 
     # Define the trainable distribution
@@ -231,7 +234,7 @@ class GW_SkyNet(BaseModel):
         
         if hasattr(bijector, 'bijectors'):
             
-            return {b.name: make_bijector_kwargs(b, name_to_kwargs) for b in bijector.bijectors}
+            return {b.name: self.make_bijector_kwargs(b, name_to_kwargs) for b in bijector.bijectors}
     
         else:
             for name_regex, kwargs in name_to_kwargs.items():
@@ -245,8 +248,8 @@ class GW_SkyNet(BaseModel):
         
         custom_checkpoint = CustomCheckpoint(filepath='model/'+str(self.network)+'_encoder_3_det.hdf5',encoder=self.encoder)
         
-        model.compile(optimizer=tf.optimizers.Adam(lr=self.lr), loss=lambda _, log_prob: -log_prob)
-        model.summary()
+        self.model.compile(optimizer=tf.optimizers.Adam(lr=self.lr), loss=lambda _, log_prob: -log_prob)
+        self.model.summary()
                                              
         # initialize checkpoints
         dataset_name = "checkpoints/NSBH_3_det"
@@ -255,7 +258,7 @@ class GW_SkyNet(BaseModel):
 
         callbacks_list=[custom_checkpoint]  
 
-        self.model.fit([self.X_train_real, self.y_train], np.zeros((len(self.X_train_real), 0), dtype=np.float32),
+        self.model.fit([self.X_train_real, self.X_train_imag, self.y_train], np.zeros((len(self.X_train_real), 0), dtype=np.float32),
               batch_size=self.batch_size,
               epochs=self.epochs,
               validation_split=self.val_split,

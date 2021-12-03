@@ -4,23 +4,23 @@ CFG = {
     "data": {
         
         "NSBH": {
-                "path_train_1": "../../SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_52k.hdf",
-                "path_train_2": "../../SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_30k.hdf",
-                "path_train_3": "../../SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_42-47.hdf",
-                "path_train_4": "../../SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_48-50.hdf",
+                "path_train_1": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_52k.hdf",
+                "path_train_2": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_30k.hdf",
+                "path_train_3": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_42-47.hdf",
+                "path_train_4": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_48-50.hdf",
             
-                "path_test": "../../SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_test.hdf"
+                "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_test.hdf"
                 }
     },
     "parameters": {
     
         "NSBH": {
-                "path_train_1": "../../SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_52k.hdf",
-                "path_train_2": "../../SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_30k.hdf",
-                "path_train_3": "../../SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_42-47.hdf",
-                "path_train_4": "../../SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_48-50.hdf",
+                "path_train_1": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_52k.hdf",
+                "path_train_2": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_30k.hdf",
+                "path_train_3": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_42-47.hdf",
+                "path_train_4": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_48-50.hdf",
         
-                "path_test": "../../SNR_time_series_sample_files/default_GW170817_parameters_NSBH_test.hdf"
+                "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_parameters_NSBH_test.hdf"
                 }   
     },
     "train": {
