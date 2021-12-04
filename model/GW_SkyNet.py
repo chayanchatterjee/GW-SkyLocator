@@ -209,12 +209,12 @@ class GW_SkyNet(BaseModel):
                                              {'maf.': {'conditional_input':self.encoded_features}}))
 
             self.model = tf.keras.Model([input1, input2, x_], log_prob_)
-            encoder = tf.keras.Model([input1, input2], self.encoded_features)  
+            self.encoder = tf.keras.Model([input1, input2], self.encoded_features)  
   
             opt = tf.keras.optimizers.Adam(learning_rate=self.lr)  # optimizer
             checkpoint = tf.train.Checkpoint(optimizer=opt, model=self.model)
         
-        self.train(log_prob_)
+        self.train(log_prob_, checkpoint)
     
 
     # Define the trainable distribution
@@ -243,7 +243,7 @@ class GW_SkyNet(BaseModel):
         return {}
     
     
-    def train(self, log_prob):
+    def train(self, log_prob, checkpoint):
         """Compiles and trains the model"""
         
         custom_checkpoint = CustomCheckpoint(filepath='model/'+str(self.network)+'_encoder_3_det.hdf5',encoder=self.encoder)
