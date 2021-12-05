@@ -304,14 +304,14 @@ class GW_SkyNet(BaseModel):
         ra_pix = phi
         de_pix = -theta + np.pi/2.0 
 
-        for i in range(len(self.y_test.shape[0])):
+        for i in range(self.y_test.shape[0]):
             x_test_real = np.expand_dims(self.X_test_real[i],axis=0)
             x_test_imag = np.expand_dims(self.X_test_imag[i],axis=0)
     
             preds = self.encoder.predict([x_test_real,x_test_imag])
     
             samples = self.trainable_distribution.sample((n_samples,),
-              bijector_kwargs=make_bijector_kwargs(trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
+              bijector_kwargs=self.make_bijector_kwargs(self.trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
     
             samples = sc.inverse_transform(samples)
     
