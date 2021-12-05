@@ -49,7 +49,10 @@ import random
 import os
 
 import healpy as hp
+import h5py
 from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KernelDensity
+from sklearn.mixture import GaussianMixture
 
 # GPU specifications
 
@@ -79,6 +82,7 @@ class GW_SkyNet(BaseModel):
         self.encoded_features = None
         self.model = None
         self.encoder = None
+        self.sc = None
         
         self.num_train = self.config.train.num_train
         self.num_test = self.config.train.num_test
@@ -121,9 +125,9 @@ class GW_SkyNet(BaseModel):
     def _preprocess_data(self):
         """ Scaling RA and Dec values """
         
-        sc = StandardScaler()
-        self.y_train = sc.fit_transform(self.y_train)
-        self.y_test = sc.transform(self.y_test)
+        self.sc = StandardScaler()
+        self.y_train = self.sc.fit_transform(self.y_train)
+        self.y_test = self.sc.transform(self.y_test)
         
         self.X_train_real = self.X_train_real.astype("float32")
         self.X_train_imag = self.X_train_imag.astype("float32")
@@ -268,7 +272,7 @@ class GW_SkyNet(BaseModel):
 
         checkpoint.save(file_prefix=checkpoint_prefix)
         
-    def kde2D(x, y, bandwidth, ra_pix, de_pix, xbins=150j, ybins=150j, **kwargs):
+    def kde2D(self, x, y, bandwidth, ra_pix, de_pix, xbins=150j, ybins=150j, **kwargs):
         """Build 2D kernel density estimate (KDE)."""
 
     # create grid of sample locations (default: 100x100)
@@ -312,22 +316,23 @@ class GW_SkyNet(BaseModel):
     
             samples = self.trainable_distribution.sample((n_samples,),
               bijector_kwargs=self.make_bijector_kwargs(self.trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
-    
-            samples = sc.inverse_transform(samples)
+            
+            samples = self.sc.inverse_transform(samples)
+            self.y_test = self.sc.inverse_transform(self.y_test)
     
             ra_samples = samples[:,0]
             dec_samples = samples[:,1]
             
             # A 2D Kernel Density Estimator is used to find the probability density at ra_pix and de_pix
-            zz = kde2D(ra_samples,dec_samples, 0.03, ra_pix,de_pix)
+            zz = self.kde2D(ra_samples,dec_samples, 0.03, ra_pix,de_pix)
             zz = zz/(np.sum(zz))
 
             probs.append(zz)
     
         f1 = h5py.File('evaluation/Injection_run_SNR_time_series_NSBH_NF_3_det_new_model.hdf', 'w')
         f1.create_dataset('Probabilities', data = probs)
-        f1.create_dataset('RA_test', data = ra_test_new)
-        f1.create_dataset('Dec_test', data = dec_test_new)
+        f1.create_dataset('RA_test', data = self.y_test[0])
+        f1.create_dataset('Dec_test', data = self.y_test[1])
 
         f1.close()    
         
