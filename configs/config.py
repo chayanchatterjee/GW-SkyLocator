@@ -30,7 +30,7 @@ CFG = {
             "n_samples": 410,
             "batch_size": 2000,
             "num_detectors": 3,
-            "epochs": 100,
+            "epochs": 10,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
