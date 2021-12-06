@@ -30,15 +30,15 @@ CFG = {
             "n_samples": 410,
             "batch_size": 2000,
             "num_detectors": 3,
-            "epochs": 10,
+            "epochs": 100,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
             },
     },
     "model": {
-            "num_bijectors": 7,
-            "MAF_hidden_units": [256, 256, 256, 256],
+            "num_bijectors": 3,
+            "MAF_hidden_units": [8, 8],
         
             "WaveNet": {
                         "filters": 16,
