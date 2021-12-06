@@ -78,6 +78,8 @@ class GW_SkyNet(BaseModel):
         self.X_test_imag = []
         self.y_train = []
         self.y_test = []
+        self.ra = []
+        self.dec = []
         self.ra_test = []
         self.dec_test = []
 
@@ -127,9 +129,9 @@ class GW_SkyNet(BaseModel):
     def _preprocess_data(self):
         """ Removing < 3 det samples and scaling RA and Dec values """
         
-        self.X_train_real, self.X_train_imag, self.y_train = DataLoader().load_3_det_samples(self.config.parameters.NSBH, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
+        self.X_train_real, self.X_train_imag, self.y_train, self.ra, self.dec = DataLoader().load_3_det_samples(self.config.parameters.NSBH, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
         
-        self.X_test_real, self.X_test_imag, self.y_test = DataLoader().load_3_det_samples(self.config.parameters.NSBH, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
+        self.X_test_real, self.X_test_imag, self.y_test, self.ra_test, self.dec_test = DataLoader().load_3_det_samples(self.config.parameters.NSBH, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
                 
         self.sc = StandardScaler()
         self.y_train = self.sc.fit_transform(self.y_train)

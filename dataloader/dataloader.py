@@ -205,6 +205,19 @@ class DataLoader:
             h1 = h1_snr > 4
             l1 = l1_snr > 4
             v1 = v1_snr > 4
+            
+            ra_1 = 2.0*np.pi*f1['ra'][()]
+            ra_2 = 2.0*np.pi*f2['ra'][0:30000][()]
+            ra_3 = 2.0*np.pi*f3['ra'][()]
+            ra_4 = 2.0*np.pi*f4['ra'][()]
+            
+            dec_1 = np.arcsin(1.0-2.0*f1['dec'][()])
+            dec_2 = np.arcsin(1.0-2.0*f2['dec'][0:30000][()])
+            dec_3 = np.arcsin(1.0-2.0*f3['dec'][()])
+            dec_4 = np.arcsin(1.0-2.0*f4['dec'][()])
+            
+            ra = np.concatenate([ra_1, ra_2, ra_3, ra_4])
+            dec = np.concatenate([dec_1, dec_2, dec_3, dec_4])
 
             index = np.zeros(num_samples, dtype = bool)
 
@@ -216,10 +229,6 @@ class DataLoader:
             f2.close()
             f3.close()
             f4.close()
-
-            X_real = X_real[index == True]
-            X_imag = X_imag[index == True]
-            y = y[index == True]
             
         elif(data == 'test'):
             f_test = h5py.File(data_config.path_test, 'r')
@@ -230,6 +239,9 @@ class DataLoader:
             h1 = h1_snr > 4
             l1 = l1_snr > 4
             v1 = v1_snr > 4
+            
+            ra = 2.0*np.pi*f_test['ra'][()]
+            dec = np.arcsin(1.0-2.0*f_test['dec'][()]) 
 
             index = np.zeros(num_samples, dtype = bool)
 
@@ -238,11 +250,13 @@ class DataLoader:
                     index[i] = True
 
             f_test.close()
+            
+        X_real = X_real[index == True]
+        X_imag = X_imag[index == True]
+        y = y[index == True]
+        ra = ra[index == True]
+        dec = dec[index == True]
 
-            X_real = X_real[index == True]
-            X_imag = X_imag[index == True]
-            y = y[index == True]
-        
-        return X_real, X_imag, y
+        return X_real, X_imag, y, ra, dec
     
 
