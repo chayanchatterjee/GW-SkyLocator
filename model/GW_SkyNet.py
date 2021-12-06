@@ -78,7 +78,9 @@ class GW_SkyNet(BaseModel):
         self.X_test_imag = []
         self.y_train = []
         self.y_test = []
-        
+        self.ra_test = []
+        self.dec_test = []
+
         self.encoded_features = None
         self.model = None
         self.encoder = None
@@ -118,13 +120,17 @@ class GW_SkyNet(BaseModel):
         self.X_test_real, self.X_test_imag = DataLoader().load_test_data(self.config.data.NSBH, self.num_test, self.n_samples)
         
         self.y_train = DataLoader().load_train_parameters(self.config.parameters.NSBH)
-        self.y_test = DataLoader().load_test_parameters(self.config.parameters.NSBH)
+        self.y_test, self.ra_test, self.dec_test = DataLoader().load_test_parameters(self.config.parameters.NSBH)
         
         self._preprocess_data()
         
     def _preprocess_data(self):
-        """ Scaling RA and Dec values """
+        """ Removing < 3 det samples and scaling RA and Dec values """
         
+        self.X_train_real, self.X_train_imag, self.y_train = DataLoader().load_3_det_samples(self.config.parameters.NSBH, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
+        
+        self.X_test_real, self.X_test_imag, self.y_test = DataLoader().load_3_det_samples(self.config.parameters.NSBH, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
+                
         self.sc = StandardScaler()
         self.y_train = self.sc.fit_transform(self.y_train)
         self.y_test = self.sc.transform(self.y_test)
@@ -318,7 +324,7 @@ class GW_SkyNet(BaseModel):
               bijector_kwargs=self.make_bijector_kwargs(self.trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
             
             samples = self.sc.inverse_transform(samples)
-            self.y_test = self.sc.inverse_transform(self.y_test)
+#            self.y_test = self.sc.inverse_transform(self.y_test)
     
             ra_samples = samples[:,0]
             dec_samples = samples[:,1]
@@ -331,8 +337,8 @@ class GW_SkyNet(BaseModel):
     
         f1 = h5py.File('evaluation/Injection_run_SNR_time_series_NSBH_NF_3_det_new_model.hdf', 'w')
         f1.create_dataset('Probabilities', data = probs)
-        f1.create_dataset('RA_test', data = self.y_test[0])
-        f1.create_dataset('Dec_test', data = self.y_test[1])
+        f1.create_dataset('RA_test', data = self.ra_test)
+        f1.create_dataset('Dec_test', data = self.dec_test)
 
         f1.close()    
         

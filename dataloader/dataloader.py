@@ -168,8 +168,81 @@ class DataLoader:
 
         y_test = np.concatenate((ra_test, dec_test), axis=1)
 
-        return y_test
+        return y_test, ra_test, dec_test
+    
+    
+    @staticmethod
+    def load_3_det_samples(data_config, X_real, X_imag, y, num_samples, data):
+        """Loads 3 det samples and parameters from path"""
         
+        if(data == 'train'):
+            f1 = h5py.File(data_config.path_train_1, 'r')
+            f2 = h5py.File(data_config.path_train_2, 'r')
+            f3 = h5py.File(data_config.path_train_3, 'r')
+            f4 = h5py.File(data_config.path_train_4, 'r')
         
+            h1_snr_1 = f1['H1_SNR'][()]
+            h1_snr_2 = f2['H1_SNR'][0:30000][()]
+            h1_snr_3 = f3['H1_SNR'][()]
+            h1_snr_4 = f4['H1_SNR'][()]
+
+            h1_snr = np.concatenate([h1_snr_1, h1_snr_2, h1_snr_3, h1_snr_4])
         
+            l1_snr_1 = f1['L1_SNR'][()]
+            l1_snr_2 = f2['L1_SNR'][0:30000][()]
+            l1_snr_3 = f3['L1_SNR'][()]
+            l1_snr_4 = f4['L1_SNR'][()]
+
+            l1_snr = np.concatenate([l1_snr_1, l1_snr_2, l1_snr_3, l1_snr_4])
+
+            v1_snr_1 = f1['V1_SNR'][()]
+            v1_snr_2 = f2['V1_SNR'][0:30000][()]
+            v1_snr_3 = f3['V1_SNR'][()]
+            v1_snr_4 = f4['V1_SNR'][()]
+
+            v1_snr = np.concatenate([v1_snr_1, v1_snr_2, v1_snr_3, v1_snr_4])
+        
+            h1 = h1_snr > 4
+            l1 = l1_snr > 4
+            v1 = v1_snr > 4
+
+            index = np.zeros(num_samples, dtype = bool)
+
+            for i in range(num_samples):
+                if(h1[i] == True and l1[i] == True and v1[i] == True):
+                    index[i] = True
+
+            f1.close()
+            f2.close()
+            f3.close()
+            f4.close()
+
+            X_real = X_real[index == True]
+            X_imag = X_imag[index == True]
+            y = y[index == True]
+            
+        elif(data == 'test'):
+            f_test = h5py.File(data_config.path_test, 'r')
+            h1_snr = f_test['H1_SNR'][()]
+            l1_snr = f_test['L1_SNR'][()]
+            v1_snr = f_test['V1_SNR'][()]
+            
+            h1 = h1_snr > 4
+            l1 = l1_snr > 4
+            v1 = v1_snr > 4
+
+            index = np.zeros(num_samples, dtype = bool)
+
+            for i in range(num_samples):
+                if(h1[i] == True and l1[i] == True and v1[i] == True):
+                    index[i] = True
+
+            f_test.close()
+
+            X_real = X_real[index == True]
+            X_imag = X_imag[index == True]
+            y = y[index == True]
+        
+        return X_real, X_imag, y
+    
 
