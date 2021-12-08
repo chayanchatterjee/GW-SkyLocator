@@ -157,7 +157,7 @@ class GW_SkyNet(BaseModel):
         """ Constructing the neural network encoder model
         
         Args:
-            model_type:     'wavenet' or 'resnet'
+            model_type:     'wavenet', 'resnet', 'resnet-34'
             
             kwargs:         Depends on the model_type
             
@@ -176,6 +176,14 @@ class GW_SkyNet(BaseModel):
                             kernels          Number of kernels in CNN layers
                             kernel_size      Kernel size in CNN layers
                             strides          Strides in CNN layers
+               
+               'resnet-34'  input_dim_real   [n_samples, n_detectors]
+                            input_dim_imag   [n_samples, n_detectors]
+                            filters          Number of filters in main layer
+                            kernel_size      Kernel size in main layer
+                            strides          Strides in main layer
+                            prev_filters     Number of filters in previous main/Residual layer
+                            input_shapes     Shapes of input signals
                          
         """
 

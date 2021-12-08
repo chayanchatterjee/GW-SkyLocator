@@ -31,7 +31,7 @@ class ResNet34(ResidualUnit):
         X = tf.keras.layers.Activation('relu')(X)
         X = tf.keras.layers.MaxPool1D(pool_size=self.pool_size, strides=self.strides, padding='same')(X)
         
-        for filters in [64] * 3 + [128] * 4 + [256] * 6 + [512] * 3:
+        for filters in [16] * 3 + [32] * 4 + [64] * 6 + [128] * 3:
             strides = 1 if filters == self.prev_filters else 2
             X = ResidualUnit(filters, strides=strides)(X)
             self.prev_filters = filters
@@ -47,7 +47,7 @@ class ResNet34(ResidualUnit):
         X = tf.keras.layers.Activation('relu')(X)
         X = tf.keras.layers.MaxPool1D(pool_size=self.pool_size, strides=self.strides, padding='same')(X)
         
-        for filters in [64] * 3 + [128] * 4 + [256] * 6 + [512] * 3:
+        for filters in [16] * 3 + [32] * 4 + [64] * 6 + [128] * 3:
             strides = 1 if filters == self.prev_filters else 2
             X = ResidualUnit(filters, strides=strides)(X)
             self.prev_filters = filters

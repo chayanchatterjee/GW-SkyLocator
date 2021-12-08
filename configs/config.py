@@ -30,7 +30,7 @@ CFG = {
             "n_samples": 410,
             "batch_size": 2000,
             "num_detectors": 3,
-            "epochs": 75,
+            "epochs": 50,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
@@ -38,7 +38,7 @@ CFG = {
     },
     "model": { # best: num_bijectors: 6, MAF_hidden_units: [256, 256, 256], epochs: 50.
             "num_bijectors": 6,
-            "MAF_hidden_units": [300, 300, 300], 
+            "MAF_hidden_units": [256, 256, 256], 
         
             "WaveNet": {
                         "filters": 16,
@@ -56,11 +56,11 @@ CFG = {
             
             },
             "ResNet_34": {
-                        "filters": 64,
+                        "filters": 16,
                         "kernel_size" : 7,
                         "strides": 2,
                         "pool_size": 3,
-                        "prev_filters": 64
+                        "prev_filters": 16
             
             },
             "learning_rate": 1e-4
