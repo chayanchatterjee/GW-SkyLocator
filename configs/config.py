@@ -24,21 +24,21 @@ CFG = {
                 }   
     },
     "train": {
-            "network": "WaveNet",
+            "network": "ResNet-34",
             "num_train": 100000,
             "num_test": 2000,
             "n_samples": 410,
             "batch_size": 2000,
             "num_detectors": 3,
-            "epochs": 150,
+            "epochs": 75,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
             },
     },
-    "model": {
-            "num_bijectors": 3,
-            "MAF_hidden_units": [16, 16, 16],
+    "model": { # best: num_bijectors: 6, MAF_hidden_units: [256, 256, 256], epochs: 50.
+            "num_bijectors": 6,
+            "MAF_hidden_units": [300, 300, 300], 
         
             "WaveNet": {
                         "filters": 16,
@@ -53,6 +53,14 @@ CFG = {
                         "kernels": 32,
                         "kernel_size": 5,
                         "strides": 3
+            
+            },
+            "ResNet_34": {
+                        "filters": 64,
+                        "kernel_size" : 7,
+                        "strides": 2,
+                        "pool_size": 3,
+                        "prev_filters": 64
             
             },
             "learning_rate": 1e-4

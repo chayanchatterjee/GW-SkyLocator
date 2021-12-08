@@ -29,6 +29,7 @@ from .base_model import BaseModel
 from dataloader.dataloader import DataLoader
 from .wavenet import WaveNet
 from .resnet import ResNet
+from .resnet_34 import ResNet34
 from utils.custom_checkpoint import CustomCheckpoint 
 
 # external
@@ -105,11 +106,18 @@ class GW_SkyNet(BaseModel):
             
         elif(self.network == 'ResNet'):
             self.kernels_res = self.config.model.ResNet.kernels_resnet_block
-            self.stride_res = self.config.model.ResNet.stride_resent_block
+            self.stride_res = self.config.model.ResNet.stride_resnet_block
             self.kernel_size_res = self.config.model.ResNet.kernel_size_resnet_block
             self.kernels = self.config.model.ResNet.kernel_size
             self.kernel_size = self.config.model.ResNet.kernel_size
             self.strides = self.config.model.ResNet.strides
+            
+        elif(self.network == 'ResNet-34'):
+            self.filters = self.config.model.ResNet_34.filters
+            self.kernel_size = self.config.model.ResNet_34.kernel_size
+            self.strides = self.config.model.ResNet_34.strides
+            self.pool_size = self.config.model.ResNet_34.pool_size
+            self.prev_filters = self.config.model.ResNet_34.prev_filters
             
         self.num_bijectors = self.config.model.num_bijectors
         self.trainable_distribution = None
@@ -187,9 +195,11 @@ class GW_SkyNet(BaseModel):
             
             elif(self.network == 'ResNet'):
                 
-                self.encoded_features = ResNet().construct_model(input1, input2,
-                                                           self.kernels_res, self.kernel_size_res, self.stride_res,
-                                                           self.kernels, self.kernel_size, self.strides)
+                self.encoded_features = ResNet(input1, input2, self.kernels_res, self.kernel_size_res, self.stride_res,
+                                               self.kernels, self.kernel_size, self.strides).construct_model()
+            elif(self.network == 'ResNet-34'):
+                
+                self.encoded_features = ResNet34(input1, input2, self.filters, self.kernel_size, self.strides, self.pool_size, self.prev_filters, input_shapes=[self.n_samples, self.n_det]).construct_model()
                 
             
             x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float32)
@@ -337,7 +347,7 @@ class GW_SkyNet(BaseModel):
 
             probs.append(zz)
     
-        f1 = h5py.File('evaluation/Injection_run_SNR_time_series_NSBH_NF_3_det_new_model.hdf', 'w')
+        f1 = h5py.File('evaluation/Injection_run_SNR_time_series_NSBH_NF_3_det_new_model_ResNet.hdf', 'w')
         f1.create_dataset('Probabilities', data = probs)
         f1.create_dataset('RA_test', data = self.ra_test)
         f1.create_dataset('Dec_test', data = self.dec_test)

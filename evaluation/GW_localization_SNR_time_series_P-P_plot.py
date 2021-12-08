@@ -107,8 +107,8 @@ for i in range(len(ra_test)):
     
 for i in range(len(dec_test)):
     cls = postprocess.find_greedy_credible_levels(p[i])
-    area_90.append(np.sum(cls <= 0.9*np.sum(p[i])) * hp.nside2pixarea(nside, degrees=True))
-    area_50.append(np.sum(cls <= 0.5*np.sum(p[i])) * hp.nside2pixarea(nside, degrees=True))
+    area_90.append(np.sum(cls <= 0.9*np.sum(p[i])) * hp.nside2pixarea(nside, degrees=True) + eps)
+    area_50.append(np.sum(cls <= 0.5*np.sum(p[i])) * hp.nside2pixarea(nside, degrees=True) + eps)
     
     declination = dec_test[i]
     right_ascension = ra_test[i]

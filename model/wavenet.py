@@ -35,16 +35,16 @@ class WaveNet:
                                        activation=self.activation, dilation_rate=8*self.dilation_rate )(X)
         
         X = tf.keras.layers.Conv1D(filters = self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate= 16*self.dilation_rate)(X)
+                                       activation= self.activation, dilation_rate= self.dilation_rate)(X)
         
-#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-#                                       activation= self.activation, dilation_rate=2*self.dilation_rate)(X)
+        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+                                       activation= self.activation, dilation_rate=2*self.dilation_rate)(X)
         
-#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-#                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
+        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
         
-#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-#                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
+        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
         
         flat1 = tf.keras.layers.Flatten()(X)
         
@@ -63,16 +63,16 @@ class WaveNet:
                                        activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
         
         X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate= 16*self.dilation_rate)(X)
+                                       activation= self.activation, dilation_rate= self.dilation_rate)(X)
         
-#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-#                                       activation= self.activation, dilation_rate=2*self.dilation_rate )(X)
+        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+                                       activation= self.activation, dilation_rate=2*self.dilation_rate )(X)
         
-#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-#                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
+        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
         
-#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-#                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
+        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
         
         flat2 = tf.keras.layers.Flatten()(X)
         
