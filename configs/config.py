@@ -10,6 +10,10 @@ CFG = {
                 "path_train_4": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_48-50.hdf",
             
                 "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_test.hdf"
+                },
+        
+        "BBH": {
+                "path_train": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_BBH_training_200k.hdf",
                 }
     },
     "parameters": {
@@ -21,24 +25,28 @@ CFG = {
                 "path_train_4": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_injection_run_parameters_NSBH_train_48-50.hdf",
         
                 "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_parameters_NSBH_test.hdf"
-                }   
+                },
+        "BBH": {
+                "path_train": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_200k_injection_parameters",
+            
+                },   
     },
     "train": {
             "network": "ResNet-34",
-            "num_train": 100000,
+            "num_train": 300000,
             "num_test": 2000,
             "n_samples": 410,
             "batch_size": 2000,
             "num_detectors": 3,
-            "epochs": 50,
+            "epochs": 75,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
             },
     },
     "model": { # best: num_bijectors: 6, MAF_hidden_units: [256, 256, 256], epochs: 50.
-            "num_bijectors": 6,
-            "MAF_hidden_units": [256, 256, 256], 
+            "num_bijectors": 5
+            "MAF_hidden_units": [512,512,512]
         
             "WaveNet": {
                         "filters": 16,

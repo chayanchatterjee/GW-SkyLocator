@@ -126,20 +126,20 @@ class GW_SkyNet(BaseModel):
     def load_data(self):
         """Loads and Preprocess data """
         
-        self.X_train_real, self.X_train_imag = DataLoader().load_train_data(self.config.data.NSBH)
-        self.X_test_real, self.X_test_imag = DataLoader().load_test_data(self.config.data.NSBH, self.num_test, self.n_samples)
+        self.X_train_real, self.X_train_imag = DataLoader().load_train_data(self.config.data)
+        self.X_test_real, self.X_test_imag = DataLoader().load_test_data(self.config.data, self.num_test, self.n_samples)
         
-        self.y_train = DataLoader().load_train_parameters(self.config.parameters.NSBH)
-        self.y_test, self.ra_test, self.dec_test = DataLoader().load_test_parameters(self.config.parameters.NSBH)
+        self.y_train = DataLoader().load_train_parameters(self.config.parameters)
+        self.y_test, self.ra_test, self.dec_test = DataLoader().load_test_parameters(self.config.parameters)
         
         self._preprocess_data()
         
     def _preprocess_data(self):
         """ Removing < 3 det samples and scaling RA and Dec values """
         
-        self.X_train_real, self.X_train_imag, self.y_train, self.ra, self.dec = DataLoader().load_3_det_samples(self.config.parameters.NSBH, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
+        self.X_train_real, self.X_train_imag, self.y_train, self.ra, self.dec = DataLoader().load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
         
-        self.X_test_real, self.X_test_imag, self.y_test, self.ra_test, self.dec_test = DataLoader().load_3_det_samples(self.config.parameters.NSBH, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
+        self.X_test_real, self.X_test_imag, self.y_test, self.ra_test, self.dec_test = DataLoader().load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
                 
         self.sc = StandardScaler()
         self.y_train = self.sc.fit_transform(self.y_train)
@@ -221,11 +221,13 @@ class GW_SkyNet(BaseModel):
                 
                 bijectors.append(masked_auto_i)
     
-                USE_BATCHNORM = True
+#                USE_BATCHNORM = True
     
-                if USE_BATCHNORM and i % 2 == 0:
+#                if USE_BATCHNORM and i % 2 == 0:
                 # BatchNorm helps to stabilize deep normalizing flows, esp. Real-NVP
-                    bijectors.append(tfb.BatchNormalization(name='batch_normalization'+str(i)))
+#                    bijectors.append(tfb.BatchNormalization(name='batch_normalization'+str(i)))
+
+                bijetors.append(tfb.BatchNormalization(name='batch_normalization'+str(i)))
     
                 bijectors.append(tfb.Permute(permutation = [1, 0]))
                 flow_bijector = tfb.Chain(list(reversed(bijectors[:-1])))
