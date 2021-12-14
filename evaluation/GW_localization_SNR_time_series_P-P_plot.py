@@ -150,7 +150,7 @@ plt.hist(np.log10(search_area),50,range=(1,np.max(np.log10(search_area))),cumula
 plt.legend(loc=4)
 plt.ylabel('Cumulative Ratio')
 plt.xlabel('Area in log(deg^2)')
-plt.savefig('Plots/Area_WaveNet_NF_NSBH_3_det_train_NSBH_ResNet-34.png', dpi=400)
+plt.savefig('Plots/Area_WaveNet_NF_NSBH_3_det_train_NSBH_200k_train.png', dpi=400)
 
 
 fig = plt.figure(figsize=(5, 5))
@@ -160,5 +160,5 @@ ax.add_confidence_band(len(ra_test),alpha=0.90) # Add 90% confidence band
 ax.add_diagonal() # Add diagonal line
 #ax.add_lightning(len(ra_test), 20) # Add some random realizations of n samples
 ax.add_series(cl) # Add our data
-plt.savefig('Plots/CLvCR_test_WaveNet_NF_NSBH_3_det_train_NSBH_ResNet-34.png', dpi=400)
+plt.savefig('Plots/CLvCR_test_WaveNet_NF_NSBH_3_det_200k_train.png', dpi=400)
 
