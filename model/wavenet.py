@@ -25,26 +25,42 @@ class WaveNet:
         X = tf.keras.layers.Conv1D(filters = self.filters, kernel_size = self.kernel_size, padding='causal', 
                                        activation=self.activation, dilation_rate=self.dilation_rate)(self.input1)
         
+#        X = tf.keras.layers.BatchNormalization()(X)
+        
         X = tf.keras.layers.Conv1D(filters = self.filters, kernel_size = self.kernel_size, padding='causal', 
                                        activation=self.activation, dilation_rate=2*self.dilation_rate )(X)
+        
+#        X = tf.keras.layers.BatchNormalization()(X)
             
         X = tf.keras.layers.Conv1D(filters = self.filters, kernel_size = self.kernel_size, padding='causal', 
                                        activation=self.activation, dilation_rate=4*self.dilation_rate )(X)
         
+#        X = tf.keras.layers.BatchNormalization()(X)
+        
         X = tf.keras.layers.Conv1D(filters = self.filters, kernel_size = self.kernel_size, padding='causal', 
                                        activation=self.activation, dilation_rate=8*self.dilation_rate )(X)
         
-        X = tf.keras.layers.Conv1D(filters = self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate= self.dilation_rate)(X)
+#        X = tf.keras.layers.BatchNormalization()(X)
         
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate=2*self.dilation_rate)(X)
+#        X = tf.keras.layers.Conv1D(filters = self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate= self.dilation_rate)(X)
         
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
+#        X = tf.keras.layers.BatchNormalization()(X)
         
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate=2*self.dilation_rate)(X)
+        
+#        X = tf.keras.layers.BatchNormalization()(X)
+        
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
+        
+#        X = tf.keras.layers.BatchNormalization()(X)
+        
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
+        
+#        X = tf.keras.layers.BatchNormalization()(X)
         
         flat1 = tf.keras.layers.Flatten()(X)
         
@@ -53,32 +69,50 @@ class WaveNet:
         X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
                                        activation= self.activation, dilation_rate=self.dilation_rate)( self.input2)
         
+#        X = tf.keras.layers.BatchNormalization()(X)
+        
         X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
                                        activation= self.activation, dilation_rate=2*self.dilation_rate)(X)
+        
+#        X = tf.keras.layers.BatchNormalization()(X)
             
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
         
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
+#        X = tf.keras.layers.BatchNormalization()(X)
         
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate= self.dilation_rate)(X)
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
         
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate=2*self.dilation_rate )(X)
+#        X = tf.keras.layers.BatchNormalization()(X)
         
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate= self.dilation_rate)(X)
         
-        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
-                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
+#        X = tf.keras.layers.BatchNormalization()(X)
+        
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate=2*self.dilation_rate )(X)
+        
+#        X = tf.keras.layers.BatchNormalization()(X)
+        
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate=4*self.dilation_rate)(X)
+        
+#        X = tf.keras.layers.BatchNormalization()(X)
+        
+#        X = tf.keras.layers.Conv1D(filters =  self.filters, kernel_size =  self.kernel_size, padding='causal', 
+#                                       activation= self.activation, dilation_rate=8*self.dilation_rate)(X)
+        
+#        X = tf.keras.layers.BatchNormalization()(X)
         
         flat2 = tf.keras.layers.Flatten()(X)
         
         # merge input models
         
-        merge = tf.keras.layers.concatenate([flat1, flat2])    
+        merge = tf.keras.layers.concatenate([flat1, flat2]) 
+        
+#        merge = tf.keras.layers.BatchNormalization()(merge)
     
         return merge
     
