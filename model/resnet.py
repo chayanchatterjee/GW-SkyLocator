@@ -51,12 +51,18 @@ class ResNet:
         X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
         
         X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
+        X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
+        
+        X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
 
         flat1 = tf.keras.layers.Flatten()(X)
 
         # Imaginary part
         
         X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size_res, strides=self.stride_res)(self.input2)
+        X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
+        
+        X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
         X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
         
         X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)

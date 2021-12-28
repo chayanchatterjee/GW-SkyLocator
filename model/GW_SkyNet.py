@@ -145,9 +145,9 @@ class GW_SkyNet(BaseModel):
     def _preprocess_data(self, d_loader):
         """ Removing < 3 det samples and scaling RA and Dec values """
         
-        self.X_train_real, self.X_train_imag, self.y_train, self.ra, self.dec = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
+        self.X_train_real, self.X_train_imag, self.y_train, self.ra, self.dec, self.h1_snr, self.l1_snr, self.v1_snr = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
         
-        self.X_test_real, self.X_test_imag, self.y_test, self.ra_test, self.dec_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
+        self.X_test_real, self.X_test_imag, self.y_test, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
         
         # Hanford scaling
         
@@ -428,7 +428,7 @@ class GW_SkyNet(BaseModel):
               bijector_kwargs=self.make_bijector_kwargs(self.trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
             
             samples = self.sc.inverse_transform(samples)
-#            self.y_test = self.sc.inverse_transform(self.y_test)
+##            self.y_test = self.sc.inverse_transform(self.y_test)
     
             ra_samples = samples[:,0]
             dec_samples = samples[:,1]
@@ -468,10 +468,13 @@ class GW_SkyNet(BaseModel):
             
 #        self.dec_test = np.arcsin(1.0-2.0*self.dec_test)
         
-        f1 = h5py.File('evaluation/Injection_run_SNR_time_series_NSBH_NF_3_det_new_model_ResNet.hdf', 'w')
+        f1 = h5py.File('evaluation/Injection_run_SNR_time_series_BNS_3_det_ResNet.hdf', 'w')
         f1.create_dataset('Probabilities', data = probs)
         f1.create_dataset('RA_test', data = self.ra_test)
         f1.create_dataset('Dec_test', data = self.dec_test)
+        f1.create_dataset('H1_SNR', data = self.h1_snr_test)
+        f1.create_dataset('L1_SNR', data = self.l1_snr_test)
+        f1.create_dataset('V1_SNR', data = self.v1_snr_test)
 
         f1.close()    
         

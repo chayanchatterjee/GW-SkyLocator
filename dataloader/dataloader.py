@@ -81,6 +81,39 @@ class DataLoader:
             v1_imag = np.imag(f1['v1_snr_series'][0:100000][()] )
     
             f1.close()
+        
+        # BNS
+        elif(self.dataset == 'BNS'):
+            f1 = h5py.File(data_config.BNS.path_train_1, 'r')
+            f2 = h5py.File(data_config.BNS.path_train_2, 'r')
+
+            h1_real_22k = abs(f1['h1_snr_series'][0:22000][()] )
+            l1_real_22k = abs(f1['l1_snr_series'][0:22000][()] )
+            v1_real_22k = abs(f1['v1_snr_series'][0:22000][()] )
+
+            h1_imag_22k = np.imag(f1['h1_snr_series'][0:22000][()] )
+            l1_imag_22k = np.imag(f1['l1_snr_series'][0:22000][()] )
+            v1_imag_22k = np.imag(f1['v1_snr_series'][0:22000][()] )
+            
+            h1_real_86k = abs(f2['h1_snr_series'][0:86000][()] )
+            l1_real_86k = abs(f2['l1_snr_series'][0:86000][()] )
+            v1_real_86k = abs(f2['v1_snr_series'][0:86000][()] )
+
+            h1_imag_86k = np.imag(f2['h1_snr_series'][0:86000][()] )
+            l1_imag_86k = np.imag(f2['l1_snr_series'][0:86000][()] )
+            v1_imag_86k = np.imag(f2['v1_snr_series'][0:86000][()] )
+            
+            h1_real = np.concatenate([h1_real_22k, h1_real_86k], axis=0)
+            l1_real = np.concatenate([l1_real_22k, l1_real_86k], axis=0)
+            v1_real = np.concatenate([v1_real_22k, v1_real_86k], axis=0)
+            
+            h1_imag = np.concatenate([h1_imag_22k, h1_imag_86k], axis=0)
+            l1_imag = np.concatenate([l1_imag_22k, l1_imag_86k], axis=0)
+            v1_imag = np.concatenate([v1_imag_22k, v1_imag_86k], axis=0)
+            
+    
+            f1.close()
+            f2.close()
 
         h1_real = h1_real[:,:,None]
         l1_real = l1_real[:,:,None]
@@ -142,12 +175,30 @@ class DataLoader:
         
             f1.close()
         
+        #BNS
+        elif(self.dataset == 'BNS'):
+            f1 = h5py.File(data_config.BNS.path_train_1, 'r')
+            f2 = h5py.File(data_config.BNS.path_train_2, 'r')
+            
+            ra_22k = 2.0*np.pi*f1['ra'][0:22000][()]
+            dec_22k = np.arcsin(1.0-2.0*f1['dec'][0:22000][()])
+            
+            ra_86k = 2.0*np.pi*f2['ra'][0:86000][()]
+            dec_86k = np.arcsin(1.0-2.0*f2['dec'][0:86000][()])
+            
+            ra = np.concatenate([ra_22k, ra_86k], axis=0)
+            dec = np.concatenate([dec_22k, dec_86k], axis=0)
+        
+            f1.close()
+            f2.close()
+        
         ra = ra[:,None]
         dec = dec[:,None]
 
         y_train = np.concatenate((ra, dec), axis=1)
 
         return y_train
+    
     
 #    @staticmethod
     def load_test_data(self, data_config):
@@ -159,6 +210,9 @@ class DataLoader:
             
         elif(self.dataset == 'BBH'):
             f_test = h5py.File(data_config.BBH.path_test, 'r')
+            
+        elif(self.dataset == 'BNS'):
+            f_test = h5py.File(data_config.BNS.path_test, 'r')
             
         group_test = f_test['omf_injection_snr_samples']
         
@@ -218,6 +272,10 @@ class DataLoader:
             
             f_test = h5py.File(data_config.BBH.path_test, 'r')
             
+        elif(self.dataset == 'BNS'):
+            
+            f_test = h5py.File(data_config.BNS.path_test, 'r')
+            
         data_ra = f_test['ra'][()]
         data_dec = f_test['dec'][()]
 
@@ -225,7 +283,6 @@ class DataLoader:
 
         ra_test = 2.0*np.pi*data_ra
         dec_test = np.arcsin(1.0 - 2.0*data_dec)
-#        dec_test = data_dec
         
         ra_test = ra_test[:,None]
         dec_test = dec_test[:,None]
@@ -351,6 +408,56 @@ class DataLoader:
                 
                 f1.close()
         
+        elif(self.dataset == 'BNS'):
+            if(data == 'train'):
+                f1 = h5py.File(data_config.BNS.path_train_1, 'r')
+                f2 = h5py.File(data_config.BNS.path_train_2, 'r')
+                
+                h1_snr_1 = f1['H1_SNR'][0:22000][()]
+                l1_snr_1 = f1['L1_SNR'][0:22000][()]
+                v1_snr_1 = f1['V1_SNR'][0:22000][()]
+                
+                h1_snr_2 = f2['H1_SNR'][0:86000][()]
+                l1_snr_2 = f2['L1_SNR'][0:86000][()]
+                v1_snr_2 = f2['V1_SNR'][0:86000][()]
+                
+                h1_snr = np.concatenate([h1_snr_1, h1_snr_2], axis=0)
+                l1_snr = np.concatenate([l1_snr_1, l1_snr_2], axis=0)
+                v1_snr = np.concatenate([v1_snr_1, v1_snr_2], axis=0)
+                
+                h1 = h1_snr > 4
+                l1 = l1_snr > 4
+                v1 = v1_snr > 4
+        
+                ra_1 = 2.0*np.pi*f1['ra'][0:22000][()]
+                dec_1 = np.arcsin(1.0-2.0*f1['dec'][0:22000][()])
+                
+                ra_2 = 2.0*np.pi*f2['ra'][0:86000][()]
+                dec_2 = np.arcsin(1.0-2.0*f2['dec'][0:86000][()])
+                
+                ra = np.concatenate([ra_1, ra_2], axis=0)
+                dec = np.concatenate([dec_1, dec_2], axis=0)
+                
+                f1.close()
+                f2.close()
+                
+            elif(data == 'test'):
+                f1 = h5py.File(data_config.BNS.path_test, 'r')
+                
+                h1_snr = f1['H1_SNR'][()]
+                l1_snr = f1['L1_SNR'][()]
+                v1_snr = f1['V1_SNR'][()]
+                
+                h1 = h1_snr > 4
+                l1 = l1_snr > 4
+                v1 = v1_snr > 4
+        
+                ra = 2.0*np.pi*f1['ra'][()]
+                dec = np.arcsin(1.0-2.0*f1['dec'][()])
+#                dec = f1['dec'][()]
+                
+                f1.close()
+        
         index = np.zeros(num_samples, dtype = bool)
         
         for i in range(num_samples):
@@ -367,7 +474,11 @@ class DataLoader:
         y = y[index == True]
         ra = ra[index == True]
         dec = dec[index == True]
+        h1_snr = h1[index==True]
+        l1_snr = l1[index==True]
+        v1_snr = v1[index==True]
 
-        return X_real, X_imag, y, ra, dec
+        return X_real, X_imag, y, ra, dec, h1_snr, l1_snr, v1_snr
+    
     
 
