@@ -50,8 +50,8 @@ class ResNet:
         X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
         X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
         
-        X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
-        X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
+#        X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
+#        X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
         
         X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
 
@@ -71,8 +71,8 @@ class ResNet:
         X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
         X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
         
-        X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
-        X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
+#        X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
+#        X = self.residual_block(X, self.kernels_res, self.stride_res, self.kernel_size_res)
         
         X = tf.keras.layers.Conv1D(self.kernels, kernel_size=self.kernel_size, strides=self.strides, padding='same')(X)
 
