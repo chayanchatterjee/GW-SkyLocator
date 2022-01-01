@@ -6,12 +6,13 @@ import h5py
 
 class DataLoader:
     """Data Loader class"""
-    def __init__(self, num_det, dataset, n_test, n_samples):
+    def __init__(self, num_det, dataset, n_test, n_samples, min_snr):
         
         self.num_det = num_det
         self.dataset = dataset
         self.n_test = n_test
         self.n_samples = n_samples
+        self.min_snr = min_snr
     
 #    @staticmethod
     def load_train_data(self, data_config):
@@ -145,18 +146,32 @@ class DataLoader:
         
             ra_52k = 2.0*np.pi*f1['ra'][()]
             dec_52k = np.arcsin(1.0-2.0*f1['dec'][()])
+            
+#            ra_52k = f1['ra'][()]
 #            dec_52k = f1['dec'][()]
+            
             ra_30k = 2.0*np.pi*(f2['ra'][0:30000][()])
             dec_30k = np.arcsin(1.0-2.0*f2['dec'][0:30000][()])
+
+#            ra_30k = f2['ra'][0:30000][()]
 #            dec_30k = f2['dec'][0:30000][()]
+        
             ra_12k = 2.0*np.pi*(f3['ra'][()])
             dec_12k = np.arcsin(1.0-2.0*f3['dec'][()])
+            
+#            ra_12k = f3['dec'][()]
 #            dec_12k = f3['dec'][()]
+            
             ra_6k = 2.0*np.pi*(f4['ra'][()])
             dec_6k = np.arcsin(1.0-2.0*f4['dec'][()])
+#            ra_6k = f4['ra'][()] 
 #            dec_6k = f4['dec'][()]
         
             ra = np.concatenate([ra_52k, ra_30k, ra_12k, ra_6k])
+            ra = ra - np.pi
+            ra_x = np.cos(ra)
+            ra_y = np.sin(ra)
+            
             dec = np.concatenate([dec_52k, dec_30k, dec_12k, dec_6k])
             
         
@@ -170,7 +185,12 @@ class DataLoader:
             f1 = h5py.File(data_config.BBH.path_train, 'r')
 
             ra = 2.0*np.pi*f1['ra'][0:100000][()]
+            ra = ra - np.pi
             dec = np.arcsin(1.0-2.0*f1['dec'][0:100000][()])
+#            ra = f1['ra'][0:100000][()]
+            ra_x = np.cos(ra)
+            ra_y = np.sin(ra)
+            
 #            dec = f1['dec'][0:100000][()]
         
             f1.close()
@@ -182,20 +202,33 @@ class DataLoader:
             
             ra_22k = 2.0*np.pi*f1['ra'][0:22000][()]
             dec_22k = np.arcsin(1.0-2.0*f1['dec'][0:22000][()])
-            
+
+#            ra_22k = f1['ra'][0:22000][()]
+#            dec_22k = f1['dec'][0:22000][()]
+        
             ra_86k = 2.0*np.pi*f2['ra'][0:86000][()]
             dec_86k = np.arcsin(1.0-2.0*f2['dec'][0:86000][()])
+
+#            ra_86k = f2['ra'][0:86000][()]
+#            dec_86k = f2['dec'][0:86000][()]
             
             ra = np.concatenate([ra_22k, ra_86k], axis=0)
+            ra = ra - np.pi
+            ra_x = np.cos(ra)
+            ra_y = np.sin(ra)
+            
             dec = np.concatenate([dec_22k, dec_86k], axis=0)
         
             f1.close()
             f2.close()
         
         ra = ra[:,None]
+        ra_x = ra_x[:,None]
+        ra_y = ra_y[:,None]
+        
         dec = dec[:,None]
 
-        y_train = np.concatenate((ra, dec), axis=1)
+        y_train = np.concatenate((ra_x, ra_y, dec), axis=1)
 
         return y_train
     
@@ -282,14 +315,24 @@ class DataLoader:
         f_test.close()
 
         ra_test = 2.0*np.pi*data_ra
+        ra_test = ra_test - np.pi
+        ra_test_x = np.cos(ra_test)
+        ra_test_y = np.sin(ra_test)
+        
         dec_test = np.arcsin(1.0 - 2.0*data_dec)
+
+#        ra_test = data_ra
+#        dec_test = data_dec
         
         ra_test = ra_test[:,None]
+        ra_test_x = ra_test_x[:, None]
+        ra_test_y = ra_test_y[:, None]
+        
         dec_test = dec_test[:,None]
 
-        y_test = np.concatenate((ra_test, dec_test), axis=1)
+        y_test = np.concatenate((ra_test_x, ra_test_y, dec_test), axis=1)
 
-        return y_test, ra_test, dec_test
+        return y_test, ra_test_x, ra_test_y, ra_test, dec_test
     
     
 #    @staticmethod
@@ -328,14 +371,19 @@ class DataLoader:
 
                 v1_snr = np.concatenate([v1_snr_1, v1_snr_2, v1_snr_3, v1_snr_4])
         
-                h1 = h1_snr > 4
-                l1 = l1_snr > 4
-                v1 = v1_snr > 4
+                h1 = h1_snr > self.min_snr
+                l1 = l1_snr > self.min_snr
+                v1 = v1_snr > self.min_snr
             
                 ra_1 = 2.0*np.pi*f1['ra'][()]
                 ra_2 = 2.0*np.pi*f2['ra'][0:30000][()]
                 ra_3 = 2.0*np.pi*f3['ra'][()]
                 ra_4 = 2.0*np.pi*f4['ra'][()]
+                
+#                ra_1 = f1['ra'][()]
+#                ra_2 = f2['ra'][0:30000][()]
+#                ra_3 = f3['ra'][()]
+#                ra_4 = f4['ra'][()]
                 
                 dec_1 = np.arcsin(1.0-2.0*f1['dec'][()])
                 dec_2 = np.arcsin(1.0-2.0*f2['dec'][0:30000][()])
@@ -348,6 +396,10 @@ class DataLoader:
 #                dec_4 = f4['dec'][()]
             
                 ra = np.concatenate([ra_1, ra_2, ra_3, ra_4])
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
                 dec = np.concatenate([dec_1, dec_2, dec_3, dec_4])
 
     
@@ -362,12 +414,18 @@ class DataLoader:
                 l1_snr = f_test['L1_SNR'][()]
                 v1_snr = f_test['V1_SNR'][()]
             
-                h1 = h1_snr > 4
-                l1 = l1_snr > 4
-                v1 = v1_snr > 4
+                h1 = h1_snr > self.min_snr
+                l1 = l1_snr > self.min_snr
+                v1 = v1_snr > self.min_snr
             
                 ra = 2.0*np.pi*f_test['ra'][()]
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
                 dec = np.arcsin(1.0-2.0*f_test['dec'][()])
+
+#                ra = f_test['ra'][()]
 #                dec = f_test['dec'][()]
 
                 f_test.close()
@@ -381,12 +439,18 @@ class DataLoader:
                 l1_snr = f1['L1_SNR'][0:100000][()]
                 v1_snr = f1['V1_SNR'][0:100000][()]
                 
-                h1 = h1_snr > 4
-                l1 = l1_snr > 4
-                v1 = v1_snr > 4
+                h1 = h1_snr > self.min_snr
+                l1 = l1_snr > self.min_snr
+                v1 = v1_snr > self.min_snr
         
                 ra = 2.0*np.pi*f1['ra'][0:100000][()]
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
                 dec = np.arcsin(1.0-2.0*f1['dec'][0:100000][()])
+                
+#                ra = f1['ra'][()]
 #                dec = f1['dec'][()]
                 
                 f1.close()
@@ -398,12 +462,18 @@ class DataLoader:
                 l1_snr = f1['L1_SNR'][()]
                 v1_snr = f1['V1_SNR'][()]
                 
-                h1 = h1_snr > 4
-                l1 = l1_snr > 4
-                v1 = v1_snr > 4
+                h1 = h1_snr > self.min_snr
+                l1 = l1_snr > self.min_snr
+                v1 = v1_snr > self.min_snr
         
                 ra = 2.0*np.pi*f1['ra'][()]
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
                 dec = np.arcsin(1.0-2.0*f1['dec'][()])
+                
+#                ra = f1['ra'][()]
 #                dec = f1['dec'][()]
                 
                 f1.close()
@@ -425,17 +495,27 @@ class DataLoader:
                 l1_snr = np.concatenate([l1_snr_1, l1_snr_2], axis=0)
                 v1_snr = np.concatenate([v1_snr_1, v1_snr_2], axis=0)
                 
-                h1 = h1_snr > 4
-                l1 = l1_snr > 4
-                v1 = v1_snr > 4
+                h1 = h1_snr > self.min_snr
+                l1 = l1_snr > self.min_snr
+                v1 = v1_snr > self.min_snr
         
                 ra_1 = 2.0*np.pi*f1['ra'][0:22000][()]
                 dec_1 = np.arcsin(1.0-2.0*f1['dec'][0:22000][()])
+
+#                ra_1 = f1['ra'][0:22000][()]
+#                dec_1 = f1['dec'][0:22000][()]
                 
                 ra_2 = 2.0*np.pi*f2['ra'][0:86000][()]
                 dec_2 = np.arcsin(1.0-2.0*f2['dec'][0:86000][()])
+
+#                ra_2 = f2['ra'][0:86000][()]
+#                dec_2 = f2['dec'][0:86000][()]
                 
                 ra = np.concatenate([ra_1, ra_2], axis=0)
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
                 dec = np.concatenate([dec_1, dec_2], axis=0)
                 
                 f1.close()
@@ -448,12 +528,18 @@ class DataLoader:
                 l1_snr = f1['L1_SNR'][()]
                 v1_snr = f1['V1_SNR'][()]
                 
-                h1 = h1_snr > 4
-                l1 = l1_snr > 4
-                v1 = v1_snr > 4
+                h1 = h1_snr > self.min_snr
+                l1 = l1_snr > self.min_snr
+                v1 = v1_snr > self.min_snr
         
                 ra = 2.0*np.pi*f1['ra'][()]
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
                 dec = np.arcsin(1.0-2.0*f1['dec'][()])
+
+#                ra = f1['ra'][()]
 #                dec = f1['dec'][()]
                 
                 f1.close()
@@ -472,13 +558,15 @@ class DataLoader:
         X_real = X_real[index == True]
         X_imag = X_imag[index == True]
         y = y[index == True]
+        ra_x = ra_x[index == True]
+        ra_y = ra_y[index == True]
         ra = ra[index == True]
         dec = dec[index == True]
-        h1_snr = h1[index==True]
-        l1_snr = l1[index==True]
-        v1_snr = v1[index==True]
+        h1_snr = h1_snr[index==True]
+        l1_snr = l1_snr[index==True]
+        v1_snr = v1_snr[index==True]
 
-        return X_real, X_imag, y, ra, dec, h1_snr, l1_snr, v1_snr
+        return X_real, X_imag, y, ra_x, ra_y, ra, dec, h1_snr, l1_snr, v1_snr
     
     
 
