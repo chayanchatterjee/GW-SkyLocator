@@ -37,6 +37,7 @@ from matplotlib import pyplot as plt
 plt.switch_backend('agg')
 
 import numpy as np
+import math
 import pandas as pd
 import seaborn as sns
 
@@ -82,22 +83,27 @@ class GW_SkyNet(BaseModel):
         self.y_train = []
         self.y_test = []
         self.ra = []
+        self.ra_x = []
+        self.ra_y = []
         self.dec = []
         self.ra_test = []
+        self.ra_test_x = []
+        self.ra_test_y = []
         self.dec_test = []
 
         self.encoded_features = None
         self.model = None
         self.encoder = None
         self.sc = None
-        self.sc_ra = None
-        self.sc_dec = None
+#        self.sc_ra = None
+#        self.sc_dec = None
 #        self.mms_ra = None
 #        self.mms_dec = None
         
         self.num_train = self.config.train.num_train
         self.num_test = self.config.train.num_test
         self.n_samples = self.config.train.n_samples
+        self.min_snr = self.config.train.min_snr
         self.n_det = self.config.train.num_detectors
         self.epochs = self.config.train.epochs
         self.lr = self.config.model.learning_rate
@@ -132,22 +138,22 @@ class GW_SkyNet(BaseModel):
     def load_data(self):
         """Loads and Preprocess data """
         
-        d_loader = DataLoader(self.n_det, self.dataset, self.num_test, self.n_samples)
+        d_loader = DataLoader(self.n_det, self.dataset, self.num_test, self.n_samples, self.min_snr)
         
         self.X_train_real, self.X_train_imag = d_loader.load_train_data(self.config.data)
         self.X_test_real, self.X_test_imag = d_loader.load_test_data(self.config.data)
         
         self.y_train = d_loader.load_train_parameters(self.config.parameters)
-        self.y_test, self.ra_test, self.dec_test = d_loader.load_test_parameters(self.config.parameters)
+        self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test = d_loader.load_test_parameters(self.config.parameters)
         
         self._preprocess_data(d_loader)
         
     def _preprocess_data(self, d_loader):
         """ Removing < 3 det samples and scaling RA and Dec values """
         
-        self.X_train_real, self.X_train_imag, self.y_train, self.ra, self.dec, self.h1_snr, self.l1_snr, self.v1_snr = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
+        self.X_train_real, self.X_train_imag, self.y_train, self.ra_x, self.ra_y, self.ra, self.dec, self.h1_snr, self.l1_snr, self.v1_snr = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
         
-        self.X_test_real, self.X_test_imag, self.y_test, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
+        self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
         
         # Hanford scaling
         
@@ -196,9 +202,9 @@ class GW_SkyNet(BaseModel):
         self.X_test_imag[2] = sc_v1_imag.transform(self.X_test_imag[2])
         
         # RA, Dec Scaling
-        self.sc = StandardScaler()
-        self.y_train = self.sc.fit_transform(self.y_train)
-        self.y_test = self.sc.transform(self.y_test)
+#        self.sc = StandardScaler()
+#        self.y_train = self.sc.fit_transform(self.y_train)
+#        self.y_test = self.sc.transform(self.y_test)
 
 #        self.ra = self.ra[:,None]
 #        self.dec = self.dec[:,None]
@@ -289,7 +295,6 @@ class GW_SkyNet(BaseModel):
                 
                 self.encoded_features = ResNet34(input1, input2, self.filters, self.kernel_size, self.strides, self.pool_size, self.prev_filters, input_shapes=[self.n_samples, self.n_det]).construct_model()
                 
-            
             x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float32)
         
             # Define a more expressive model
@@ -309,11 +314,11 @@ class GW_SkyNet(BaseModel):
 
 #                bijectors.append(tfb.BatchNormalization(name='batch_normalization'+str(i)))
     
-                bijectors.append(tfb.Permute(permutation = [1, 0]))
+                bijectors.append(tfb.Permute(permutation = [2, 1, 0]))
                 flow_bijector = tfb.Chain(list(reversed(bijectors[:-1])))
             
             # Define the trainable distribution
-            self.trainable_distribution = tfd.TransformedDistribution(distribution=tfd.MultivariateNormalDiag(loc=tf.zeros(2)),
+            self.trainable_distribution = tfd.TransformedDistribution(distribution=tfd.MultivariateNormalDiag(loc=tf.zeros(3)),
                         bijector = flow_bijector)
 
             log_prob_ = self.trainable_distribution.log_prob(x_, bijector_kwargs=
@@ -334,7 +339,7 @@ class GW_SkyNet(BaseModel):
     
         made = tfp.bijectors.AutoregressiveNetwork(params=2,
               hidden_units=hidden_units,
-              event_shape=(2,),
+              event_shape=(3,),
               activation=activation,
               conditional=True,
 #              kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0, mode='fan_avg', distribution='uniform'),
@@ -427,11 +432,26 @@ class GW_SkyNet(BaseModel):
             samples = self.trainable_distribution.sample((n_samples,),
               bijector_kwargs=self.make_bijector_kwargs(self.trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
             
-            samples = self.sc.inverse_transform(samples)
+#            samples = self.sc.inverse_transform(samples)
 ##            self.y_test = self.sc.inverse_transform(self.y_test)
-    
-            ra_samples = samples[:,0]
-            dec_samples = samples[:,1]
+            
+            ra_samples_x = samples[:,0]
+            ra_samples_y = samples[:,1]
+            dec_samples = samples[:,2]
+            
+            index = np.zeros(n_samples, dtype = bool)
+            
+            for i in range(n_samples):
+                if((ra_samples_x[i] >= -1  and ra_samples_x[i] <= 1) and (ra_samples_y[i] >= -1 and ra_samples_y[i] <= 1)):
+                    
+                    index[i] = True
+            
+            ra_samples_x = ra_samples_x[index==True]
+            ra_samples_y = ra_samples_y[index==True]
+            dec_samples = dec_samples[index==True]
+            
+            ra_samples = np.arctan2(ra_samples_y, ra_samples_x)
+            ra_samples = ra_samples + np.pi
             
 #            ra_samples = ra_samples[:,None]
 #            dec_samples = dec_samples[:,None]
@@ -461,12 +481,7 @@ class GW_SkyNet(BaseModel):
 
             probs.append(zz)
         
-##        self.ra_test = self.mms_ra.inverse_transform(self.ra_test)
-##        self.dec_test = self.mms_dec.inverse_transform(self.dec_test)
-#        self.ra_test = self.sc_ra.inverse_transform(self.ra_test)
-#        self.dec_test = self.sc_dec.inverse_transform(self.dec_test)
-            
-#        self.dec_test = np.arcsin(1.0-2.0*self.dec_test)
+        self.ra_test = self.ra_test + np.pi
         
         f1 = h5py.File('evaluation/Injection_run_SNR_time_series_BNS_3_det_ResNet.hdf', 'w')
         f1.create_dataset('Probabilities', data = probs)
