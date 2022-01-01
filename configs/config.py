@@ -47,10 +47,11 @@ CFG = {
             "dataset": "BNS",
             "num_train": 108000,
             "num_test": 2000,
+            "min_snr": 6,
             "n_samples": 410,
             "batch_size": 2000,
             "num_detectors": 3,
-            "epochs": 125,
+            "epochs": 75,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
