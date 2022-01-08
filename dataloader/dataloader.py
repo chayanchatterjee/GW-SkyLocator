@@ -234,7 +234,7 @@ class DataLoader:
     
     
 #    @staticmethod
-    def load_test_data(self, data_config):
+    def load_test_data(self, data_config, test_real):
         """Loads dataset from path"""
         #Get the HDF5 group
         #NSBH
@@ -245,7 +245,10 @@ class DataLoader:
             f_test = h5py.File(data_config.BBH.path_test, 'r')
             
         elif(self.dataset == 'BNS'):
-            f_test = h5py.File(data_config.BNS.path_test, 'r')
+            if(test_real == False):
+                f_test = h5py.File(data_config.BNS.path_test, 'r')
+            else:
+                f_test = h5py.File(data_config.BNS.path_test_GW170817, 'r')
             
         group_test = f_test['omf_injection_snr_samples']
         
@@ -295,7 +298,7 @@ class DataLoader:
 
            
 #    @staticmethod
-    def load_test_parameters(self, data_config):
+    def load_test_parameters(self, data_config, test_real):
         """Loads train parameters from path"""
         if(self.dataset == 'NSBH'):
             
@@ -307,7 +310,10 @@ class DataLoader:
             
         elif(self.dataset == 'BNS'):
             
-            f_test = h5py.File(data_config.BNS.path_test, 'r')
+            if(test_real == False):
+                f_test = h5py.File(data_config.BNS.path_test, 'r')
+            else:
+                f_test = h5py.File(data_config.BNS.path_test_GW170817, 'r')
             
         data_ra = f_test['ra'][()]
         data_dec = f_test['dec'][()]
@@ -531,6 +537,29 @@ class DataLoader:
                 h1 = h1_snr > self.min_snr
                 l1 = l1_snr > self.min_snr
                 v1 = v1_snr > self.min_snr
+        
+                ra = 2.0*np.pi*f1['ra'][()]
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
+                dec = np.arcsin(1.0-2.0*f1['dec'][()])
+
+#                ra = f1['ra'][()]
+#                dec = f1['dec'][()]
+                
+                f1.close()
+        
+            elif(data == 'real_event'):
+                f1 = h5py.File(data_config.BNS.path_test_GW170817, 'r')
+                
+                h1_snr = f1['H1_SNR'][()]
+                l1_snr = f1['L1_SNR'][()]
+                v1_snr = f1['V1_SNR'][()]
+                
+                h1 = np.ones(len(h1_snr), dtype=bool)
+                l1 = np.ones(len(l1_snr), dtype=bool)
+                v1 = np.ones(len(v1_snr), dtype=bool)
         
                 ra = 2.0*np.pi*f1['ra'][()]
                 ra = ra - np.pi
