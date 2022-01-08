@@ -10,15 +10,18 @@ CFG = {
                 "path_train_4": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_train_48-50.hdf",
             
                 "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_NSBH_test.hdf"
-                },        
+                },
+        
         "BBH": {
                 "path_train": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_BBH_training_200k.hdf",
                 },
+        
         "BNS": {
                 "path_train_1": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_BNS_train_1-6.hdf",
                 "path_train_2": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_BNS_train_7-24.hdf",
             
-                "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_BNS_test.hdf"
+                "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_snr_series_GW170817_BNS_test.hdf",
+                "path_test_GW170817": "/group/pmc005/cchatterjee/Real_events/default_snr_series_GW170817_test_Gaussian_noise_1.hdf"
                 },
     },
     "parameters": {
@@ -39,19 +42,22 @@ CFG = {
                 "path_train_1": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_parameters_BNS_train_1-6.hdf",
                 "path_train_2": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_parameters_BNS_train_7-24.hdf",
             
-                "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_parameters_BNS_test.hdf"
+                "path_test": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_parameters_BNS_test.hdf",
+                "path_test_GW170817": "/group/pmc005/cchatterjee/Real_events/default_GW170817_parameters_test_Gaussian_noise_1.hdf"
                 },   
     },
     "train": {
-            "network": "ResNet",
+            "network": "ResNet-34",
             "dataset": "BNS",
+            "test_real": True,
             "num_train": 108000,
-            "num_test": 2000,
-            "min_snr": 6,
+            "num_test": 1,
+            "min_snr": 1,
             "n_samples": 410,
             "batch_size": 2000,
+            "output_filename": 'Real_events/GW170817_test_3_det_all_SNR_ResNet-34_1.hdf',
             "num_detectors": 3,
-            "epochs": 75,
+                "epochs": 1,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
@@ -59,7 +65,7 @@ CFG = {
     },
     "model": { # best: num_bijectors: 6, MAF_hidden_units: [256, 256, 256], epochs: 50.
             "num_bijectors": 6,
-            "MAF_hidden_units": [64,64,64],
+            "MAF_hidden_units": [256,256,256],
         
             "WaveNet": {
                         "filters": 16,
