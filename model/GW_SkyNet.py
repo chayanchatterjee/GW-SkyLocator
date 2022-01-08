@@ -338,8 +338,8 @@ class GW_SkyNet(BaseModel):
             checkpoint = tf.train.Checkpoint(optimizer=opt, model=self.model)
             
             # load best model with min validation loss
-            checkpoint.restore('/home/cchatterjee/GW-SkyNet/checkpoints/BNS_3_det_ResNet-34/All_SNR/tmp_0xf05553e/ckpt_all_SNR-1')
-            self.encoder.load_weights("model/ResNet-34_BNS_encoder_3_det_all_SNR.hdf5")
+#            checkpoint.restore('/home/cchatterjee/GW-SkyNet/checkpoints/BNS_3_det_ResNet-34/All_SNR/tmp_0xf05553e/ckpt_all_SNR-1')
+#            self.encoder.load_weights("model/ResNet-34_BNS_encoder_3_det_all_SNR.hdf5")
 
         self.train(log_prob_, checkpoint)
     
@@ -385,17 +385,17 @@ class GW_SkyNet(BaseModel):
         checkpoint_directory = "{}/tmp_{}".format(dataset_name, str(hex(random.getrandbits(32))))
         checkpoint_prefix = os.path.join(checkpoint_directory, "ckpt_all_SNR")
 
-#        callbacks_list=[custom_checkpoint]  
+        callbacks_list=[custom_checkpoint]  
 
         self.model.fit([self.X_train_real, self.X_train_imag, self.y_train], np.zeros((len(self.X_train_real), 0), dtype=np.float32),
               batch_size=self.batch_size,
               epochs=self.epochs,
               validation_split=self.val_split,
-#              callbacks=callbacks_list,
+              callbacks=callbacks_list,
               shuffle=True,
               verbose=True)
 
-#        checkpoint.save(file_prefix=checkpoint_prefix)
+        checkpoint.save(file_prefix=checkpoint_prefix)
         
     def kde2D(self, x, y, bandwidth, ra_pix, de_pix, xbins=150j, ybins=150j, **kwargs):
         """Build 2D kernel density estimate (KDE)."""
