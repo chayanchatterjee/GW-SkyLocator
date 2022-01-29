@@ -15,10 +15,10 @@ class DataLoader:
         self.min_snr = min_snr
     
 #    @staticmethod
-    def load_train_data(self, data_config):
+    def load_train_data(self, data_config, snr_range_train):
         """Loads dataset from path"""
         # NSBH
-        if(self.dataset == 'NSBH'):
+        if((self.dataset == 'NSBH') and (snr_range_train=='high')):
             f1 = h5py.File(data_config.NSBH.path_train_1, 'r')
             f2 = h5py.File(data_config.NSBH.path_train_2, 'r')
             f3 = h5py.File(data_config.NSBH.path_train_3, 'r')
@@ -69,9 +69,55 @@ class DataLoader:
             f3.close()
             f4.close()
             
+        elif((self.dataset == 'NSBH') and (snr_range_train=='low')):
+            
+            f1 = h5py.File(data_config.NSBH.path_train_low_snr_1, 'r')
+            f2 = h5py.File(data_config.NSBH.path_train_low_snr_2, 'r')
+
+            h1_real_60k = abs(f1['h1_snr_series'][0:60000][()] )
+            l1_real_60k = abs(f1['l1_snr_series'][0:60000][()] )
+            v1_real_60k = abs(f1['v1_snr_series'][0:60000][()] )
+
+            h1_imag_60k = np.imag(f1['h1_snr_series'][0:60000][()] )
+            l1_imag_60k = np.imag(f1['l1_snr_series'][0:60000][()] )
+            v1_imag_60k = np.imag(f1['v1_snr_series'][0:60000][()] )
+            
+            h1_real_40k = abs(f2['h1_snr_series'][0:40000][()] )
+            l1_real_40k = abs(f2['l1_snr_series'][0:40000][()] )
+            v1_real_40k = abs(f2['v1_snr_series'][0:40000][()] )
+    
+            h1_imag_40k = np.imag(f2['h1_snr_series'][0:40000][()] )
+            l1_imag_40k = np.imag(f2['l1_snr_series'][0:40000][()] )
+            v1_imag_40k = np.imag(f2['v1_snr_series'][0:40000][()] )
+                
+            h1_real = np.concatenate([h1_real_60k, h1_real_40k], axis=0)
+            l1_real = np.concatenate([l1_real_60k, l1_real_40k], axis=0)
+            v1_real = np.concatenate([v1_real_60k, v1_real_40k], axis=0)
+            
+            h1_imag = np.concatenate([h1_imag_60k, h1_imag_40k], axis=0)
+            l1_imag = np.concatenate([l1_imag_60k, l1_imag_40k], axis=0)
+            v1_imag = np.concatenate([v1_imag_60k, v1_imag_40k], axis=0)
+            
+            f1.close()
+            f2.close()
+            
         # BBH
-        elif(self.dataset == 'BBH'):
+        elif((self.dataset == 'BBH') and (snr_range_train=='high')):
             f1 = h5py.File(data_config.BBH.path_train, 'r')
+
+            h1_real = abs(f1['h1_snr_series'][0:100000][()] )
+            l1_real = abs(f1['l1_snr_series'][0:100000][()] )
+            v1_real = abs(f1['v1_snr_series'][0:100000][()] )
+
+            h1_imag = np.imag(f1['h1_snr_series'][0:100000][()] )
+            l1_imag = np.imag(f1['l1_snr_series'][0:100000][()] )
+            v1_imag = np.imag(f1['v1_snr_series'][0:100000][()] )
+    
+            f1.close()
+        
+        elif((self.dataset == 'BBH') and (snr_range_train=='low')):
+            
+            f1 = h5py.File(data_config.BBH.path_train_low_SNR, 'r')
 
             h1_real = abs(f1['h1_snr_series'][0:100000][()] )
             l1_real = abs(f1['l1_snr_series'][0:100000][()] )
@@ -85,37 +131,79 @@ class DataLoader:
         
         # BNS
         elif(self.dataset == 'BNS'):
-            f1 = h5py.File(data_config.BNS.path_train_1, 'r')
-            f2 = h5py.File(data_config.BNS.path_train_2, 'r')
+            if(snr_range_train == 'high'):
+                f1 = h5py.File(data_config.BNS.path_train_1, 'r')
+                f2 = h5py.File(data_config.BNS.path_train_2, 'r')
 
-            h1_real_22k = abs(f1['h1_snr_series'][0:22000][()] )
-            l1_real_22k = abs(f1['l1_snr_series'][0:22000][()] )
-            v1_real_22k = abs(f1['v1_snr_series'][0:22000][()] )
+                h1_real_22k = abs(f1['h1_snr_series'][0:22000][()] )
+                l1_real_22k = abs(f1['l1_snr_series'][0:22000][()] )
+                v1_real_22k = abs(f1['v1_snr_series'][0:22000][()] )
 
-            h1_imag_22k = np.imag(f1['h1_snr_series'][0:22000][()] )
-            l1_imag_22k = np.imag(f1['l1_snr_series'][0:22000][()] )
-            v1_imag_22k = np.imag(f1['v1_snr_series'][0:22000][()] )
+                h1_imag_22k = np.imag(f1['h1_snr_series'][0:22000][()] )
+                l1_imag_22k = np.imag(f1['l1_snr_series'][0:22000][()] )
+                v1_imag_22k = np.imag(f1['v1_snr_series'][0:22000][()] )
             
-            h1_real_86k = abs(f2['h1_snr_series'][0:86000][()] )
-            l1_real_86k = abs(f2['l1_snr_series'][0:86000][()] )
-            v1_real_86k = abs(f2['v1_snr_series'][0:86000][()] )
-
-            h1_imag_86k = np.imag(f2['h1_snr_series'][0:86000][()] )
-            l1_imag_86k = np.imag(f2['l1_snr_series'][0:86000][()] )
-            v1_imag_86k = np.imag(f2['v1_snr_series'][0:86000][()] )
-            
-            h1_real = np.concatenate([h1_real_22k, h1_real_86k], axis=0)
-            l1_real = np.concatenate([l1_real_22k, l1_real_86k], axis=0)
-            v1_real = np.concatenate([v1_real_22k, v1_real_86k], axis=0)
-            
-            h1_imag = np.concatenate([h1_imag_22k, h1_imag_86k], axis=0)
-            l1_imag = np.concatenate([l1_imag_22k, l1_imag_86k], axis=0)
-            v1_imag = np.concatenate([v1_imag_22k, v1_imag_86k], axis=0)
-            
+                h1_real_86k = abs(f2['h1_snr_series'][0:86000][()] )
+                l1_real_86k = abs(f2['l1_snr_series'][0:86000][()] )
+                v1_real_86k = abs(f2['v1_snr_series'][0:86000][()] )
     
-            f1.close()
-            f2.close()
+                h1_imag_86k = np.imag(f2['h1_snr_series'][0:86000][()] )
+                l1_imag_86k = np.imag(f2['l1_snr_series'][0:86000][()] )
+                v1_imag_86k = np.imag(f2['v1_snr_series'][0:86000][()] )
+            
+                h1_real = np.concatenate([h1_real_22k, h1_real_86k], axis=0)
+                l1_real = np.concatenate([l1_real_22k, l1_real_86k], axis=0)
+                v1_real = np.concatenate([v1_real_22k, v1_real_86k], axis=0)
+            
+                h1_imag = np.concatenate([h1_imag_22k, h1_imag_86k], axis=0)
+                l1_imag = np.concatenate([l1_imag_22k, l1_imag_86k], axis=0)
+                v1_imag = np.concatenate([v1_imag_22k, v1_imag_86k], axis=0)
+            
+                f1.close()
+                f2.close()
+                
+            elif(snr_range_train == 'low'):
+                
+                f1 = h5py.File(data_config.BNS.path_train_low_snr_1, 'r')
+                f2 = h5py.File(data_config.BNS.path_train_low_snr_2, 'r')
+                f3 = h5py.File(data_config.BNS.path_train_low_snr_3, 'r')
 
+                h1_real_12k = abs(f1['h1_snr_series'][0:12000][()] )
+                l1_real_12k = abs(f1['l1_snr_series'][0:12000][()] )
+                v1_real_12k = abs(f1['v1_snr_series'][0:12000][()] )
+
+                h1_imag_12k = np.imag(f1['h1_snr_series'][0:12000][()] )
+                l1_imag_12k = np.imag(f1['l1_snr_series'][0:12000][()] )
+                v1_imag_12k = np.imag(f1['v1_snr_series'][0:12000][()] )
+            
+                h1_real_36k = abs(f2['h1_snr_series'][0:36000][()] )
+                l1_real_36k = abs(f2['l1_snr_series'][0:36000][()] )
+                v1_real_36k = abs(f2['v1_snr_series'][0:36000][()] )
+    
+                h1_imag_36k = np.imag(f2['h1_snr_series'][0:36000][()] )
+                l1_imag_36k = np.imag(f2['l1_snr_series'][0:36000][()] )
+                v1_imag_36k = np.imag(f2['v1_snr_series'][0:36000][()] )
+                
+                h1_real_52k = abs(f3['h1_snr_series'][0:52000][()] )
+                l1_real_52k = abs(f3['l1_snr_series'][0:52000][()] )
+                v1_real_52k = abs(f3['v1_snr_series'][0:52000][()] )
+    
+                h1_imag_52k = np.imag(f3['h1_snr_series'][0:52000][()] )
+                l1_imag_52k = np.imag(f3['l1_snr_series'][0:52000][()] )
+                v1_imag_52k = np.imag(f3['v1_snr_series'][0:52000][()] )
+            
+                h1_real = np.concatenate([h1_real_12k, h1_real_36k, h1_real_52k], axis=0)
+                l1_real = np.concatenate([l1_real_12k, l1_real_36k, l1_real_52k], axis=0)
+                v1_real = np.concatenate([v1_real_12k, v1_real_36k, v1_real_52k], axis=0)
+            
+                h1_imag = np.concatenate([h1_imag_12k, h1_imag_36k, h1_imag_52k], axis=0)
+                l1_imag = np.concatenate([l1_imag_12k, l1_imag_36k, l1_imag_52k], axis=0)
+                v1_imag = np.concatenate([v1_imag_12k, v1_imag_36k, v1_imag_52k], axis=0)
+            
+                f1.close()
+                f2.close()
+                f3.close()
+                
         h1_real = h1_real[:,:,None]
         l1_real = l1_real[:,:,None]
         v1_real = v1_real[:,:,None]
@@ -135,10 +223,10 @@ class DataLoader:
         return X_train_real, X_train_imag
     
 #    @staticmethod
-    def load_train_parameters(self, data_config):
+    def load_train_parameters(self, data_config, snr_range_train):
         """Loads train parameters from path"""
         #NSBH
-        if(self.dataset == 'NSBH'):
+        if((self.dataset == 'NSBH') and (snr_range_train == 'high')):
             f1 = h5py.File(data_config.NSBH.path_train_1, 'r')
             f2 = h5py.File(data_config.NSBH.path_train_2, 'r')
             f3 = h5py.File(data_config.NSBH.path_train_3, 'r')
@@ -179,10 +267,44 @@ class DataLoader:
             f2.close()
             f3.close()
             f4.close()
+            
+        if((self.dataset == 'NSBH') and (snr_range_train == 'low')):
+            f1 = h5py.File(data_config.NSBH.path_train_low_snr_1, 'r')
+            f2 = h5py.File(data_config.NSBH.path_train_low_snr_2, 'r')
+        
+            ra_60k = 2.0*np.pi*f1['ra'][()]
+            dec_60k = np.arcsin(1.0-2.0*f1['dec'][()])
+            
+            ra_40k = 2.0*np.pi*(f2['ra'][0:40000][()])
+            dec_40k = np.arcsin(1.0-2.0*f2['dec'][0:40000][()])
+        
+            ra = np.concatenate([ra_60k, ra_40k])
+            ra = ra - np.pi
+            ra_x = np.cos(ra)
+            ra_y = np.sin(ra)
+            
+            dec = np.concatenate([dec_60k, dec_40k])
+            
+            f1.close()
+            f2.close()
         
         #BBH
-        elif(self.dataset == 'BBH'):
+        elif((self.dataset == 'BBH') and (snr_range_train == 'high')):
             f1 = h5py.File(data_config.BBH.path_train, 'r')
+
+            ra = 2.0*np.pi*f1['ra'][0:100000][()]
+            ra = ra - np.pi
+            dec = np.arcsin(1.0-2.0*f1['dec'][0:100000][()])
+#            ra = f1['ra'][0:100000][()]
+            ra_x = np.cos(ra)
+            ra_y = np.sin(ra)
+            
+#            dec = f1['dec'][0:100000][()]
+        
+            f1.close()
+        
+        elif((self.dataset == 'BBH') and (snr_range_train == 'low')):
+            f1 = h5py.File(data_config.BBH.path_train_low_SNR, 'r')
 
             ra = 2.0*np.pi*f1['ra'][0:100000][()]
             ra = ra - np.pi
@@ -197,31 +319,57 @@ class DataLoader:
         
         #BNS
         elif(self.dataset == 'BNS'):
-            f1 = h5py.File(data_config.BNS.path_train_1, 'r')
-            f2 = h5py.File(data_config.BNS.path_train_2, 'r')
+            if(snr_range_train == 'high'):
+                f1 = h5py.File(data_config.BNS.path_train_1, 'r')
+                f2 = h5py.File(data_config.BNS.path_train_2, 'r')
             
-            ra_22k = 2.0*np.pi*f1['ra'][0:22000][()]
-            dec_22k = np.arcsin(1.0-2.0*f1['dec'][0:22000][()])
+                ra_22k = 2.0*np.pi*f1['ra'][0:22000][()]
+                dec_22k = np.arcsin(1.0-2.0*f1['dec'][0:22000][()])
 
-#            ra_22k = f1['ra'][0:22000][()]
-#            dec_22k = f1['dec'][0:22000][()]
+    #            ra_22k = f1['ra'][0:22000][()]
+    #            dec_22k = f1['dec'][0:22000][()]
         
-            ra_86k = 2.0*np.pi*f2['ra'][0:86000][()]
-            dec_86k = np.arcsin(1.0-2.0*f2['dec'][0:86000][()])
+                ra_86k = 2.0*np.pi*f2['ra'][0:86000][()]
+                dec_86k = np.arcsin(1.0-2.0*f2['dec'][0:86000][()])
 
-#            ra_86k = f2['ra'][0:86000][()]
-#            dec_86k = f2['dec'][0:86000][()]
+    #            ra_86k = f2['ra'][0:86000][()]
+    #            dec_86k = f2['dec'][0:86000][()]
             
-            ra = np.concatenate([ra_22k, ra_86k], axis=0)
-            ra = ra - np.pi
-            ra_x = np.cos(ra)
-            ra_y = np.sin(ra)
+                ra = np.concatenate([ra_22k, ra_86k], axis=0)
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
             
-            dec = np.concatenate([dec_22k, dec_86k], axis=0)
+                dec = np.concatenate([dec_22k, dec_86k], axis=0)
         
-            f1.close()
-            f2.close()
+                f1.close()
+                f2.close()
+                
+            elif(snr_range_train == 'low'):
+                f1 = h5py.File(data_config.BNS.path_train_low_snr_1, 'r')
+                f2 = h5py.File(data_config.BNS.path_train_low_snr_2, 'r')
+                f3 = h5py.File(data_config.BNS.path_train_low_snr_3, 'r')
+            
+                ra_12k = 2.0*np.pi*f1['ra'][0:12000][()]
+                dec_12k = np.arcsin(1.0-2.0*f1['dec'][0:12000][()])
         
+                ra_36k = 2.0*np.pi*f2['ra'][0:36000][()]
+                dec_36k = np.arcsin(1.0-2.0*f2['dec'][0:36000][()])
+                
+                ra_52k = 2.0*np.pi*f3['ra'][0:52000][()]
+                dec_52k = np.arcsin(1.0-2.0*f3['dec'][0:52000][()])
+            
+                ra = np.concatenate([ra_12k, ra_36k, ra_52k], axis=0)
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+            
+                dec = np.concatenate([dec_12k, dec_36k, dec_52k], axis=0)
+        
+                f1.close()
+                f2.close()
+                f3.close()
+                
         ra = ra[:,None]
         ra_x = ra_x[:,None]
         ra_y = ra_y[:,None]
@@ -234,21 +382,27 @@ class DataLoader:
     
     
 #    @staticmethod
-    def load_test_data(self, data_config, test_real):
+    def load_test_data(self, data_config, test_real, snr_range_test):
         """Loads dataset from path"""
         #Get the HDF5 group
         #NSBH
         if(self.dataset == 'NSBH'):
-            f_test = h5py.File(data_config.NSBH.path_test, 'r')
+            if(snr_range_test == 'high'):
+                f_test = h5py.File(data_config.NSBH.path_test, 'r')
+            elif(snr_range_test == 'low'):
+                f_test = h5py.File(data_config.NSBH.path_test_low_snr, 'r')
             
         elif(self.dataset == 'BBH'):
-            f_test = h5py.File(data_config.BBH.path_test, 'r')
+            if(snr_range_test == 'low'):
+                f_test = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
             
         elif(self.dataset == 'BNS'):
-            if(test_real == False):
-                f_test = h5py.File(data_config.BNS.path_test, 'r')
-            else:
+            if(test_real == True):
                 f_test = h5py.File(data_config.BNS.path_test_GW170817, 'r')
+            elif((test_real == False) and (snr_range_test == 'high')):
+                f_test = h5py.File(data_config.BNS.path_test, 'r')
+            elif((test_real == False) and (snr_range_test == 'low')):
+                f_test = h5py.File(data_config.BNS.path_test_low_SNR, 'r')
             
         group_test = f_test['omf_injection_snr_samples']
         
@@ -298,22 +452,34 @@ class DataLoader:
 
            
 #    @staticmethod
-    def load_test_parameters(self, data_config, test_real):
+    def load_test_parameters(self, data_config, test_real, snr_range_test):
         """Loads train parameters from path"""
         if(self.dataset == 'NSBH'):
-            
-            f_test = h5py.File(data_config.NSBH.path_test, 'r')
+            if(snr_range_test == 'high'):
+                f_test = h5py.File(data_config.NSBH.path_test, 'r')
+            elif(snr_range_test == 'low'):
+                f_test = h5py.File(data_config.NSBH.path_test_low_snr, 'r')
             
         elif(self.dataset == 'BBH'):
-            
-            f_test = h5py.File(data_config.BBH.path_test, 'r')
+            if(snr_range_test == 'high'):
+                f_test = h5py.File(data_config.BBH.path_test, 'r')
+            elif(snr_range_test == 'low'):
+                f_test = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
             
         elif(self.dataset == 'BNS'):
             
-            if(test_real == False):
-                f_test = h5py.File(data_config.BNS.path_test, 'r')
-            else:
+            if(test_real == True):
+                
                 f_test = h5py.File(data_config.BNS.path_test_GW170817, 'r')
+                
+            elif((test_real == False) and (snr_range_test == 'high')):
+                
+                f_test = h5py.File(data_config.BNS.path_test, 'r')
+                
+            elif((test_real == False) and (snr_range_test == 'low')):
+                
+                f_test = h5py.File(data_config.BNS.path_test_low_SNR, 'r')
+                
             
         data_ra = f_test['ra'][()]
         data_dec = f_test['dec'][()]
@@ -342,11 +508,11 @@ class DataLoader:
     
     
 #    @staticmethod
-    def load_3_det_samples(self, data_config, X_real, X_imag, y, num_samples, data):
+    def load_3_det_samples(self, data_config, X_real, X_imag, y, num_samples, snr_range_train, snr_range_test, data):
         """Loads 3 det samples and parameters from path"""
         if(self.dataset == 'NSBH'):
             
-            if(data == 'train'):
+            if((data == 'train') and (snr_range_train=='high')):
                 f1 = h5py.File(data_config.NSBH.path_train_1, 'r')
                 f2 = h5py.File(data_config.NSBH.path_train_2, 'r')
                 f3 = h5py.File(data_config.NSBH.path_train_3, 'r')
@@ -414,32 +580,114 @@ class DataLoader:
                 f3.close()
                 f4.close()
             
-            elif(data == 'test'):
-                f_test = h5py.File(data_config.NSBH.path_test, 'r')
-                h1_snr = f_test['H1_SNR'][()]
-                l1_snr = f_test['L1_SNR'][()]
-                v1_snr = f_test['V1_SNR'][()]
-            
+            elif((data == 'train') and (snr_range_train=='low')):
+                f1 = h5py.File(data_config.NSBH.path_train_low_snr_1, 'r')
+                f2 = h5py.File(data_config.NSBH.path_train_low_snr_2, 'r')      
+                        
+                h1_snr_1 = f1['H1_SNR'][()]
+                h1_snr_2 = f2['H1_SNR'][()]
+
+                h1_snr = np.concatenate([h1_snr_1, h1_snr_2])
+        
+                l1_snr_1 = f1['L1_SNR'][()]
+                l1_snr_2 = f2['L1_SNR'][()]       
+                
+                l1_snr = np.concatenate([l1_snr_1, l1_snr_2])
+
+                v1_snr_1 = f1['V1_SNR'][()]
+                v1_snr_2 = f2['V1_SNR'][()]       
+                
+                v1_snr = np.concatenate([v1_snr_1, v1_snr_2])
+        
                 h1 = h1_snr > self.min_snr
                 l1 = l1_snr > self.min_snr
                 v1 = v1_snr > self.min_snr
             
-                ra = 2.0*np.pi*f_test['ra'][()]
+                ra_1 = 2.0*np.pi*f1['ra'][()]
+                ra_2 = 2.0*np.pi*f2['ra'][()]
+                
+                dec_1 = np.arcsin(1.0-2.0*f1['dec'][()])
+                dec_2 = np.arcsin(1.0-2.0*f2['dec'][()])
+            
+                ra = np.concatenate([ra_1, ra_2])
                 ra = ra - np.pi
                 ra_x = np.cos(ra)
                 ra_y = np.sin(ra)
                 
-                dec = np.arcsin(1.0-2.0*f_test['dec'][()])
+                dec = np.concatenate([dec_1, dec_2])
+    
+                f1.close()
+                f2.close()
+            
+            elif(data == 'test'):
+                if(snr_range_test == 'high'):
+                    f_test = h5py.File(data_config.NSBH.path_test, 'r')
+                    h1_snr = f_test['H1_SNR'][()]
+                    l1_snr = f_test['L1_SNR'][()]
+                    v1_snr = f_test['V1_SNR'][()]
+            
+                    h1 = h1_snr > self.min_snr
+                    l1 = l1_snr > self.min_snr
+                    v1 = v1_snr > self.min_snr
+            
+                    ra = 2.0*np.pi*f_test['ra'][()]
+                    ra = ra - np.pi
+                    ra_x = np.cos(ra)
+                    ra_y = np.sin(ra)
+                
+                    dec = np.arcsin(1.0-2.0*f_test['dec'][()])
 
-#                ra = f_test['ra'][()]
-#                dec = f_test['dec'][()]
+    #                ra = f_test['ra'][()]
+    #                dec = f_test['dec'][()]
 
-                f_test.close()
+                    f_test.close()
+        
+                elif(snr_range_test == 'low'):
+                    f_test = h5py.File(data_config.NSBH.path_test_low_snr, 'r')
+                    h1_snr = f_test['H1_SNR'][()]
+                    l1_snr = f_test['L1_SNR'][()]
+                    v1_snr = f_test['V1_SNR'][()]
+            
+                    h1 = h1_snr > self.min_snr
+                    l1 = l1_snr > self.min_snr
+                    v1 = v1_snr > self.min_snr
+            
+                    ra = 2.0*np.pi*f_test['ra'][()]
+                    ra = ra - np.pi
+                    ra_x = np.cos(ra)
+                    ra_y = np.sin(ra)
+                
+                    dec = np.arcsin(1.0-2.0*f_test['dec'][()])
+
+                    f_test.close()
                 
         
         elif(self.dataset == 'BBH'):
-            if(data == 'train'):
+            if((data == 'train') and (snr_range_train=='high')):
                 f1 = h5py.File(data_config.BBH.path_train, 'r')
+                
+                h1_snr = f1['H1_SNR'][0:100000][()]
+                l1_snr = f1['L1_SNR'][0:100000][()]
+                v1_snr = f1['V1_SNR'][0:100000][()]
+                
+                h1 = h1_snr > self.min_snr
+                l1 = l1_snr > self.min_snr
+                v1 = v1_snr > self.min_snr
+        
+                ra = 2.0*np.pi*f1['ra'][0:100000][()]
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
+                dec = np.arcsin(1.0-2.0*f1['dec'][0:100000][()])
+                
+#                ra = f1['ra'][()]
+#                dec = f1['dec'][()]
+                
+                f1.close()
+        
+            elif((data == 'train') and (snr_range_train=='low')):
+                f1 = h5py.File(data_config.BBH.path_train_low_SNR, 'r')
                 
                 h1_snr = f1['H1_SNR'][0:100000][()]
                 l1_snr = f1['L1_SNR'][0:100000][()]
@@ -462,7 +710,10 @@ class DataLoader:
                 f1.close()
                 
             elif(data == 'test'):
-                f1 = h5py.File(data_config.BBH.path_test, 'r')
+                if(snr_range_test == 'high'):
+                    f1 = h5py.File(data_config.BBH.path_test, 'r')
+                elif(snr_range_test == 'low'):
+                    f1 = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
                 
                 h1_snr = f1['H1_SNR'][()]
                 l1_snr = f1['L1_SNR'][()]
@@ -485,7 +736,7 @@ class DataLoader:
                 f1.close()
         
         elif(self.dataset == 'BNS'):
-            if(data == 'train'):
+            if((data == 'train') and (snr_range_train=='high')):
                 f1 = h5py.File(data_config.BNS.path_train_1, 'r')
                 f2 = h5py.File(data_config.BNS.path_train_2, 'r')
                 
@@ -527,8 +778,57 @@ class DataLoader:
                 f1.close()
                 f2.close()
                 
+            elif((data == 'train') and (snr_range_train=='low')):
+                f1 = h5py.File(data_config.BNS.path_train_low_snr_1, 'r')
+                f2 = h5py.File(data_config.BNS.path_train_low_snr_2, 'r')
+                f3 = h5py.File(data_config.BNS.path_train_low_snr_3, 'r')
+                
+                h1_snr_1 = f1['H1_SNR'][0:12000][()]
+                l1_snr_1 = f1['L1_SNR'][0:12000][()]
+                v1_snr_1 = f1['V1_SNR'][0:12000][()]
+                
+                h1_snr_2 = f2['H1_SNR'][0:36000][()]
+                l1_snr_2 = f2['L1_SNR'][0:36000][()]
+                v1_snr_2 = f2['V1_SNR'][0:36000][()]
+                
+                h1_snr_3 = f3['H1_SNR'][0:52000][()]
+                l1_snr_3 = f3['L1_SNR'][0:52000][()]
+                v1_snr_3 = f3['V1_SNR'][0:52000][()]
+                
+                h1_snr = np.concatenate([h1_snr_1, h1_snr_2, h1_snr_3], axis=0)
+                l1_snr = np.concatenate([l1_snr_1, l1_snr_2, l1_snr_3], axis=0)
+                v1_snr = np.concatenate([v1_snr_1, v1_snr_2, l1_snr_3], axis=0)
+                
+                h1 = h1_snr > self.min_snr
+                l1 = l1_snr > self.min_snr
+                v1 = v1_snr > self.min_snr
+        
+                ra_1 = 2.0*np.pi*f1['ra'][0:12000][()]
+                dec_1 = np.arcsin(1.0-2.0*f1['dec'][0:12000][()])
+                
+                ra_2 = 2.0*np.pi*f2['ra'][0:36000][()]
+                dec_2 = np.arcsin(1.0-2.0*f2['dec'][0:36000][()])
+                
+                ra_3 = 2.0*np.pi*f3['ra'][0:52000][()]
+                dec_3 = np.arcsin(1.0-2.0*f3['dec'][0:52000][()])
+         
+                ra = np.concatenate([ra_1, ra_2, ra_3], axis=0)
+                ra = ra - np.pi
+                ra_x = np.cos(ra)
+                ra_y = np.sin(ra)
+                
+                dec = np.concatenate([dec_1, dec_2, dec_3], axis=0)
+                
+                f1.close()
+                f2.close()
+                f3.close()
+                
+                
             elif(data == 'test'):
-                f1 = h5py.File(data_config.BNS.path_test, 'r')
+                if(snr_range_test == 'high'):
+                    f1 = h5py.File(data_config.BNS.path_test, 'r')
+                elif(snr_range_test == 'low'):
+                    f1 = h5py.File(data_config.BNS.path_test_low_SNR, 'r')
                 
                 h1_snr = f1['H1_SNR'][()]
                 l1_snr = f1['L1_SNR'][()]
@@ -598,4 +898,3 @@ class DataLoader:
         return X_real, X_imag, y, ra_x, ra_y, ra, dec, h1_snr, l1_snr, v1_snr
     
     
-

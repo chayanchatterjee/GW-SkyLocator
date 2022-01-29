@@ -100,6 +100,8 @@ class GW_SkyNet(BaseModel):
         self.num_test = self.config.train.num_test
         self.n_samples = self.config.train.n_samples
         self.test_real = self.config.train.test_real
+        self.snr_range_train = self.config.train.snr_range_train
+        self.snr_range_test = self.config.train.snr_range_test
         self.min_snr = self.config.train.min_snr
         self.n_det = self.config.train.num_detectors
         self.epochs = self.config.train.epochs
@@ -138,105 +140,25 @@ class GW_SkyNet(BaseModel):
         
         d_loader = DataLoader(self.n_det, self.dataset, self.num_test, self.n_samples, self.min_snr)
         
-        self.X_train_real, self.X_train_imag = d_loader.load_train_data(self.config.data)
-        self.X_test_real, self.X_test_imag = d_loader.load_test_data(self.config.data, self.test_real)
-        
-        
-        print(self.X_test_real.shape)
-        
-        self.y_train = d_loader.load_train_parameters(self.config.parameters)
-        self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test = d_loader.load_test_parameters(self.config.parameters, self.test_real)
+        self.X_train_real, self.X_train_imag = d_loader.load_train_data(self.config.data, self.snr_range_train)
+        self.X_test_real, self.X_test_imag = d_loader.load_test_data(self.config.data, self.test_real, self.snr_range_test)
+                
+        self.y_train = d_loader.load_train_parameters(self.config.parameters, self.snr_range_train)
+        self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test = d_loader.load_test_parameters(self.config.parameters, self.test_real, self.snr_range_test)
         
         self._preprocess_data(d_loader)
         
     def _preprocess_data(self, d_loader):
         """ Removing < n_det samples and scaling RA and Dec values """
         
-        self.X_train_real, self.X_train_imag, self.y_train, self.ra_x, self.ra_y, self.ra, self.dec, self.h1_snr, self.l1_snr, self.v1_snr = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, data='train')
+        self.X_train_real, self.X_train_imag, self.y_train, self.ra_x, self.ra_y, self.ra, self.dec, self.h1_snr, self.l1_snr, self.v1_snr = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, self.snr_range_train, self.snr_range_test, data='train')
         
         if(self.test_real == False):
-            self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='test')
+            self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, self.snr_range_train, self.snr_range_test, data='test')
             
         elif(self.test_real == True):
-            self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, data='real_event')
+            self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, self.snr_range_train, self.snr_range_test, data='real_event')
             
-        
-        # Hanford scaling
-        
-#        mms_h1_real = MinMaxScaler()
-#        mms_h1_imag = MinMaxScaler()        
-#        self.X_train_real[0] = mms_h1_real.fit_transform(self.X_train_real[0])
-#        self.X_test_real[0] = mms_h1_real.transform(self.X_test_real[0])
-#        self.X_train_imag[0] = mms_h1_imag.fit_transform(self.X_train_imag[0])
-#        self.X_test_imag[0] = mms_h1_imag.transform(self.X_test_imag[0])
-        
-#        sc_h1_real = StandardScaler()
-#        sc_h1_imag = StandardScaler()        
-#        self.X_train_real[0] = sc_h1_real.fit_transform(self.X_train_real[0])
-#        self.X_test_real[0] = sc_h1_real.transform(self.X_test_real[0])
-#        self.X_train_imag[0] = sc_h1_imag.fit_transform(self.X_train_imag[0])
-#        self.X_test_imag[0] = sc_h1_imag.transform(self.X_test_imag[0])
-        
-        # Livingston Scaling
-#        mms_l1_real = MinMaxScaler()
-#        mms_l1_imag = MinMaxScaler()
-#        self.X_train_real[1] = mms_l1_real.fit_transform(self.X_train_real[1])
-#        self.X_test_real[1] = mms_l1_real.transform(self.X_test_real[1])
-#        self.X_train_imag[1] = mms_l1_imag.fit_transform(self.X_train_imag[1])
-#        self.X_test_imag[1] = mms_l1_imag.transform(self.X_test_imag[1])
-        
-#        sc_l1_real = StandardScaler()
-#        sc_l1_imag = StandardScaler()
-#        self.X_train_real[1] = sc_l1_real.fit_transform(self.X_train_real[1])
-#        self.X_test_real[1] = sc_l1_real.transform(self.X_test_real[1])
-#        self.X_train_imag[1] = sc_l1_imag.fit_transform(self.X_train_imag[1])
-#        self.X_test_imag[1] = sc_l1_imag.transform(self.X_test_imag[1])
-        
-        # Virgo Scaling
-#        mms_v1_real = MinMaxScaler()
-#        mms_v1_imag = MinMaxScaler()
-#        self.X_train_real[2] = mms_v1_real.fit_transform(self.X_train_real[2])
-#        self.X_test_real[2] = mms_v1_real.transform(self.X_test_real[2])
-#        self.X_train_imag[2] = mms_v1_imag.fit_transform(self.X_train_imag[2])
-#        self.X_test_imag[2] = mms_v1_imag.transform(self.X_test_imag[2])
-        
-#        sc_v1_real = StandardScaler()
-#        sc_v1_imag = StandardScaler()
-#        self.X_train_real[2] = sc_v1_real.fit_transform(self.X_train_real[2])
-#        self.X_test_real[2] = sc_v1_real.transform(self.X_test_real[2])
-#        self.X_train_imag[2] = sc_v1_imag.fit_transform(self.X_train_imag[2])
-#        self.X_test_imag[2] = sc_v1_imag.transform(self.X_test_imag[2])
-        
-        # RA, Dec Scaling
-#        self.sc = StandardScaler()
-#        self.y_train = self.sc.fit_transform(self.y_train)
-#        self.y_test = self.sc.transform(self.y_test)
-
-#        self.ra = self.ra[:,None]
-#        self.dec = self.dec[:,None]
-        
-#        self.ra_test = self.ra_test[:,None]
-#        self.dec_test = self.dec_test[:,None]
-        
-#        self.mms_ra = MinMaxScaler()
-#        self.ra = self.mms_ra.fit_transform(self.ra)
-#        self.ra_test = self.mms_ra.transform(self.ra_test)
-        
-#        self.mms_dec = MinMaxScaler()
-#        self.dec = self.mms_dec.fit_transform(self.dec)
-#        self.dec_test = self.mms_dec.transform(self.dec_test)
-
-#        self.sc_ra = StandardScaler()
-#        self.ra = self.sc_ra.fit_transform(self.ra)
-#        self.ra_test = self.sc_ra.transform(self.ra_test)
-        
-#        self.sc_dec = StandardScaler()
-#        self.dec = self.sc_dec.fit_transform(self.dec)
-#        self.dec_test = self.sc_dec.transform(self.dec_test)
-        
-#        self.y_train = np.concatenate([self.ra, self.dec], axis=1)
-#        self.y_test = np.concatenate([self.ra_test, self.dec_test], axis=1)
-        
         self.X_train_real = self.X_train_real.astype("float32")
         self.X_train_imag = self.X_train_imag.astype("float32")
         self.y_train = self.y_train.astype("float32")
@@ -338,8 +260,8 @@ class GW_SkyNet(BaseModel):
             checkpoint = tf.train.Checkpoint(optimizer=opt, model=self.model)
             
             # load best model with min validation loss
-#            checkpoint.restore('/home/cchatterjee/GW-SkyNet/checkpoints/BNS_3_det_ResNet-34/All_SNR/tmp_0xf05553e/ckpt_all_SNR-1')
-#            self.encoder.load_weights("model/ResNet-34_BNS_encoder_3_det_all_SNR.hdf5")
+#            checkpoint.restore('/group/pmc005/cchatterjee/checkpoints/BNS_3_det_ResNet-34_adaptive/tmp_0x7730423b/ckpt-1')
+#            self.encoder.load_weights("model/encoder_models/ResNet-34_BNS_encoder_3_det_adaptive.hdf5")
 
         self.train(log_prob_, checkpoint)
     
@@ -375,15 +297,15 @@ class GW_SkyNet(BaseModel):
     def train(self, log_prob, checkpoint):
         """Compiles and trains the model"""
         
-        custom_checkpoint = CustomCheckpoint(filepath='model/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_all_SNR.hdf5',encoder=self.encoder)
+        custom_checkpoint = CustomCheckpoint(filepath='model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20.hdf5',encoder=self.encoder)
         
         self.model.compile(optimizer=tf.optimizers.Adam(lr=self.lr), loss=lambda _, log_prob: -log_prob)
         self.model.summary()
                                              
         # initialize checkpoints
-        dataset_name = "checkpoints/"+str(self.dataset)+"_"+str(self.n_det)+"_det_"+str(self.network)
+        dataset_name = "checkpoints/"+str(self.dataset)+"_"+str(self.n_det)+"_det_"+str(self.network)+"_adaptive"
         checkpoint_directory = "{}/tmp_{}".format(dataset_name, str(hex(random.getrandbits(32))))
-        checkpoint_prefix = os.path.join(checkpoint_directory, "ckpt_all_SNR")
+        checkpoint_prefix = os.path.join(checkpoint_directory, "ckpt")
 
         callbacks_list=[custom_checkpoint]  
 
@@ -418,7 +340,7 @@ class GW_SkyNet(BaseModel):
              
     def obtain_samples(self):
         """Obtain samples from trained distribution"""
-        self.encoder.load_weights('model/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_all_SNR.hdf5')
+        self.encoder.load_weights('model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20.hdf5')
         n_samples = 5000
         probs = []
         ra_preds = []
@@ -440,25 +362,11 @@ class GW_SkyNet(BaseModel):
     
             samples = self.trainable_distribution.sample((n_samples,),
               bijector_kwargs=self.make_bijector_kwargs(self.trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
-            
-#            samples = self.sc.inverse_transform(samples)
-##            self.y_test = self.sc.inverse_transform(self.y_test)
-            
+                 
             ra_samples_x = samples[:,0]
             ra_samples_y = samples[:,1]
             dec_samples = samples[:,2]
             
-#            index = np.zeros(n_samples, dtype = bool)
-            
-#            for i in range(n_samples):
-#                if((ra_samples_x[i] >= -1  and ra_samples_x[i] <= 1) and (ra_samples_y[i] >= -1 and ra_samples_y[i] <= 1)):
-                    
-#                    index[i] = True
-            
-#            ra_samples_x = ra_samples_x[index==True]
-#            ra_samples_y = ra_samples_y[index==True]
-#            dec_samples = dec_samples[index==True]
-
             ra_samples_x = np.where(ra_samples_x > 1, 1, ra_samples_x)
             ra_samples_x = np.where(ra_samples_x < -1, -1, ra_samples_x)
             
@@ -470,26 +378,6 @@ class GW_SkyNet(BaseModel):
             
             ra_samples = np.arctan2(ra_samples_y, ra_samples_x)
             ra_samples = ra_samples + np.pi
-            
-#            ra_samples = ra_samples[:,None]
-#            dec_samples = dec_samples[:,None]
-            
-##            ra_samples = self.mms_ra.inverse_transform(ra_samples)
-##            dec_samples = self.mms_dec.inverse_transform(dec_samples)
-            
-#            ra_samples = self.sc_ra.inverse_transform(ra_samples)
-#            dec_samples = self.sc_dec.inverse_transform(dec_samples)
-            
-#            ra_samples = np.squeeze(ra_samples)
-#            dec_samples = np.squeeze(dec_samples)
-            
-            # Removing NAN samples
-#            dec_samples = 1.0-2.0*dec_samples
-#            index = np.where(np.logical_or(dec_samples > 1, dec_samples < -1))
-#            ra_samples = np.delete(ra_samples, index)
-#            dec_samples = np.delete(dec_samples, index)
-            
-#            dec_samples = np.arcsin(dec_samples)
             
             eps = 1e-5
             
