@@ -56,7 +56,8 @@ CFG = {
         
         "BBH": {
                 "path_train": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_200k_injection_parameters",
-                "path_test_low_SNR": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_parameters_BBH_train_snr-10to20.hdf"
+                "path_train_low_SNR": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_parameters_BBH_train_snr-10to20.hdf",
+                "path_test_low_SNR": "/group/pmc005/cchatterjee/SNR_time_series_sample_files/default_GW170817_BBH_snr-10to20_test_parameters.hdf"
             
                 },
         
