@@ -30,6 +30,9 @@ from dataloader.dataloader import DataLoader
 from .wavenet import WaveNet
 from .resnet import ResNet
 from .resnet_34 import ResNet34
+from .resnet_34_2_det import ResNet_34_2_det
+from .lstm import LSTM_model
+from .cnn import CNN_model
 from utils.custom_checkpoint import CustomCheckpoint 
 
 # external
@@ -66,6 +69,11 @@ devices = tf.config.experimental.list_physical_devices(
 devices_names = [d.name.split('e:')[1] for d in devices]
 strategy = tf.distribute.MirroredStrategy(
            devices=devices_names[:n_gpus])
+#try:
+#    tf.config.experimental.set_memory_growth(devices[1], True)
+#except:
+  # Invalid device or cannot modify virtual devices once initialized.
+#    pass
 
 
 class GW_SkyNet(BaseModel):
@@ -131,6 +139,24 @@ class GW_SkyNet(BaseModel):
             self.pool_size = self.config.model.ResNet_34.pool_size
             self.prev_filters = self.config.model.ResNet_34.prev_filters
             
+        elif(self.network == 'ResNet-34_2_det'):
+            self.filters = self.config.model.ResNet_34_2_det.filters
+            self.kernel_size = self.config.model.ResNet_34_2_det.kernel_size
+            self.strides = self.config.model.ResNet_34_2_det.strides
+            self.pool_size = self.config.model.ResNet_34_2_det.pool_size
+            self.prev_filters = self.config.model.ResNet_34_2_det.prev_filters
+            
+        elif(self.network == 'LSTM'):
+            self.n_units = self.config.model.LSTM_model.n_units
+            self.rate = self.config.model.LSTM_model.rate
+            
+        elif(self.network == 'CNN'):
+            self.filters = self.config.model.CNN_model.filters
+            self.kernel_size = self.config.model.CNN_model.kernel_size
+            self.max_pool_size = self.config.model.CNN_model.max_pool_size
+            self.rate = self.config.model.CNN_model.dropout_rate
+            self.n_units = self.config.model.CNN_model.n_units
+
         self.num_bijectors = self.config.model.num_bijectors
         self.trainable_distribution = None
         self.MAF_hidden_units = self.config.model.MAF_hidden_units
@@ -140,24 +166,162 @@ class GW_SkyNet(BaseModel):
         
         d_loader = DataLoader(self.n_det, self.dataset, self.num_test, self.n_samples, self.min_snr)
         
-        self.X_train_real, self.X_train_imag = d_loader.load_train_data(self.config.data, self.snr_range_train)
-        self.X_test_real, self.X_test_imag = d_loader.load_test_data(self.config.data, self.test_real, self.snr_range_test)
+        if(self.n_det == 3):
+            self.X_train_real, self.X_train_imag = d_loader.load_train_3_det_data(self.config.data, self.snr_range_train)
+            self.X_test_real, self.X_test_imag = d_loader.load_test_3_det_data(self.config.data, self.test_real, self.snr_range_test)
                 
-        self.y_train = d_loader.load_train_parameters(self.config.parameters, self.snr_range_train)
-        self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test = d_loader.load_test_parameters(self.config.parameters, self.test_real, self.snr_range_test)
+            self.y_train = d_loader.load_train_3_det_parameters(self.config.parameters, self.snr_range_train)
+            self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test = d_loader.load_test_3_det_parameters(self.config.parameters, self.test_real, self.snr_range_test)
+            
+        elif(self.n_det == 2):
+            self.X_train_real, self.X_train_imag = d_loader.load_train_2_det_data(self.config.data, self.snr_range_train)
+            self.X_test_real, self.X_test_imag = d_loader.load_test_2_det_data(self.config.data, self.test_real, self.snr_range_test)
+                
+            self.y_train = d_loader.load_train_2_det_parameters(self.config.parameters, self.snr_range_train)
+            self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test = d_loader.load_test_2_det_parameters(self.config.parameters, self.test_real, self.snr_range_test)
         
         self._preprocess_data(d_loader)
         
     def _preprocess_data(self, d_loader):
         """ Removing < n_det samples and scaling RA and Dec values """
         
-        self.X_train_real, self.X_train_imag, self.y_train, self.ra_x, self.ra_y, self.ra, self.dec, self.h1_snr, self.l1_snr, self.v1_snr = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, self.snr_range_train, self.snr_range_test, data='train')
+        if(self.n_det == 3):
+            self.X_train_real, self.X_train_imag, self.y_train, self.ra_x, self.ra_y, self.ra, self.dec, self.h1_snr, self.l1_snr, self.v1_snr = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, self.snr_range_train, self.snr_range_test, data='train')
         
-        if(self.test_real == False):
-            self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, self.snr_range_train, self.snr_range_test, data='test')
+            if(self.test_real == False):
+                self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, self.snr_range_train, self.snr_range_test, data='test')
             
-        elif(self.test_real == True):
-            self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, self.snr_range_train, self.snr_range_test, data='real_event')
+            elif(self.test_real == True):
+                self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, self.snr_range_train, self.snr_range_test, data='real_event')
+                            
+            h1_real_train_scaled = []
+            l1_real_train_scaled = []
+            v1_real_train_scaled = []
+
+            h1_imag_train_scaled = []
+            l1_imag_train_scaled = []
+            v1_imag_train_scaled = []
+
+            for i in range(self.num_train):
+                
+                sc_h1_real = MinMaxScaler()
+                sc_h1_imag = MinMaxScaler()
+
+                h1_real_train_scaled.append(sc_h1_real.fit_transform(self.X_train_real[i,:,0].reshape(-1,1)))
+                l1_real_train_scaled.append(sc_h1_real.transform(self.X_train_real[i,:,1].reshape(-1,1)))
+                v1_real_train_scaled.append(sc_h1_real.transform(self.X_train_real[i,:,2].reshape(-1,1)))
+    
+                h1_imag_train_scaled.append(sc_h1_imag.fit_transform(self.X_train_imag[i,:,0].reshape(-1,1)))
+                l1_imag_train_scaled.append(sc_h1_imag.transform(self.X_train_imag[i,:,1].reshape(-1,1)))
+                v1_imag_train_scaled.append(sc_h1_imag.transform(self.X_train_imag[i,:,2].reshape(-1,1)))
+            
+                            
+            h1_real_train_scaled = np.array(h1_real_train_scaled)
+            h1_imag_train_scaled = np.array(h1_imag_train_scaled)
+
+            l1_real_train_scaled = np.array(l1_real_train_scaled)
+            l1_imag_train_scaled = np.array(l1_imag_train_scaled)
+            
+            v1_real_train_scaled = np.array(v1_real_train_scaled)
+            v1_imag_train_scaled = np.array(v1_imag_train_scaled)
+            
+            self.X_train_real = np.concatenate([h1_real_train_scaled, l1_real_train_scaled, v1_real_train_scaled], axis=-1)
+            self.X_train_imag = np.concatenate([h1_imag_train_scaled, l1_imag_train_scaled, v1_imag_train_scaled], axis=-1)
+
+            
+            h1_real_test_scaled = []
+            l1_real_test_scaled = []
+            v1_real_test_scaled = []
+
+            h1_imag_test_scaled = []
+            l1_imag_test_scaled = []
+            v1_imag_test_scaled = []
+
+            for i in range(self.num_test):
+                
+                sc_h1_real = MinMaxScaler()
+                sc_h1_imag = MinMaxScaler()
+
+                h1_real_test_scaled.append(sc_h1_real.fit_transform(self.X_test_real[i,:,0].reshape(-1,1)))
+                l1_real_test_scaled.append(sc_h1_real.transform(self.X_test_real[i,:,1].reshape(-1,1)))
+                v1_real_test_scaled.append(sc_h1_real.transform(self.X_test_real[i,:,2].reshape(-1,1)))
+    
+                h1_imag_test_scaled.append(sc_h1_imag.fit_transform(self.X_test_imag[i,:,0].reshape(-1,1)))
+                l1_imag_test_scaled.append(sc_h1_imag.transform(self.X_test_imag[i,:,1].reshape(-1,1)))
+                v1_imag_test_scaled.append(sc_h1_imag.transform(self.X_test_imag[i,:,2].reshape(-1,1)))
+                                       
+            h1_real_test_scaled = np.array(h1_real_test_scaled)
+            h1_imag_test_scaled = np.array(h1_imag_test_scaled)
+
+            l1_real_test_scaled = np.array(l1_real_test_scaled)
+            l1_imag_test_scaled = np.array(l1_imag_test_scaled)
+            
+            v1_real_test_scaled = np.array(v1_real_test_scaled)
+            v1_imag_test_scaled = np.array(v1_imag_test_scaled)
+            
+            self.X_test_real = np.concatenate([h1_real_test_scaled, l1_real_test_scaled, v1_real_test_scaled], axis=-1)
+            self.X_test_imag = np.concatenate([h1_imag_test_scaled, l1_imag_test_scaled, v1_imag_test_scaled], axis=-1)
+            
+        
+        elif(self.n_det == 2):
+            
+            self.X_train_real, self.X_train_imag, self.y_train, self.ra_x, self.ra_y, self.ra, self.dec, self.h1_snr, self.l1_snr = d_loader.load_2_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, self.snr_range_train, self.snr_range_test, data='train')
+            
+            self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test = d_loader.load_2_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, self.snr_range_train, self.snr_range_test, data='test')
+            
+            h1_real_train_scaled = []
+            l1_real_train_scaled = []
+
+            h1_imag_train_scaled = []
+            l1_imag_train_scaled = []
+
+            for i in range(len(self.X_train_real)):
+                
+                sc_h1_real = MinMaxScaler()
+                sc_h1_imag = MinMaxScaler()
+
+                h1_real_train_scaled.append(sc_h1_real.fit_transform(self.X_train_real[i,:,0].reshape(-1,1)))
+                l1_real_train_scaled.append(sc_h1_real.transform(self.X_train_real[i,:,1].reshape(-1,1)))
+    
+                h1_imag_train_scaled.append(sc_h1_imag.fit_transform(self.X_train_imag[i,:,0].reshape(-1,1)))
+                l1_imag_train_scaled.append(sc_h1_imag.transform(self.X_train_imag[i,:,1].reshape(-1,1)))
+            
+                            
+            h1_real_train_scaled = np.array(h1_real_train_scaled)
+            h1_imag_train_scaled = np.array(h1_imag_train_scaled)
+
+            l1_real_train_scaled = np.array(l1_real_train_scaled)
+            l1_imag_train_scaled = np.array(l1_imag_train_scaled)
+            
+            self.X_train_real = np.concatenate([h1_real_train_scaled, l1_real_train_scaled], axis=-1)
+            self.X_train_imag = np.concatenate([h1_imag_train_scaled, l1_imag_train_scaled], axis=-1)
+
+            h1_real_test_scaled = []
+            l1_real_test_scaled = []
+
+            h1_imag_test_scaled = []
+            l1_imag_test_scaled = []
+
+            for i in range(len(self.X_test_real)):
+                
+                sc_h1_real = MinMaxScaler()
+                sc_h1_imag = MinMaxScaler()
+
+                h1_real_test_scaled.append(sc_h1_real.fit_transform(self.X_test_real[i,:,0].reshape(-1,1)))
+                l1_real_test_scaled.append(sc_h1_real.transform(self.X_test_real[i,:,1].reshape(-1,1)))
+    
+                h1_imag_test_scaled.append(sc_h1_imag.fit_transform(self.X_test_imag[i,:,0].reshape(-1,1)))
+                l1_imag_test_scaled.append(sc_h1_imag.transform(self.X_test_imag[i,:,1].reshape(-1,1)))
+                                       
+            h1_real_test_scaled = np.array(h1_real_test_scaled)
+            h1_imag_test_scaled = np.array(h1_imag_test_scaled)
+
+            l1_real_test_scaled = np.array(l1_real_test_scaled)
+            l1_imag_test_scaled = np.array(l1_imag_test_scaled)
+            
+            self.X_test_real = np.concatenate([h1_real_test_scaled, l1_real_test_scaled], axis=-1)
+            self.X_test_imag = np.concatenate([h1_imag_test_scaled, l1_imag_test_scaled], axis=-1)
+            
             
         self.X_train_real = self.X_train_real.astype("float32")
         self.X_train_imag = self.X_train_imag.astype("float32")
@@ -223,6 +387,18 @@ class GW_SkyNet(BaseModel):
                 
                 self.encoded_features = ResNet34(input1, input2, self.filters, self.kernel_size, self.strides, self.pool_size, self.prev_filters, input_shapes=[self.n_samples, self.n_det]).construct_model()
                 
+            elif(self.network == 'ResNet-34_2_det'):
+                
+                self.encoded_features = ResNet_34_2_det(input1, input2, self.filters, self.kernel_size, self.strides, self.pool_size, self.prev_filters, input_shapes=[self.n_samples, self.n_det]).construct_model()
+                
+            elif(self.network == 'LSTM'):
+                
+                self.encoded_features = LSTM_model(input1, input2, self.n_units, self.rate, input_shapes=[None, self.n_det]).construct_model()
+                
+            elif(self.network == 'CNN'):
+                
+                self.encoded_features = CNN_model(input1, input2, self.filters, self.kernel_size, self.max_pool_size, self.rate, self.n_units, input_shapes=[self.n_samples, self.n_det]).construct_model()
+                
             x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float32)
         
             # Define a more expressive model
@@ -260,8 +436,9 @@ class GW_SkyNet(BaseModel):
             checkpoint = tf.train.Checkpoint(optimizer=opt, model=self.model)
             
             # load best model with min validation loss
-#            checkpoint.restore('/group/pmc005/cchatterjee/checkpoints/BNS_3_det_ResNet-34_adaptive/tmp_0x7730423b/ckpt-1')
-#            self.encoder.load_weights("model/encoder_models/ResNet-34_BNS_encoder_3_det_adaptive.hdf5")
+#            checkpoint.restore('/fred/oz016/Chayan/GW-SkyNet/checkpoints/BNS_2_det_ResNet_adaptive/tmp_0xf6404635/ckpt-1')
+#            checkpoint.restore('/home/cchatterjee/GW-SkyNet/checkpoints/BBH_2_det_ResNet-34_adaptive/tmp_0x280e68c2/ckpt-1')
+#            self.encoder.load_weights("/fred/oz016/Chayan/GW-SkyNet/model/encoder_models/ResNet_BNS_encoder_2_det_adaptive_snr-10to20.hdf5")
 
         self.train(log_prob_, checkpoint)
     
@@ -297,13 +474,13 @@ class GW_SkyNet(BaseModel):
     def train(self, log_prob, checkpoint):
         """Compiles and trains the model"""
         
-        custom_checkpoint = CustomCheckpoint(filepath='model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20.hdf5',encoder=self.encoder)
+        custom_checkpoint = CustomCheckpoint(filepath='/fred/oz016/Chayan/GW-SkyNet/model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20.hdf5',encoder=self.encoder)
         
         self.model.compile(optimizer=tf.optimizers.Adam(lr=self.lr), loss=lambda _, log_prob: -log_prob)
         self.model.summary()
                                              
         # initialize checkpoints
-        dataset_name = "checkpoints/"+str(self.dataset)+"_"+str(self.n_det)+"_det_"+str(self.network)+"_adaptive"
+        dataset_name = "/fred/oz016/Chayan/GW-SkyNet/checkpoints/"+str(self.dataset)+"_"+str(self.n_det)+"_det_"+str(self.network)+"_adaptive"
         checkpoint_directory = "{}/tmp_{}".format(dataset_name, str(hex(random.getrandbits(32))))
         checkpoint_prefix = os.path.join(checkpoint_directory, "ckpt")
 
@@ -340,7 +517,7 @@ class GW_SkyNet(BaseModel):
              
     def obtain_samples(self):
         """Obtain samples from trained distribution"""
-        self.encoder.load_weights('model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20.hdf5')
+        self.encoder.load_weights('/fred/oz016/Chayan/GW-SkyNet/model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20.hdf5')
         n_samples = 5000
         probs = []
         ra_preds = []
@@ -392,15 +569,29 @@ class GW_SkyNet(BaseModel):
         
         self.ra_test = self.ra_test + np.pi
         
-        f1 = h5py.File('evaluation/'+self.output_filename, 'w')
-        f1.create_dataset('Probabilities', data = probs)
-        f1.create_dataset('RA_samples', data = ra_preds)
-        f1.create_dataset('Dec_samples', data = dec_preds)
-        f1.create_dataset('RA_test', data = self.ra_test)
-        f1.create_dataset('Dec_test', data = self.dec_test)
-        f1.create_dataset('H1_SNR', data = self.h1_snr_test)
-        f1.create_dataset('L1_SNR', data = self.l1_snr_test)
-        f1.create_dataset('V1_SNR', data = self.v1_snr_test)
+        if(self.n_det == 3):
+            f1 = h5py.File('/fred/oz016/Chayan/GW-SkyNet/evaluation/'+self.output_filename, 'w')
+            f1.create_dataset('Probabilities', data = probs)
+            f1.create_dataset('RA_samples', data = ra_preds)
+            f1.create_dataset('Dec_samples', data = dec_preds)
+            f1.create_dataset('RA_test', data = self.ra_test)
+            f1.create_dataset('Dec_test', data = self.dec_test)
+            f1.create_dataset('H1_SNR', data = self.h1_snr_test)
+            f1.create_dataset('L1_SNR', data = self.l1_snr_test)
+            f1.create_dataset('V1_SNR', data = self.v1_snr_test)
 
-        f1.close()    
+            f1.close()    
+        
+        elif(self.n_det == 2):
+            
+            f1 = h5py.File('/fred/oz016/Chayan/GW-SkyNet/evaluation/'+self.output_filename, 'w')
+            f1.create_dataset('Probabilities', data = probs)
+            f1.create_dataset('RA_samples', data = ra_preds)
+            f1.create_dataset('Dec_samples', data = dec_preds)
+            f1.create_dataset('RA_test', data = self.ra_test)
+            f1.create_dataset('Dec_test', data = self.dec_test)
+            
+            f1.close()
+            
+            
         
