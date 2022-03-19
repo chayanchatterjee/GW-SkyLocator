@@ -118,6 +118,7 @@ class GW_SkyNet(BaseModel):
         self.val_split = self.config.train.validation_split
         self.output_filename = self.config.train.output_filename
         
+        # Reading parameters specific to a neural network model  
         if(self.network == 'WaveNet'):
             self.filters = self.config.model.WaveNet.filters
             self.kernel_size = self.config.model.WaveNet.kernel_size
@@ -162,7 +163,7 @@ class GW_SkyNet(BaseModel):
         self.MAF_hidden_units = self.config.model.MAF_hidden_units
         
     def load_data(self):
-        """Loads and Preprocess data """
+        """Loads real and imaginary parts of SNR time series data """
         
         d_loader = DataLoader(self.n_det, self.dataset, self.num_test, self.n_samples, self.min_snr)
         
@@ -183,11 +184,12 @@ class GW_SkyNet(BaseModel):
         self._preprocess_data(d_loader)
         
     def _preprocess_data(self, d_loader):
-        """ Removing < n_det samples and scaling RA and Dec values """
+        """ Removing samples with single detector SNR < self.min_snr. Normalizing amplitudes of SNR time series signals """
         
         if(self.n_det == 3):
             self.X_train_real, self.X_train_imag, self.y_train, self.ra_x, self.ra_y, self.ra, self.dec, self.h1_snr, self.l1_snr, self.v1_snr = d_loader.load_3_det_samples(self.config.parameters, self.X_train_real, self.X_train_imag, self.y_train, self.num_train, self.snr_range_train, self.snr_range_test, data='train')
-        
+            
+            # Testing on real events/injections
             if(self.test_real == False):
                 self.X_test_real, self.X_test_imag, self.y_test, self.ra_test_x, self.ra_test_y, self.ra_test, self.dec_test, self.h1_snr_test, self.l1_snr_test, self.v1_snr_test = d_loader.load_3_det_samples(self.config.parameters, self.X_test_real, self.X_test_imag, self.y_test, self.num_test, self.snr_range_train, self.snr_range_test, data='test')
             
@@ -335,7 +337,7 @@ class GW_SkyNet(BaseModel):
         """ Constructing the neural network encoder model
         
         Args:
-            model_type:     'wavenet', 'resnet', 'resnet-34'
+            model_type:     'wavenet', 'resnet', 'resnet-34', 'lstm', 'cnn'
             
             kwargs:         Depends on the model_type
             
@@ -362,6 +364,23 @@ class GW_SkyNet(BaseModel):
                             strides          Strides in main layer
                             prev_filters     Number of filters in previous main/Residual layer
                             input_shapes     Shapes of input signals
+                            
+               
+               'lstm'       input_dim_real   [None, n_detectors]
+                            input_dim_imag   [None, n_detectors]
+                            units            Number of neurons
+                            rate             Dropout rate
+                            
+               'cnn'        input_dim_real   [n_samples, n_detectors]
+                            input_dim_imag   [n_samples, n_detectors]
+                            filters          Numer of filters in CNN layer
+                            kernel_size      Size of filters in convolutional layer
+                            max_pool_size    Factor by which the size of feature maps are reduced
+                            rate             Dropout rate
+                            n_units          Number of neurons in fully connected layers
+            
+            returns:        A vector of encoded features extracted from the SNR times series data                
+        
                          
         """
 
@@ -401,11 +420,11 @@ class GW_SkyNet(BaseModel):
                 
             x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float32)
         
-            # Define a more expressive model
+            # Constructing the chain of Masked Autoregressive Flow bijectors
             bijectors = []
 
             for i in range(self.num_bijectors):
-#                bijectors.append(tfb.BatchNormalization(name='batch_normalization'+str(i)))
+#                bijectors.append(tfb.BatchNormalization(name='batch_normalization'+str(i))) 
                 masked_auto_i = self.make_masked_autoregressive_flow(i, hidden_units = self.MAF_hidden_units, activation = 'relu', conditional_event_shape=self.encoded_features.shape[-1])
                 
                 bijectors.append(masked_auto_i)
@@ -419,12 +438,13 @@ class GW_SkyNet(BaseModel):
 #                bijectors.append(tfb.BatchNormalization(name='batch_normalization'+str(i)))
     
                 bijectors.append(tfb.Permute(permutation = [2, 1, 0]))
-                flow_bijector = tfb.Chain(list(reversed(bijectors[:-1])))
+                flow_bijector = tfb.Chain(list(reversed(bijectors[:-1]))) # The chain of MAF bijectors is defined
             
             # Define the trainable distribution
             self.trainable_distribution = tfd.TransformedDistribution(distribution=tfd.MultivariateNormalDiag(loc=tf.zeros(3)),
                         bijector = flow_bijector)
-
+            
+            # Defining the log likelihood loss
             log_prob_ = self.trainable_distribution.log_prob(x_, bijector_kwargs=
                         self.make_bijector_kwargs(self.trainable_distribution.bijector, 
                                              {'maf.': {'conditional_input':self.encoded_features}}))
@@ -485,7 +505,8 @@ class GW_SkyNet(BaseModel):
         checkpoint_prefix = os.path.join(checkpoint_directory, "ckpt")
 
         callbacks_list=[custom_checkpoint]  
-
+        
+        # Fitting the model to the training data
         self.model.fit([self.X_train_real, self.X_train_imag, self.y_train], np.zeros((len(self.X_train_real), 0), dtype=np.float32),
               batch_size=self.batch_size,
               epochs=self.epochs,
@@ -495,7 +516,8 @@ class GW_SkyNet(BaseModel):
               verbose=True)
 
         checkpoint.save(file_prefix=checkpoint_prefix)
-        
+     
+    # Defining the function to calculate 2D Kernel Density Estimation for samples drawn from the trained distribution.      
     def kde2D(self, x, y, bandwidth, ra_pix, de_pix, xbins=150j, ybins=150j, **kwargs):
         """Build 2D kernel density estimate (KDE)."""
 
@@ -514,7 +536,7 @@ class GW_SkyNet(BaseModel):
         z = np.exp(kde_skl.score_samples(xy_sample))
         return z
 
-             
+    # Draw samples from the trained distribution         
     def obtain_samples(self):
         """Obtain samples from trained distribution"""
         self.encoder.load_weights('/fred/oz016/Chayan/GW-SkyNet/model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20.hdf5')
@@ -523,27 +545,31 @@ class GW_SkyNet(BaseModel):
         ra_preds = []
         dec_preds = []
         
+        # Defining fixed resolution of sky grids. Adaptive Mesh Refinement can be used for the same but is slower. Needs speed-up using GPU acceleration
         nside=32
         npix=hp.nside2npix(nside)
         theta,phi = hp.pixelfunc.pix2ang(nside,np.arange(npix))
 
-        # ra_pix and de_pix are co-ordinates in the skuy where I want to find the probabilities
+        # ra_pix and de_pix are co-ordinates in the sky where I want to find the probabilities
         ra_pix = phi
         de_pix = -theta + np.pi/2.0 
 
         for i in range(self.y_test.shape[0]):
             x_test_real = np.expand_dims(self.X_test_real[i],axis=0)
             x_test_imag = np.expand_dims(self.X_test_imag[i],axis=0)
-    
+            
+            # Predicting the encoded feature vector from the saved encoder model
             preds = self.encoder.predict([x_test_real,x_test_imag])
-    
+            
+            # Drawing samples from the saved trained distribution
             samples = self.trainable_distribution.sample((n_samples,),
               bijector_kwargs=self.make_bijector_kwargs(self.trainable_distribution.bijector, {'maf.': {'conditional_input':preds}}))
-                 
+            
             ra_samples_x = samples[:,0]
             ra_samples_y = samples[:,1]
             dec_samples = samples[:,2]
             
+            # Collecting only valid samples
             ra_samples_x = np.where(ra_samples_x > 1, 1, ra_samples_x)
             ra_samples_x = np.where(ra_samples_x < -1, -1, ra_samples_x)
             
@@ -553,6 +579,7 @@ class GW_SkyNet(BaseModel):
             dec_samples = np.where(dec_samples > np.pi/2, np.pi/2, dec_samples)
             dec_samples = np.where(dec_samples < -np.pi/2, -np.pi/2, dec_samples)
             
+            # Converting from (RA_x, RA_y, Dec) to (RA, Dec) co-ordinates 
             ra_samples = np.arctan2(ra_samples_y, ra_samples_x)
             ra_samples = ra_samples + np.pi
             
@@ -569,6 +596,7 @@ class GW_SkyNet(BaseModel):
         
         self.ra_test = self.ra_test + np.pi
         
+        # Saving the results
         if(self.n_det == 3):
             f1 = h5py.File('/fred/oz016/Chayan/GW-SkyNet/evaluation/'+self.output_filename, 'w')
             f1.create_dataset('Probabilities', data = probs)
