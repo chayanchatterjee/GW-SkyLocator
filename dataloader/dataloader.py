@@ -1020,7 +1020,7 @@ class DataLoader:
     
     #    @staticmethod
     def load_2_det_samples(self, data_config, X_real, X_imag, y, num_samples, snr_range_train, snr_range_test, data):
-        """Loads 3 det samples and parameters from path"""
+        """Loads 2 det samples and parameters from path"""
         if(self.dataset == 'BNS'):
             
             if((data == 'train') and (snr_range_train=='low')):
