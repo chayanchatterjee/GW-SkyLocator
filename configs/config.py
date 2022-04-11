@@ -105,7 +105,7 @@ CFG = {
     },
     "model": { # best: num_bijectors: 6, MAF_hidden_units: [256, 256, 256], epochs: 50.
             "num_bijectors": 6,
-            "MAF_hidden_units": [256,256,256],
+            "MAF_hidden_units": [2048, 2048, 2048, 2048, 2048],
         
             "WaveNet": {
                         "filters": 16,
