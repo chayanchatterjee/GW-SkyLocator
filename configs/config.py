@@ -11,10 +11,10 @@ CFG = {
             
                 "path_train_low_snr_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_NSBH_snr-10to20_train_4k_samples.hdf",
                 "path_train_low_snr_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_snr-10to20_NSBH_train_OzSTAR_train.hdf",
-                "path_train_low_snr_3": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_NSBH_2_det_snr-20to30_72k.hdf",
             
                 "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_NSBH_test.hdf",
-                "path_test_low_snr": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_snr-10to20_NSBH_test.hdf",
+                "path_test_low_snr": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_snr-10to20_NSBH_test.hdf",
+                "path_test_GW190917": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW190917_test_new_1.hdf",
                 },
         
         "BBH": {
@@ -22,27 +22,44 @@ CFG = {
                 
                 "path_train_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BBH_snr-10to20_train.hdf",
             
-                "path_test_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BBH_snr-10to20_test.hdf"
+                "path_test_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BBH_snr-10to20_test.hdf",
+                "path_test_GW170729":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170729_test_.hdf",
+                "path_test_GW170809":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170809_test_.hdf",
+                "path_test_GW170814":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170814_test_.hdf",
+                "path_test_GW170818":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170818_test_.hdf",
+            
                 },
         
         "BNS": {
+####################################################### 3 detectors train ######################################################
                 "path_train_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BNS_train_1-6.hdf",
                 "path_train_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BNS_train_7-24.hdf",
-                
+         # Real data       
+#                "path_train_real_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/GW170817_real_noise/default_snr_series_GW170817_realnoise_1.hdf",
+                "path_train_real_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/GW170817_real_noise/default_snr_series_GW170817_realnoise_final_Kaya.hdf",
+                "path_train_real_3": "/fred/oz016/Chayan/SNR_time_series_sample_files/GW170817_real_noise/default_snr_series_GW170817_realnoise_final_Pople.hdf",
+         
+         # Low SNR
                 "path_train_low_snr_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_BNS_snr-10to20_train_2k_samples.hdf",
                 "path_train_low_snr_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_BNS_snr-10to20_train_4k_samples.hdf",
                 "path_train_low_snr_3": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_BNS_snr-10to20_train_OzSTAR.hdf",
             
+       
+################################################### 2 detectors train ###########################################################            
+            # Low SNR
                 "path_train_2_det_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_BNS_2_det_snr-10to20_low_mass.hdf",
                 "path_train_2_det_low_SNR_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_2_det_snr_10-20_new.hdf",
             
+            # High SNR
                 "path_train_2_det_high_SNR_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_2_det_snr-30to40_train_1.hdf",
                 "path_train_2_det_high_SNR_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_2_det_snr-30to40_train_2.hdf",
-                
+             
+################################################## Test sets #################################################################### 
             
-                "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BNS_test.hdf",
                 "path_test_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BNS_snr_10-20_test.hdf",
-                "path_test_GW170817": "/group/pmc005/cchatterjee/Real_events/default_snr_series_GW170817_test_Gaussian_noise_1.hdf",
+            
+#                "path_test_GW170817": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_test_Gaussian_noise.hdf",
+                "path_test_GW170817": "/fred/oz016/Chayan/SNR_time_series_sample_files/real_snr_series_GW170817_test_1.hdf",
             
                 "path_test_2_det_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_snr_series_GW170817_2_det_snr_10-20_BNS_test.hdf",
                 
@@ -71,24 +88,32 @@ CFG = {
             
                 "path_train_low_snr_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_GW170817_parameters_NSBH_train_snr-10to20_4k_samples.hdf",
                 "path_train_low_snr_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_GW170817_snr-10to20_NSBH_train_OzSTAR_parameters.hdf",
-                "path_train_low_snr_3": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_NSBH_2_det_parameters_snr-20to30_72k.hdf",
-            
         
                 "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_GW170817_parameters_NSBH_test.hdf",
-                "path_test_low_snr": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_GW170817_snr-10to20_NSBH_test_parameters.hdf"
+                "path_test_low_snr": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_GW170817_snr-10to20_NSBH_test_parameters.hdf",
+                "path_test_GW190917": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW190917_parameters_test_new_1.hdf"
             
                 },
         
         "BBH": {
                 "path_train": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_200k_injection_parameters",
                 "path_train_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_parameters_BBH_train_snr-10to20.hdf",
-                "path_test_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_BBH_snr-10to20_test_parameters.hdf"
+                "path_test_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_BBH_snr-10to20_test_parameters.hdf",
+            
+                "path_test_GW170729":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170729_parameters_test.hdf",
+                "path_test_GW170809":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170809_parameters_test.hdf",
+                "path_test_GW170814":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170814_parameters_test.hdf",
+                "path_test_GW170818":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170818_parameters_test.hdf",
             
                 },
         
         "BNS": {
                 "path_train_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_parameters_BNS_train_1-6.hdf",
                 "path_train_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_parameters_BNS_train_7-24.hdf",
+            
+#                "path_train_real_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/GW170817_real_noise/default_GW170817_realnoise_parameters_1.hdf",
+                "path_train_real_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/GW170817_real_noise/default_GW170817_realnoise_parameters_final_Kaya.hdf",
+                "path_train_real_3": "/fred/oz016/Chayan/SNR_time_series_sample_files/GW170817_real_noise/default_GW170817_realnoise_parameters_final_Pople.hdf",
             
                 "path_train_2_det_high_SNR_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_2_det_snr-30to40_parameters_1.hdf",
                 "path_train_2_det_high_SNR_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_2_det_snr-30to40_parameters_2.hdf",
@@ -98,13 +123,19 @@ CFG = {
                 "path_train_low_snr_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_GW170817_parameters_BNS_train_snr-10to20_4k_samples.hdf",
                 "path_train_low_snr_3": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_GW170817_snr-10to20_train_OzSTAR_parameters.hdf",
             
+                "path_train_5_sec": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_GW170817_BNS_3_det_5_sec_parameters_train.hdf",
+                "path_train_10_sec": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_GW170817_BNS_3_det_10_sec_parameters_train.hdf",
+            
+                "path_train_2_det_5_sec_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_GW170817_BNS_2_det_5_sec_parameters_1_train.hdf",
+                "path_train_2_det_5_sec_2": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_GW170817_BNS_2_det_5_sec_parameters_2_train.hdf",
+                
+            
                 "path_train_2_det_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/Kaya_data/default_GW170817_BNS_2_det_snr-10to20_low_mass_parameters.hdf",
-                "path_train_2_det_low_SNR_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_2_det_parameters_BNS_train_snr-10to20_new.hdf",
-                            
+                "path_train_2_det_low_SNR_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_2_det_parameters_BNS_train_snr-10to20_new.hdf",                            
             
                 "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_parameters_BNS_test.hdf",
                 "path_test_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_parameters_test_snr_10-20_BNS_test.hdf",
-                "path_test_GW170817": "/group/pmc005/cchatterjee/Real_events/default_GW170817_parameters_test_Gaussian_noise_1.hdf",
+                "path_test_GW170817": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_Gaussian_noise_parameters_test.hdf",
             
                 "path_test_2_det_high_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_2_det_snr-30to40_parameters_test.hdf",
                 
@@ -117,20 +148,23 @@ CFG = {
                 },   
     },
     "train": {
-            "network": "ResNet-34_2_det",
-            "dataset": "NSBH",
-            "test_real": False,
-            "test_negative_latency": False,
-            "snr_range_train": 'low',
+            "network": "ResNet-34",
+            "dataset": "BNS",
+            "train_real": True,
+            "test_real": True,
+            "train_negative_latency": True,
+            "train_negative_latency_seconds": '5',
+            "test_negative_latency": True,
+            "snr_range_train": 'high',
             "snr_range_test": 'low',
-            "num_train": 272000, # BNS 2 det: 410000, NSBH 2 det: 272000, BBH 2 det: 280000
-            "num_test": 4000,
-            "min_snr": 4,
+            "num_train": 100000, # BBH 3 det: 100000, BNS 5 sec: 90000 
+            "num_test": 2000,
+            "min_snr": 1,
             "n_samples": 410,
             "batch_size": 2000,
-            "output_filename": 'Adaptive_NSIDE/Injection_run_NSBH_2_det_snr-10to20_new.hdf',
-            "num_detectors": 2,
-                "epochs": 55, # For BNS: 75, for NSBH: 100
+            "output_filename": 'Adaptive_NSIDE/Negative_latency/Injection_run_BNS_3_det_5_sec_test.hdf',
+            "num_detectors": 3,
+                "epochs": 50, # For BNS: 75, for NSBH: 100
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
@@ -139,7 +173,7 @@ CFG = {
     "model": { # best: num_bijectors: 6, MAF_hidden_units: [256, 256, 256], epochs: 50.
                # best 2 detectors: num_bijectors: 6, MAF_hidden_units: [2048, 2048, 2048, 2048, 2048], epochs=75
             "num_bijectors": 6,
-            "MAF_hidden_units": [1024, 1024, 1024, 1024, 1024],
+            "MAF_hidden_units": [256, 256, 256], # [256, 256, 256]
         
             "WaveNet": {
                         "filters": 16,
@@ -157,11 +191,13 @@ CFG = {
             
             },
             "ResNet_34": {
-                        "filters": 32,
+                        "filters_real": 16, #16
+                        "filters_imag": 16, #16
                         "kernel_size" : 7,
                         "strides": 2,
                         "pool_size": 3,
-                        "prev_filters": 32
+                        "prev_filters_real": 16, #16
+                        "prev_filters_imag": 16 #16
             
             },
             "ResNet_34_2_det": {
