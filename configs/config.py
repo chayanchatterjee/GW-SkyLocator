@@ -150,21 +150,21 @@ CFG = {
     "train": {
             "network": "ResNet-34",
             "dataset": "BNS",
-            "train_real": True,
-            "test_real": True,
-            "train_negative_latency": True,
+            "train_real": False,
+            "test_real": False,
+            "train_negative_latency": False,
             "train_negative_latency_seconds": '5',
-            "test_negative_latency": True,
+            "test_negative_latency": False,
             "snr_range_train": 'high',
             "snr_range_test": 'low',
             "num_train": 100000, # BBH 3 det: 100000, BNS 5 sec: 90000 
             "num_test": 2000,
-            "min_snr": 1,
+            "min_snr": 4,
             "n_samples": 410,
             "batch_size": 2000,
-            "output_filename": 'Adaptive_NSIDE/Negative_latency/Injection_run_BNS_3_det_5_sec_test.hdf',
+            "output_filename": 'Adaptive_NSIDE/BNS_3_det/Injection_run_BNS_3_det_snr-10to20.hdf',
             "num_detectors": 3,
-                "epochs": 50, # For BNS: 75, for NSBH: 100
+                "epochs": 50,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
