@@ -1322,7 +1322,7 @@ class DataLoader:
             
         #BBH
         elif((self.dataset == 'BBH') and (snr_range_test == 'low')):
-            f1 = h5py.File(data_config.BBH.path_train, 'r')
+            f1 = h5py.File(data_config.BBH.path_test, 'r')
             f2 = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
 
             h1_test_real_1 = abs(f1['h1_snr_series'][()])
@@ -1624,7 +1624,7 @@ class DataLoader:
             
         elif((self.dataset == 'BBH') and (snr_range_test == 'low')):
             
-            f_test_1 = h5py.File(data_config.BBH.path_train, 'r')
+            f_test_1 = h5py.File(data_config.BBH.path_test, 'r')
             f_test_2 = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
             
             ra_1 = 2.0*np.pi*f_test_1['ra'][()]
@@ -2400,7 +2400,7 @@ class DataLoader:
                 
             elif((data == 'test') and (snr_range_test == 'low')):
                 
-                f_test_1 = h5py.File(data_config.BBH.path_train, 'r')
+                f_test_1 = h5py.File(data_config.BBH.path_test, 'r')
                 f_test_2 = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
                              
                 h1_snr_1 = f_test_1['H1_SNR'][()]
