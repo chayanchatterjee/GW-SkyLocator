@@ -19,10 +19,11 @@ CFG = {
         
         "BBH": {
                 "path_train": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BBH_training_200k.hdf",
+                "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_BBH_test_parameters",
                 
                 "path_train_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BBH_snr-10to20_train.hdf",
-            
                 "path_test_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170817_BBH_snr-10to20_test.hdf",
+                
                 "path_test_GW170729":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170729_test_.hdf",
                 "path_test_GW170809":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170809_test_.hdf",
                 "path_test_GW170814":"/fred/oz016/Chayan/SNR_time_series_sample_files/default_snr_series_GW170814_test_.hdf",
@@ -97,6 +98,7 @@ CFG = {
         
         "BBH": {
                 "path_train": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_200k_injection_parameters",
+                "path_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_BBH_test_parameters",
                 "path_train_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_parameters_BBH_train_snr-10to20.hdf",
                 "path_test_low_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/default_GW170817_BBH_snr-10to20_test_parameters.hdf",
             
