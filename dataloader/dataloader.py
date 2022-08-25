@@ -1325,11 +1325,11 @@ class DataLoader:
             f1 = h5py.File(data_config.BBH.path_train, 'r')
             f2 = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
 
-            h1_test_real_1 = abs(f1['h1_snr_series'][0:2000][()])
-            l1_test_real_1 = abs(f1['l1_snr_series'][0:2000][()])
+            h1_test_real_1 = abs(f1['h1_snr_series'][()])
+            l1_test_real_1 = abs(f1['l1_snr_series'][()])
        
-            h1_test_imag_1 = abs(np.imag(f1['h1_snr_series'][0:2000][()]))
-            l1_test_imag_1 = abs(np.imag(f1['l1_snr_series'][0:2000][()]))
+            h1_test_imag_1 = abs(np.imag(f1['h1_snr_series'][()]))
+            l1_test_imag_1 = abs(np.imag(f1['l1_snr_series'][()]))
                         
             h1_test_real_2 = abs(f2['h1_snr_series'][()])
             l1_test_real_2 = abs(f2['l1_snr_series'][()])
@@ -1627,8 +1627,8 @@ class DataLoader:
             f_test_1 = h5py.File(data_config.BBH.path_train, 'r')
             f_test_2 = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
             
-            ra_1 = 2.0*np.pi*f_test_1['ra'][0:2000][()]
-            dec_1 = np.arcsin(1.0-2.0*f_test_1['dec'][0:2000][()])
+            ra_1 = 2.0*np.pi*f_test_1['ra'][()]
+            dec_1 = np.arcsin(1.0-2.0*f_test_1['dec'][()])
             
             ra_2 = 2.0*np.pi*f_test_2['ra'][()]
             dec_2 = np.arcsin(1.0-2.0*f_test_2['dec'][()])
@@ -2403,8 +2403,8 @@ class DataLoader:
                 f_test_1 = h5py.File(data_config.BBH.path_train, 'r')
                 f_test_2 = h5py.File(data_config.BBH.path_test_low_SNR, 'r')
                              
-                h1_snr_1 = f_test_1['H1_SNR'][0:2000][()]
-                l1_snr_1 = f_test_1['L1_SNR'][0:2000][()]
+                h1_snr_1 = f_test_1['H1_SNR'][()]
+                l1_snr_1 = f_test_1['L1_SNR'][()]
                 
                 h1_snr_2 = f_test_2['H1_SNR'][()]
                 l1_snr_2 = f_test_2['L1_SNR'][()]                 
@@ -2418,8 +2418,8 @@ class DataLoader:
                 network_snr = np.sqrt(h1_snr**2 + l1_snr**2)
                 net_snr = network_snr > 12
         
-                ra_1 = 2.0*np.pi*f_test_1['ra'][0:2000][()]
-                dec_1 = np.arcsin(1.0-2.0*f_test_1['dec'][0:2000][()])
+                ra_1 = 2.0*np.pi*f_test_1['ra'][()]
+                dec_1 = np.arcsin(1.0-2.0*f_test_1['dec'][()])
                 
                 ra_2 = 2.0*np.pi*f_test_2['ra'][()]
                 dec_2 = np.arcsin(1.0-2.0*f_test_2['dec'][()])
