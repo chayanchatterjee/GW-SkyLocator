@@ -5664,13 +5664,13 @@ class DataLoader:
                 
                     f_test = h5py.File(data_config.BBH.path_test_design_Bayestar_test, 'r')
                    
-                    h1_test_real = abs(f_test['h1_snr_series'][()])
-                    l1_test_real = abs(f_test['l1_snr_series'][()])
-                    v1_test_real = abs(f_test['v1_snr_series'][()])
+                    h1_test_real = abs(f_test['h1_snr_series'][0:10][()])
+                    l1_test_real = abs(f_test['l1_snr_series'][0:10][()])
+                    v1_test_real = abs(f_test['v1_snr_series'][0:10][()])
         
-                    h1_test_imag = np.imag((f_test['h1_snr_series'][()]))
-                    l1_test_imag = np.imag((f_test['l1_snr_series'][()]))
-                    v1_test_imag = np.imag((f_test['v1_snr_series'][()]))
+                    h1_test_imag = np.imag((f_test['h1_snr_series'][0:10][()]))
+                    l1_test_imag = np.imag((f_test['l1_snr_series'][0:10][()]))
+                    v1_test_imag = np.imag((f_test['v1_snr_series'][0:10][()]))
                                       
                     f_test.close()
                     
@@ -6908,8 +6908,8 @@ class DataLoader:
         
                     f_test = h5py.File(data_config.BBH.path_test_design_Bayestar_test, 'r')
                    
-                    data_ra = f_test['ra'][()]
-                    data_dec = f_test['dec'][()]
+                    data_ra = f_test['ra'][0:10][()]
+                    data_dec = f_test['dec'][0:10][()]
         
                     ra_test = 2.0*np.pi*data_ra
                     ra_test = ra_test - np.pi
@@ -6918,10 +6918,10 @@ class DataLoader:
         
                     dec_test = np.arcsin(1.0 - 2.0*data_dec)
             
-                    mass_1 = f_test['mass1'][()]
-                    mass_2 = f_test['mass2'][()]
-                    spin_1 = f_test['spin1z'][()]
-                    spin_2 = f_test['spin2z'][()]
+                    mass_1 = f_test['mass1'][0:10][()]
+                    mass_2 = f_test['mass2'][0:10][()]
+                    spin_1 = f_test['spin1z'][0:10][()]
+                    spin_2 = f_test['spin2z'][0:10][()]
 #                    inc = f_test['inclination'][()]
 #                    inj_snr = f_test['Injection_SNR'][()]
 
