@@ -7,23 +7,29 @@ import re
 tfd = tfp.distributions
 tfb = tfp.bijectors
 
-class ResidualUnit(tf.keras.layers.Layer):
-    def __init__(self, filters, strides=1, activation='relu',**kwargs):
+class ResidualUnit50(tf.keras.layers.Layer):
+    def __init__(self, filters, stage, strides, activation='relu',**kwargs):
         super().__init__(**kwargs)
         self.filters = filters
+        self.stage = stage
+        self.strides = strides
         self.activation = tf.keras.activations.get(activation)
         self.main_layers = [
-            tf.keras.layers.Conv2D(self.filters, 3, strides=strides, padding='same', use_bias=False),
+            tf.keras.layers.Conv1D(self.filters, 1, strides=self.strides, padding='valid', use_bias=False),
             tf.keras.layers.BatchNormalization(),
             self.activation,
-            tf.keras.layers.Conv2D(self.filters, 3, strides=1, padding='same', use_bias=False),
+            tf.keras.layers.Conv1D(self.filters, 3, strides=1, padding='same', use_bias=False),
+            tf.keras.layers.BatchNormalization(),
+            self.activation,
+            tf.keras.layers.Conv1D(4*self.filters, 1, strides=1, padding='valid', use_bias=False),
             tf.keras.layers.BatchNormalization()]
         
         self.skip_layers = []
-        if (strides > 1):
+        if ((self.strides > 1) or (self.stage == 2)):
             self.skip_layers = [
-                tf.keras.layers.Conv2D(self.filters, 1, strides=strides, padding='same', use_bias=False),
+                tf.keras.layers.Conv1D(4*self.filters, 1, strides=self.strides, padding='valid', use_bias=False),
                 tf.keras.layers.BatchNormalization()]
+            
             
     def call(self, inputs):
         Z = inputs

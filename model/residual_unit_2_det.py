@@ -13,16 +13,16 @@ class ResidualUnit(tf.keras.layers.Layer):
         self.filters = filters
         self.activation = tf.keras.activations.get(activation)
         self.main_layers = [
-            tf.keras.layers.Conv2D(self.filters, 3, strides=strides, padding='same', use_bias=False),
+            tf.keras.layers.Conv1D(self.filters, 3, strides=strides, padding='same', use_bias=False),
             tf.keras.layers.BatchNormalization(),
             self.activation,
-            tf.keras.layers.Conv2D(self.filters, 3, strides=1, padding='same', use_bias=False),
+            tf.keras.layers.Conv1D(self.filters, 3, strides=1, padding='same', use_bias=False),
             tf.keras.layers.BatchNormalization()]
         
         self.skip_layers = []
         if (strides > 1):
             self.skip_layers = [
-                tf.keras.layers.Conv2D(self.filters, 1, strides=strides, padding='same', use_bias=False),
+                tf.keras.layers.Conv1D(self.filters, 1, strides=strides, padding='same', use_bias=False),
                 tf.keras.layers.BatchNormalization()]
             
     def call(self, inputs):

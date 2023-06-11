@@ -7,9 +7,9 @@ import re
 tfd = tfp.distributions
 tfb = tfp.bijectors
 
-from .residual_unit import ResidualUnit
+from .residual_unit_50 import ResidualUnit50
 
-class ResNet34(ResidualUnit):
+class ResNet50(ResidualUnit50):
     def __init__(self, input1, input2, filters_real, kernel_size, strides, pool_size, prev_filters_real, input_shapes1, input_shapes2):
         
         self.input1 = input1
@@ -28,32 +28,32 @@ class ResNet34(ResidualUnit):
         
         # Real part
         
-        X = tf.keras.layers.Conv2D(self.filters_real, self.kernel_size, strides=self.strides, input_shape=self.input_shapes1,
+        X = tf.keras.layers.Conv1D(self.filters_real, self.kernel_size, strides=self.strides, input_shape=self.input_shapes1,
                                    padding='same', use_bias=False)(self.input1)
         X = tf.keras.layers.BatchNormalization()(X)
         X = tf.keras.layers.Activation('relu')(X)
-        X = tf.keras.layers.MaxPool2D(pool_size=self.pool_size, padding='same')(X)
+        X = tf.keras.layers.MaxPool1D(pool_size=self.pool_size, strides=self.strides, padding='same')(X)
         
+        stage = 2
         for filters in [self.filters_real] * 3 + [2*self.filters_real] * 4 + [4*self.filters_real] * 6 + [8*self.filters_real] * 3:
+            
             strides = 1 if filters == self.prev_filters_real else 2
-            X = ResidualUnit(filters, strides=strides)(X)
+            X = ResidualUnit50(filters, stage, strides=strides)(X)
             self.prev_filters_real = filters
-        
-        resnet1 = tf.keras.layers.GlobalAveragePooling2D()(X)
-        flat1 = tf.keras.layers.Flatten()(resnet1) 
-    
-        
-#        dense_1 = tf.keras.layers.Dense(units=64, activation='relu')(flat1)
-#        dense_1 = tf.keras.layers.BatchNormalization()(dense_1)
-#        dense_2 = tf.keras.layers.Dense(units=64, activation='relu')(dense_1)
-#        dense_3 = tf.keras.layers.Dense(units=32, activation='relu')(dense_2)
-#        dense_1 = tf.keras.layers.BatchNormalization()(dense_1)
-#        dense_4 = tf.keras.layers.Dense(units=32, activation='relu')(dense_3)
+            stage = stage+1
 
-##        dense_real_3 = tf.keras.layers.Dense(units=128, activation='relu')(dense_real_2)
-##        dense_real_4 = tf.keras.layers.Dense(units=32, activation='relu')(dense_real_3)
-##        dense_real_5 = tf.keras.layers.Dense(units=16, activation='relu')(dense_real_4)
-##        flat1 = tf.keras.layers.Flatten()(X)
+#        flat1 = tf.keras.layers.Flatten()(X) 
+        
+        resnet1 = tf.keras.layers.GlobalAvgPool1D()(X)
+ #       flat1 = tf.keras.layers.Flatten()(resnet1) 
+        
+        dense_1 = tf.keras.layers.Dense(units=128, activation='relu')(resnet1)
+        dense_1 = tf.keras.layers.BatchNormalization()(dense_1)
+        dense_2 = tf.keras.layers.Dense(units=64, activation='relu')(dense_1)
+#        dense_real_3 = tf.keras.layers.Dense(units=128, activation='relu')(dense_real_2)
+#        dense_real_4 = tf.keras.layers.Dense(units=32, activation='relu')(dense_real_3)
+#        dense_real_5 = tf.keras.layers.Dense(units=16, activation='relu')(dense_real_4)
+#        flat1 = tf.keras.layers.Flatten()(X)
         
         
         # Imaginary part
@@ -86,27 +86,22 @@ class ResNet34(ResidualUnit):
 
         # Intrinsic parameters
     
-        dense_real_1 = tf.keras.layers.Dense(units=32, activation='relu')(self.input2)
+        dense_real_1 = tf.keras.layers.Dense(units=64, activation='relu')(self.input2)
         dense_real_1 = tf.keras.layers.BatchNormalization()(dense_real_1)
-        dense_real_2 = tf.keras.layers.Dense(units=32, activation='relu')(dense_real_1)
+        dense_real_2 = tf.keras.layers.Dense(units=64, activation='relu')(dense_real_1)
         dense_real_2 = tf.keras.layers.BatchNormalization()(dense_real_2)
-        dense_real_3 = tf.keras.layers.Dense(units=32, activation='relu')(dense_real_2)
-#        dense_real_3 = tf.keras.layers.BatchNormalization()(dense_real_3)
-#        dropout1 = tf.keras.layers.Dropout(rate=0.2)(dense_real_3)
-#        dense_real_4 = tf.keras.layers.Dense(units=32, activation='relu')(dense_real_3)
-#        dense_real_4 = tf.keras.layers.BatchNormalization()(dense_real_4)
-#        dense_real_5 = tf.keras.layers.Dense(units=32, activation='relu')(dense_real_4)
+        dense_real_3 = tf.keras.layers.Dense(units=64, activation='relu')(dense_real_2)
+        dense_real_3 = tf.keras.layers.BatchNormalization()(dense_real_3)
+#        dropout1 = tf.keras.layers.Dropout(rate=0.1)(dense_real_3)
+        dense_real_4 = tf.keras.layers.Dense(units=64, activation='relu')(dense_real_3)
+        dense_real_4 = tf.keras.layers.BatchNormalization()(dense_real_4)
+        dense_real_5 = tf.keras.layers.Dense(units=64, activation='relu')(dense_real_4)
         
         # Merge features
         
-        merge = tf.keras.layers.concatenate([10*flat1, dense_real_3], axis=-1)
+        merge = tf.keras.layers.concatenate([dense_2, dense_real_5], axis=-1)
         
-#        dense = tf.keras.layers.Dense(units=128, activation='relu')(merge)
         
-        sigmoid = tf.keras.layers.Activation('sigmoid')(merge)  
-        layer_norm = tf.keras.layers.LayerNormalization()(sigmoid)
-        
-        return layer_norm
-    
+        return merge
         
     
