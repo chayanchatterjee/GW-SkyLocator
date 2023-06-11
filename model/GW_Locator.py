@@ -501,7 +501,7 @@ class GW_Locator(BaseModel):
 #            self.encoder.load_weights("/fred/oz016/Chayan/GW-SkyNet_pre-merger/model/encoder_models/ResNet-34_BBH_encoder_3_det_adaptive_snr-10to20_test.hdf5")
 
 
-            custom_checkpoint = CustomCheckpoint(filepath='/fred/oz016/Chayan/GW-SkyLocators/model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20_test.hdf5',encoder=self.encoder)
+            custom_checkpoint = CustomCheckpoint(filepath='/fred/oz016/Chayan/GW-SkyLocator/model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20_test.hdf5',encoder=self.encoder)
         
             trainingStopCallback = haltCallback(self.model)
         
@@ -882,7 +882,7 @@ class GW_Locator(BaseModel):
     #            hpmap, probability = self.as_healpix(zz,kde)
             
                 # Post-merger injection run 
-                io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyLocator/evaluation/skymaps/CPU/BBH/skymaps/Gaussian_KDE/Test_new_BN_test_GPU_'+str(i)+'.fits', hpmap, nest=True)
+                io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyLocator/evaluation/skymaps/BBH/skymaps/Gaussian_KDE/Test_new_BN_test_GPU_'+str(i)+'.fits', hpmap, nest=True)
 
                 # Pre-merger injection run
     #            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyNet_pre-merger/evaluation/skymaps/CPU/Pre-merger/New/45_secs/Test_3_bij_50_epochs_lr_schedule_'+str(i)+'.fits', hpmap, nest=True)
@@ -999,7 +999,7 @@ class GW_Locator(BaseModel):
     #            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyNet_pre-merger/evaluation/skymaps/CPU/NSBH/skymaps/Gaussian_KDE/Test_3_bij_lr_schedule_'+str(i)+'.fits', hpmap, nest=True)
 
     #            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyNet_pre-merger/evaluation/skymaps/CPU/Pre-merger/New/15_secs/Test_3_bij_50_epochs_prob_density_'+str(i)+'.fits', hpmap, nest=True)
-            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyLocator/evaluation/skymaps/CPU/Real_events/Test_3_bij_50_epochs_BNS_3_det_prob_density_'+str(i)+'.fits', hpmap, nest=True)
+            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyLocator/evaluation/skymaps/Real_events/Test_3_bij_50_epochs_BNS_3_det_prob_density_'+str(i)+'.fits', hpmap, nest=True)
     
             probabilities.append(probability)
                  
