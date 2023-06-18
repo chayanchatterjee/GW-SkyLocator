@@ -16,6 +16,8 @@ To train the model, simply run the ```main.py``` file:
 ```
 python main.py
 ```
-The hyperparameters of the network and the training processes can be set in the file: ```configs/config.py```
+The hyperparameters of the network and the training processes can be set in the file: ```configs/config.py```.
+The path to the training and test set files, saved in the OzStar Supercomputing Cluster, can be found in ```dataloader/dataloader.py```.
+Codes for plotting skymaps and generating P-P plots and histograms of contour areas can be found under ```evaluation```.
 
 
