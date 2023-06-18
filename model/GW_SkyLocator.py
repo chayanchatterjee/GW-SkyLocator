@@ -662,8 +662,6 @@ class GW_SkyLocator(BaseModel):
                 intrinsic_test = np.expand_dims(self.intrinsic_test[i], axis=0)
             
                 gps_time_test = self.gps_time[i]
-  
-                starttime = timeit.default_timer()
             
                 self.encoder_features = self.encoder([x_test, intrinsic_test])
                            
@@ -717,8 +715,6 @@ class GW_SkyLocator(BaseModel):
                        
                 # Obtain the multi-order FITS files using adaptive refinement.
                 hpmap, probability = self.as_healpix()
-            
-                print(timeit.default_timer() - starttime)
                 
                 # Save FITS files:
             
