@@ -437,14 +437,14 @@ class GW_SkyLocator(BaseModel):
             self.model.summary()
                                              
             # Settings for Reduce Learning Rate callback
-            reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.85, patience=15)
+            reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.90, patience=30)
             lr_scheduler = tf.keras.callbacks.LearningRateScheduler(self.scheduler)
             
             # Defining Early Stoppoing callback
             early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=30)
 
             # Initializing Callbacks list
-            callbacks_list=[custom_checkpoint, early_stopping]  
+            callbacks_list=[custom_checkpoint, reduce_lr]  
 
             # Fitting the model
             model_history = self.model.fit([self.X_train, self.intrinsic_train, self.y_train], np.zeros((len(self.X_train_real)), dtype=np.float32),
