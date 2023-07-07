@@ -604,7 +604,7 @@ CFG = {
             "output_filename": 'Adaptive_NSIDE/Negative_latency/Injection_run_BNS_3_det_O4_PSD_test.hdf',
             "checkpoint_restore": False,
             "num_detectors": 3,
-                "epochs": 5,
+                "epochs": 125,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
@@ -672,6 +672,6 @@ CFG = {
                         "n_units": 128
             
             },
-            "learning_rate": 1e-4 
+            "learning_rate": 2e-4 
     }
 }
