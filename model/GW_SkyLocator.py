@@ -245,7 +245,7 @@ class GW_SkyLocator(BaseModel):
         # Calling standardize function for SNR timeseries data
 
         self.X_train_real, self.X_test_real = self.standardize_data(self.X_train_real, self.X_test_real)
-        self.X_train_imag, self.X_test_imag = self.standardize_data(self.X_train_imag, self.X_test_imag)
+#        self.X_train_imag, self.X_test_imag = self.standardize_data(self.X_train_imag, self.X_test_imag)
         
         # Reshaping data for 2D CNN
             
@@ -259,8 +259,8 @@ class GW_SkyLocator(BaseModel):
         
         # Scaling intrinsic parameters and labels (RA and Dec).
         
-        self.y_train, self.y_test, self.mean, self.std = self.scale_labels(self.y_train, self.y_test)
-        self.intrinsic_train, self.intrinsic_test, self.intrinsic_mean, self.intrinsic_std = self.scale_labels(self.intrinsic_train, self.intrinsic_test)
+        self.y_train, self.y_test, self.mean, self.std = self.scale_data(self.y_train, self.y_test)
+        self.intrinsic_train, self.intrinsic_test, self.intrinsic_mean, self.intrinsic_std = self.scale_data(self.intrinsic_train, self.intrinsic_test)
             
         
         # Converting to float32
