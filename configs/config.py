@@ -147,7 +147,7 @@ CFG = {
                 "path_test_design_high_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_snr_series_GW170817_BNS_3_det_design_0_sec_test_high_SNR.hdf",
                 "path_test_design_Bayestar_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_snr_series_GW170817_BNS_3_det_design_0_sec_test_Bayestar_1.hdf",
             
-                "path_test_Bayestar_post_merger": "/fred/oz016/Chayan/SNR_time_series_sample_files/Bayestar_post-merger_test/Bayestar_test_snr_time_series_2.hdf",
+                "path_test_Bayestar_post_merger": "/fred/oz016/Chayan/SNR_time_series_sample_files/Bayestar_post-merger_test/Bayestar_test_snr_time_series_BNS_coinc.hdf",
             
             # 10 secs
                 "path_train_design_10_sec_1": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_snr_series_GW170817_BNS_3_det_design_10_sec.hdf",
@@ -450,7 +450,7 @@ CFG = {
                 "path_test_design_high_SNR": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_GW170817_BNS_3_det_design_0_sec_parameters_test_high_SNR.hdf",
                 "path_test_design_Bayestar_test": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_GW170817_BNS_3_det_design_0_sec_parameters_test_Bayestar.hdf",
             
-                "path_test_Bayestar_post_merger": "/fred/oz016/Chayan/SNR_time_series_sample_files/Bayestar_post-merger_test/Bayestar_test_parameters_2.hdf",
+                "path_test_Bayestar_post_merger": "/fred/oz016/Chayan/SNR_time_series_sample_files/Bayestar_post-merger_test/Bayestar_test_BNS_parameters_coinc.hdf",
             
 
                 "path_test_design": "/fred/oz016/Chayan/SNR_time_series_sample_files/Negative_latency/default_GW170817_BNS_3_det_design_0_sec_parameters_40k_test_new.hdf",
@@ -586,7 +586,7 @@ CFG = {
     },
     "train": {
             "network": "ResNet-34",
-            "dataset": "BBH",
+            "dataset": "BNS",
             "train_real": False,
             "test_real": False,
             "PSD": 'design', # 'O4'/'aLIGO/design'
@@ -604,7 +604,7 @@ CFG = {
             "output_filename": 'Adaptive_NSIDE/Negative_latency/Injection_run_BNS_3_det_O4_PSD_test.hdf',
             "checkpoint_restore": False,
             "num_detectors": 3,
-                "epochs": 5,
+                "epochs": 125,
             "validation_split": 0.05,
             "optimizer": {
                 "type": "adam"
@@ -612,7 +612,7 @@ CFG = {
     },
     "model": { 
         
-            "num_bijectors": 12,
+            "num_bijectors": 3,
             "MAF_hidden_units": [256, 256, 256, 256, 256],
         
             "WaveNet": {
