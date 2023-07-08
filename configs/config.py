@@ -612,7 +612,11 @@ CFG = {
     },
     "model": { 
         
+<<<<<<< HEAD
             "num_bijectors": 3,
+=======
+            "num_bijectors": 5,
+>>>>>>> 622894af2f4b932c480260d56c4f0e468d3a59fa
             "MAF_hidden_units": [256, 256, 256, 256, 256],
         
             "WaveNet": {
@@ -672,6 +676,6 @@ CFG = {
                         "n_units": 128
             
             },
-            "learning_rate": 1e-4 
+            "learning_rate": 2e-4 
     }
 }

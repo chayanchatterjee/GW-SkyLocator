@@ -437,14 +437,14 @@ class GW_SkyLocator(BaseModel):
             self.model.summary()
                                              
             # Settings for Reduce Learning Rate callback
-            reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.85, patience=15)
+            reduce_lr = tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.90, patience=30)
             lr_scheduler = tf.keras.callbacks.LearningRateScheduler(self.scheduler)
             
             # Defining Early Stoppoing callback
             early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=30)
 
             # Initializing Callbacks list
-            callbacks_list=[custom_checkpoint, early_stopping]  
+            callbacks_list=[custom_checkpoint, reduce_lr]  
 
             # Fitting the model
             model_history = self.model.fit([self.X_train, self.intrinsic_train, self.y_train], np.zeros((len(self.X_train_real)), dtype=np.float32),
@@ -662,8 +662,6 @@ class GW_SkyLocator(BaseModel):
                 intrinsic_test = np.expand_dims(self.intrinsic_test[i], axis=0)
             
                 gps_time_test = self.gps_time[i]
-  
-                starttime = timeit.default_timer()
             
                 self.encoder_features = self.encoder([x_test, intrinsic_test])
                            
@@ -717,8 +715,6 @@ class GW_SkyLocator(BaseModel):
                        
                 # Obtain the multi-order FITS files using adaptive refinement.
                 hpmap, probability = self.as_healpix()
-            
-                print(timeit.default_timer() - starttime)
                 
                 # Save FITS files:
             
