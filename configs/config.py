@@ -611,16 +611,9 @@ CFG = {
             },
     },
     "model": { 
-        
-<<<<<<< HEAD
-<<<<<<< HEAD
             "num_bijectors": 3,
-=======
             "num_bijectors": 5,
->>>>>>> 622894af2f4b932c480260d56c4f0e468d3a59fa
-=======
             "num_bijectors": 3,
->>>>>>> caff27b16610787d7b03e285f649f7ab26e8cdd7
             "MAF_hidden_units": [256, 256, 256, 256, 256],
         
             "WaveNet": {
