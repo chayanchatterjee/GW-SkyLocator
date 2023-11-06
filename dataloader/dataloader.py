@@ -18,21 +18,21 @@ class DataLoader:
             f3 = h5py.File(data_config.data.NSBH.path_train_3, 'r')
             f4 = h5py.File(data_config.data.NSBH.path_train_4, 'r')
             
-            h1_real_52k = abs(f1['h1_snr_series'][()] )
-            l1_real_52k = abs(f1['l1_snr_series'][()] )
-            v1_real_52k = abs(f1['v1_snr_series'][()] )
+            h1_real_52k = np.real(f1['h1_snr_series'][()] )
+            l1_real_52k = np.real(f1['l1_snr_series'][()] )
+            v1_real_52k = np.real(f1['v1_snr_series'][()] )
         
-            h1_real_30k = abs(f2['h1_snr_series'][()] )
-            l1_real_30k = abs(f2['l1_snr_series'][()] )
-            v1_real_30k = abs(f2['v1_snr_series'][()] )
+            h1_real_30k = np.real(f2['h1_snr_series'][()] )
+            l1_real_30k = np.real(f2['l1_snr_series'][()] )
+            v1_real_30k = np.real(f2['v1_snr_series'][()] )
             
-            h1_real_12k = abs(f3['h1_snr_series'][()] )
-            l1_real_12k = abs(f3['l1_snr_series'][()] )
-            v1_real_12k = abs(f3['v1_snr_series'][()] )
+            h1_real_12k = np.real(f3['h1_snr_series'][()] )
+            l1_real_12k = np.real(f3['l1_snr_series'][()] )
+            v1_real_12k = np.real(f3['v1_snr_series'][()] )
         
-            h1_real_6k = abs(f4['h1_snr_series'][()] )
-            l1_real_6k = abs(f4['l1_snr_series'][()] )
-            v1_real_6k = abs(f4['v1_snr_series'][()] )
+            h1_real_6k = np.real(f4['h1_snr_series'][()] )
+            l1_real_6k = np.real(f4['l1_snr_series'][()] )
+            v1_real_6k = np.real(f4['v1_snr_series'][()] )
             
             h1_real = np.concatenate([h1_real_52k, h1_real_30k, h1_real_12k, h1_real_6k], axis=0)
             l1_real = np.concatenate([l1_real_52k, l1_real_30k, l1_real_12k, l1_real_6k], axis=0)
@@ -68,17 +68,17 @@ class DataLoader:
             f1 = h5py.File(data_config.data.NSBH.path_train_low_snr_1, 'r')
             f2 = h5py.File(data_config.data.NSBH.path_train_low_snr_2, 'r')
 
-            h1_real_60k = abs(f1['h1_snr_series'][0:60000][()] )
-            l1_real_60k = abs(f1['l1_snr_series'][0:60000][()] )
-            v1_real_60k = abs(f1['v1_snr_series'][0:60000][()] )
+            h1_real_60k = np.real(f1['h1_snr_series'][0:60000][()] )
+            l1_real_60k = np.real(f1['l1_snr_series'][0:60000][()] )
+            v1_real_60k = np.real(f1['v1_snr_series'][0:60000][()] )
 
             h1_imag_60k = np.imag((f1['h1_snr_series'][0:60000][()]))
             l1_imag_60k = np.imag((f1['l1_snr_series'][0:60000][()]))
             v1_imag_60k = np.imag((f1['v1_snr_series'][0:60000][()]))
             
-            h1_real_40k = abs(f2['h1_snr_series'][0:40000][()] )
-            l1_real_40k = abs(f2['l1_snr_series'][0:40000][()] )
-            v1_real_40k = abs(f2['v1_snr_series'][0:40000][()] )
+            h1_real_40k = np.real(f2['h1_snr_series'][0:40000][()] )
+            l1_real_40k = np.real(f2['l1_snr_series'][0:40000][()] )
+            v1_real_40k = np.real(f2['v1_snr_series'][0:40000][()] )
     
             h1_imag_40k = np.imag((f2['h1_snr_series'][0:40000][()]))
             l1_imag_40k = np.imag((f2['l1_snr_series'][0:40000][()]))
@@ -111,21 +111,21 @@ class DataLoader:
             f10 = h5py.File(data_config.data.NSBH.path_train_low_snr_1, 'r')
             f11 = h5py.File(data_config.data.NSBH.path_train_low_snr_2, 'r')
             
-            h1_real_52k = abs(f6['h1_snr_series'][()] )
-            l1_real_52k = abs(f6['l1_snr_series'][()] )
-            v1_real_52k = abs(f6['v1_snr_series'][()] )
+            h1_real_52k = np.real(f6['h1_snr_series'][()] )
+            l1_real_52k = np.real(f6['l1_snr_series'][()] )
+            v1_real_52k = np.real(f6['v1_snr_series'][()] )
         
-            h1_real_30k = abs(f7['h1_snr_series'][()] )
-            l1_real_30k = abs(f7['l1_snr_series'][()] )
-            v1_real_30k = abs(f7['v1_snr_series'][()] )
+            h1_real_30k = np.real(f7['h1_snr_series'][()] )
+            l1_real_30k = np.real(f7['l1_snr_series'][()] )
+            v1_real_30k = np.real(f7['v1_snr_series'][()] )
             
-            h1_real_12k = abs(f8['h1_snr_series'][()] )
-            l1_real_12k = abs(f8['l1_snr_series'][()] )
-            v1_real_12k = abs(f8['v1_snr_series'][()] )
+            h1_real_12k = np.real(f8['h1_snr_series'][()] )
+            l1_real_12k = np.real(f8['l1_snr_series'][()] )
+            v1_real_12k = np.real(f8['v1_snr_series'][()] )
         
-            h1_real_6k = abs(f9['h1_snr_series'][()] )
-            l1_real_6k = abs(f9['l1_snr_series'][()] )
-            v1_real_6k = abs(f9['v1_snr_series'][()] )
+            h1_real_6k = np.real(f9['h1_snr_series'][()] )
+            l1_real_6k = np.real(f9['l1_snr_series'][()] )
+            v1_real_6k = np.real(f9['v1_snr_series'][()] )
                 
             h1_imag_52k = np.imag(f6['h1_snr_series'][()] )
             l1_imag_52k = np.imag(f6['l1_snr_series'][()] )
@@ -144,57 +144,57 @@ class DataLoader:
             v1_imag_6k = np.imag(f9['v1_snr_series'][()] )
                 
                 
-            h1_real_60k = abs(f10['h1_snr_series'][0:60000][()] )
-            l1_real_60k = abs(f10['l1_snr_series'][0:60000][()] )
-            v1_real_60k = abs(f10['v1_snr_series'][0:60000][()] )
+            h1_real_60k = np.real(f10['h1_snr_series'][0:60000][()] )
+            l1_real_60k = np.real(f10['l1_snr_series'][0:60000][()] )
+            v1_real_60k = np.real(f10['v1_snr_series'][0:60000][()] )
 
             h1_imag_60k = np.imag((f10['h1_snr_series'][0:60000][()]))
             l1_imag_60k = np.imag((f10['l1_snr_series'][0:60000][()]))
             v1_imag_60k = np.imag((f10['v1_snr_series'][0:60000][()]))
             
-            h1_real_40k = abs(f11['h1_snr_series'][0:40000][()] )
-            l1_real_40k = abs(f11['l1_snr_series'][0:40000][()] )
-            v1_real_40k = abs(f11['v1_snr_series'][0:40000][()] )
+            h1_real_40k = np.real(f11['h1_snr_series'][0:40000][()] )
+            l1_real_40k = np.real(f11['l1_snr_series'][0:40000][()] )
+            v1_real_40k = np.real(f11['v1_snr_series'][0:40000][()] )
     
             h1_imag_40k = np.imag((f11['h1_snr_series'][0:40000][()]))
             l1_imag_40k = np.imag((f11['l1_snr_series'][0:40000][()]))
             v1_imag_40k = np.imag((f11['v1_snr_series'][0:40000][()]))                
 
-            h1_real_1 = abs(f1['h1_snr_series'][()] )
-            l1_real_1 = abs(f1['l1_snr_series'][()] )
-            v1_real_1 = abs(f1['v1_snr_series'][()] )
+            h1_real_1 = np.real(f1['h1_snr_series'][()] )
+            l1_real_1 = np.real(f1['l1_snr_series'][()] )
+            v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
             h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
             l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
             v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-            h1_real_2 = abs(f2['h1_snr_series'][()] )
-            l1_real_2 = abs(f2['l1_snr_series'][()] )
-            v1_real_2 = abs(f2['v1_snr_series'][()] )
+            h1_real_2 = np.real(f2['h1_snr_series'][()] )
+            l1_real_2 = np.real(f2['l1_snr_series'][()] )
+            v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
             h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
             v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-            h1_real_3 = abs(f3['h1_snr_series'][()] )
-            l1_real_3 = abs(f3['l1_snr_series'][()] )
-            v1_real_3 = abs(f3['v1_snr_series'][()] )
+            h1_real_3 = np.real(f3['h1_snr_series'][()] )
+            l1_real_3 = np.real(f3['l1_snr_series'][()] )
+            v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
             h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
             l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
             v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-            h1_real_4 = abs(f4['h1_snr_series'][()] )
-            l1_real_4 = abs(f4['l1_snr_series'][()] )
-            v1_real_4 = abs(f4['v1_snr_series'][()] )
+            h1_real_4 = np.real(f4['h1_snr_series'][()] )
+            l1_real_4 = np.real(f4['l1_snr_series'][()] )
+            v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
             h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
             l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
             v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
                 
-            h1_real_5 = abs(f5['h1_snr_series'][()] )
-            l1_real_5 = abs(f5['l1_snr_series'][()] )
-            v1_real_5 = abs(f5['v1_snr_series'][()] )
+            h1_real_5 = np.real(f5['h1_snr_series'][()] )
+            l1_real_5 = np.real(f5['l1_snr_series'][()] )
+            v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
             h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
             l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
@@ -237,82 +237,82 @@ class DataLoader:
             f9 = h5py.File(data_config.data.BBH.path_train_real_noise_4, 'r')
             f10 = h5py.File(data_config.data.BBH.path_train_real_noise_5, 'r')
                 
-            h1_real_1 = abs(f1['h1_snr_series'][()] )
-            l1_real_1 = abs(f1['l1_snr_series'][()] )
-            v1_real_1 = abs(f1['v1_snr_series'][()] )
+            h1_real_1 = np.real(f1['h1_snr_series'][()] )
+            l1_real_1 = np.real(f1['l1_snr_series'][()] )
+            v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
             h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
             l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
             v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-            h1_real_2 = abs(f2['h1_snr_series'][()] )
-            l1_real_2 = abs(f2['l1_snr_series'][()] )
-            v1_real_2 = abs(f2['v1_snr_series'][()] )
+            h1_real_2 = np.real(f2['h1_snr_series'][()] )
+            l1_real_2 = np.real(f2['l1_snr_series'][()] )
+            v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
             h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
             v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-            h1_real_3 = abs(f3['h1_snr_series'][()] )
-            l1_real_3 = abs(f3['l1_snr_series'][()] )
-            v1_real_3 = abs(f3['v1_snr_series'][()] )
+            h1_real_3 = np.real(f3['h1_snr_series'][()] )
+            l1_real_3 = np.real(f3['l1_snr_series'][()] )
+            v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
             h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
             l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
             v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-            h1_real_4 = abs(f4['h1_snr_series'][()] )
-            l1_real_4 = abs(f4['l1_snr_series'][()] )
-            v1_real_4 = abs(f4['v1_snr_series'][()] )
+            h1_real_4 = np.real(f4['h1_snr_series'][()] )
+            l1_real_4 = np.real(f4['l1_snr_series'][()] )
+            v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
             h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
             l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
             v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
                 
-            h1_real_5 = abs(f5['h1_snr_series'][()] )
-            l1_real_5 = abs(f5['l1_snr_series'][()] )
-            v1_real_5 = abs(f5['v1_snr_series'][()] )
+            h1_real_5 = np.real(f5['h1_snr_series'][()] )
+            l1_real_5 = np.real(f5['l1_snr_series'][()] )
+            v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
             h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
             l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
             v1_imag_5 = np.imag((f5['v1_snr_series'][()]))
             
                 
-            h1_real_6 = abs(f6['h1_snr_series'][()] )
-            l1_real_6 = abs(f6['l1_snr_series'][()] )
-            v1_real_6 = abs(f6['v1_snr_series'][()] )
+            h1_real_6 = np.real(f6['h1_snr_series'][()] )
+            l1_real_6 = np.real(f6['l1_snr_series'][()] )
+            v1_real_6 = np.real(f6['v1_snr_series'][()] )
 
             h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
             l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
             v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
             
-            h1_real_7 = abs(f7['h1_snr_series'][()] )
-            l1_real_7 = abs(f7['l1_snr_series'][()] )
-            v1_real_7 = abs(f7['v1_snr_series'][()] )
+            h1_real_7 = np.real(f7['h1_snr_series'][()] )
+            l1_real_7 = np.real(f7['l1_snr_series'][()] )
+            v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
             h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
             l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
             v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
                 
-            h1_real_8 = abs(f8['h1_snr_series'][()] )
-            l1_real_8 = abs(f8['l1_snr_series'][()] )
-            v1_real_8 = abs(f8['v1_snr_series'][()] )
+            h1_real_8 = np.real(f8['h1_snr_series'][()] )
+            l1_real_8 = np.real(f8['l1_snr_series'][()] )
+            v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
             h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
             l1_imag_8 = np.imag((f8['l1_snr_series'][()]))
             v1_imag_8 = np.imag((f8['v1_snr_series'][()]))
                 
-            h1_real_9 = abs(f9['h1_snr_series'][()] )
-            l1_real_9 = abs(f9['l1_snr_series'][()] )
-            v1_real_9 = abs(f9['v1_snr_series'][()] )
+            h1_real_9 = np.real(f9['h1_snr_series'][()] )
+            l1_real_9 = np.real(f9['l1_snr_series'][()] )
+            v1_real_9 = np.real(f9['v1_snr_series'][()] )
     
             h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
             l1_imag_9 = np.imag((f9['l1_snr_series'][()]))
             v1_imag_9 = np.imag((f9['v1_snr_series'][()]))
                 
-            h1_real_10 = abs(f10['h1_snr_series'][()] )
-            l1_real_10 = abs(f10['l1_snr_series'][()] )
-            v1_real_10 = abs(f10['v1_snr_series'][()] )
+            h1_real_10 = np.real(f10['h1_snr_series'][()] )
+            l1_real_10 = np.real(f10['l1_snr_series'][()] )
+            v1_real_10 = np.real(f10['v1_snr_series'][()] )
     
             h1_imag_10 = np.imag((f10['h1_snr_series'][()]))
             l1_imag_10 = np.imag((f10['l1_snr_series'][()]))
@@ -344,9 +344,9 @@ class DataLoader:
             
             f1 = h5py.File(data_config.data.BBH.path_train, 'r')
 
-            h1_real = abs(f1['h1_snr_series'][0:100000][()] )
-            l1_real = abs(f1['l1_snr_series'][0:100000][()] )
-            v1_real = abs(f1['v1_snr_series'][0:100000][()] )
+            h1_real = np.real(f1['h1_snr_series'][0:100000][()] )
+            l1_real = np.real(f1['l1_snr_series'][0:100000][()] )
+            v1_real = np.real(f1['v1_snr_series'][0:100000][()] )
 
             h1_imag = np.imag(f1['h1_snr_series'][0:100000][()] )
             l1_imag = np.imag(f1['l1_snr_series'][0:100000][()] )
@@ -358,9 +358,9 @@ class DataLoader:
             
             f1 = h5py.File(data_config.data.BBH.path_train_low_SNR, 'r')
 
-            h1_real = abs(f1['h1_snr_series'][0:100000][()] )
-            l1_real = abs(f1['l1_snr_series'][0:100000][()] )
-            v1_real = abs(f1['v1_snr_series'][0:100000][()] )
+            h1_real = np.real(f1['h1_snr_series'][0:100000][()] )
+            l1_real = np.real(f1['l1_snr_series'][0:100000][()] )
+            v1_real = np.real(f1['v1_snr_series'][0:100000][()] )
 
             h1_imag = np.imag(f1['h1_snr_series'][0:100000][()] )
             l1_imag = np.imag(f1['l1_snr_series'][0:100000][()] )
@@ -379,71 +379,78 @@ class DataLoader:
             f6 = h5py.File(data_config.data.BBH.path_train, 'r')
             f7 = h5py.File(data_config.data.BBH.path_train_low_SNR, 'r')
                 
-            h1_real_1 = abs(f1['h1_snr_series'][()] )
-            l1_real_1 = abs(f1['l1_snr_series'][()] )
-            v1_real_1 = abs(f1['v1_snr_series'][()] )
+            h1_real_1 = np.real(f1['h1_snr_series'][()] )
+            l1_real_1 = np.real(f1['l1_snr_series'][()] )
+            v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
             h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
             l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
             v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-            h1_real_2 = abs(f2['h1_snr_series'][()] )
-            l1_real_2 = abs(f2['l1_snr_series'][()] )
-            v1_real_2 = abs(f2['v1_snr_series'][()] )
+            h1_real_2 = np.real(f2['h1_snr_series'][()] )
+            l1_real_2 = np.real(f2['l1_snr_series'][()] )
+            v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
             h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
             v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-            h1_real_3 = abs(f3['h1_snr_series'][()] )
-            l1_real_3 = abs(f3['l1_snr_series'][()] )
-            v1_real_3 = abs(f3['v1_snr_series'][()] )
+            h1_real_3 = np.real(f3['h1_snr_series'][()] )
+            l1_real_3 = np.real(f3['l1_snr_series'][()] )
+            v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
             h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
             l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
             v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-            h1_real_4 = abs(f4['h1_snr_series'][()] )
-            l1_real_4 = abs(f4['l1_snr_series'][()] )
-            v1_real_4 = abs(f4['v1_snr_series'][()] )
+            h1_real_4 = np.real(f4['h1_snr_series'][()] )
+            l1_real_4 = np.real(f4['l1_snr_series'][()] )
+            v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
             h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
             l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
             v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
                 
-            h1_real_5 = abs(f5['h1_snr_series'][()] )
-            l1_real_5 = abs(f5['l1_snr_series'][()] )
-            v1_real_5 = abs(f5['v1_snr_series'][()] )
+            h1_real_5 = np.real(f5['h1_snr_series'][()] )
+            l1_real_5 = np.real(f5['l1_snr_series'][()] )
+            v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
             h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
             l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
             v1_imag_5 = np.imag((f5['v1_snr_series'][()]))
                 
-            h1_real_6 = abs(f6['h1_snr_series'][()] )
-            l1_real_6 = abs(f6['l1_snr_series'][()] )
-            v1_real_6 = abs(f6['v1_snr_series'][()] )
+            h1_real_6 = np.real(f6['h1_snr_series'][()] )
+            l1_real_6 = np.real(f6['l1_snr_series'][()] )
+            v1_real_6 = np.real(f6['v1_snr_series'][()] )
     
             h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
             l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
             v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
                 
-            h1_real_7 = abs(f7['h1_snr_series'][()] )
-            l1_real_7 = abs(f7['l1_snr_series'][()] )
-            v1_real_7 = abs(f7['v1_snr_series'][()] )
+            h1_real_7 = np.real(f7['h1_snr_series'][()] )
+            l1_real_7 = np.real(f7['l1_snr_series'][()] )
+            v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
             h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
             l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
             v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
             
 
-            h1_real = np.concatenate([h1_real_6, h1_real_7], axis=0) 
-            l1_real = np.concatenate([l1_real_6, l1_real_7], axis=0) 
-            v1_real = np.concatenate([v1_real_6, v1_real_7], axis=0)
+#            h1_real = np.concatenate([h1_real_1, h1_real_2, h1_real_3, h1_real_6, h1_real_7], axis=0) 
+#            l1_real = np.concatenate([l1_real_1, l1_real_2, l1_real_3, l1_real_6, l1_real_7], axis=0) 
+#            v1_real = np.concatenate([v1_real_1, v1_real_2, v1_real_3, v1_real_6, v1_real_7], axis=0)
             
-            h1_imag = np.concatenate([h1_imag_6, h1_imag_7], axis=0)
-            l1_imag = np.concatenate([l1_imag_6, l1_imag_7], axis=0)
-            v1_imag = np.concatenate([v1_imag_6, v1_imag_7], axis=0)
+#            h1_imag = np.concatenate([h1_imag_1, h1_imag_2, h1_imag_3, h1_imag_6, h1_imag_7], axis=0)
+#            l1_imag = np.concatenate([l1_imag_1, l1_imag_2, l1_imag_3, l1_imag_6, l1_imag_7], axis=0)
+#            v1_imag = np.concatenate([v1_imag_1, v1_imag_2, v1_imag_3, v1_imag_6, v1_imag_7], axis=0)
             
+            h1_real = h1_real_6
+            l1_real = l1_real_6
+            v1_real = v1_real_6
+            
+            h1_imag = h1_imag_6
+            l1_imag = l1_imag_6
+            v1_imag = v1_imag_6
             
             f1.close()
             f2.close()
@@ -466,77 +473,77 @@ class DataLoader:
             f8 = h5py.File(data_config.data.BBH.path_train_real_noise_8, 'r')
             f9 = h5py.File(data_config.data.BBH.path_train_real_noise_9, 'r')
                 
-            h1_real_1 = abs(f1['h1_snr_series'][()] )
-            l1_real_1 = abs(f1['l1_snr_series'][()] )
-            v1_real_1 = abs(f1['v1_snr_series'][()] )
+            h1_real_1 = np.real(f1['h1_snr_series'][()] )
+            l1_real_1 = np.real(f1['l1_snr_series'][()] )
+            v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
-            h1_imag_1 = abs(np.imag((f1['h1_snr_series'][()])))
-            l1_imag_1 = abs(np.imag((f1['l1_snr_series'][()])))
-            v1_imag_1 = abs(np.imag((f1['v1_snr_series'][()])))
+            h1_imag_1 = np.real(np.imag((f1['h1_snr_series'][()])))
+            l1_imag_1 = np.real(np.imag((f1['l1_snr_series'][()])))
+            v1_imag_1 = np.real(np.imag((f1['v1_snr_series'][()])))
             
-            h1_real_2 = abs(f2['h1_snr_series'][()] )
-            l1_real_2 = abs(f2['l1_snr_series'][()] )
-            v1_real_2 = abs(f2['v1_snr_series'][()] )
+            h1_real_2 = np.real(f2['h1_snr_series'][()] )
+            l1_real_2 = np.real(f2['l1_snr_series'][()] )
+            v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
-            h1_imag_2 = abs(np.imag((f2['h1_snr_series'][()])))
-            l1_imag_2 = abs(np.imag((f2['l1_snr_series'][()])))
-            v1_imag_2 = abs(np.imag((f2['v1_snr_series'][()])))
+            h1_imag_2 = np.real(np.imag((f2['h1_snr_series'][()])))
+            l1_imag_2 = np.real(np.imag((f2['l1_snr_series'][()])))
+            v1_imag_2 = np.real(np.imag((f2['v1_snr_series'][()])))
                 
-            h1_real_3 = abs(f3['h1_snr_series'][()] )
-            l1_real_3 = abs(f3['l1_snr_series'][()] )
-            v1_real_3 = abs(f3['v1_snr_series'][()] )
+            h1_real_3 = np.real(f3['h1_snr_series'][()] )
+            l1_real_3 = np.real(f3['l1_snr_series'][()] )
+            v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
-            h1_imag_3 = abs(np.imag((f3['h1_snr_series'][()])))
-            l1_imag_3 = abs(np.imag((f3['l1_snr_series'][()])))
-            v1_imag_3 = abs(np.imag((f3['v1_snr_series'][()])))
+            h1_imag_3 = np.real(np.imag((f3['h1_snr_series'][()])))
+            l1_imag_3 = np.real(np.imag((f3['l1_snr_series'][()])))
+            v1_imag_3 = np.real(np.imag((f3['v1_snr_series'][()])))
                 
-            h1_real_4 = abs(f4['h1_snr_series'][()] )
-            l1_real_4 = abs(f4['l1_snr_series'][()] )
-            v1_real_4 = abs(f4['v1_snr_series'][()] )
+            h1_real_4 = np.real(f4['h1_snr_series'][()] )
+            l1_real_4 = np.real(f4['l1_snr_series'][()] )
+            v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
-            h1_imag_4 = abs(np.imag((f4['h1_snr_series'][()])))
-            l1_imag_4 = abs(np.imag((f4['l1_snr_series'][()])))
-            v1_imag_4 = abs(np.imag((f4['v1_snr_series'][()])))
+            h1_imag_4 = np.real(np.imag((f4['h1_snr_series'][()])))
+            l1_imag_4 = np.real(np.imag((f4['l1_snr_series'][()])))
+            v1_imag_4 = np.real(np.imag((f4['v1_snr_series'][()])))
                 
-            h1_real_5 = abs(f5['h1_snr_series'][()] )
-            l1_real_5 = abs(f5['l1_snr_series'][()] )
-            v1_real_5 = abs(f5['v1_snr_series'][()] )
+            h1_real_5 = np.real(f5['h1_snr_series'][()] )
+            l1_real_5 = np.real(f5['l1_snr_series'][()] )
+            v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
-            h1_imag_5 = abs(np.imag((f5['h1_snr_series'][()])))
-            l1_imag_5 = abs(np.imag((f5['l1_snr_series'][()])))
-            v1_imag_5 = abs(np.imag((f5['v1_snr_series'][()])))
+            h1_imag_5 = np.real(np.imag((f5['h1_snr_series'][()])))
+            l1_imag_5 = np.real(np.imag((f5['l1_snr_series'][()])))
+            v1_imag_5 = np.real(np.imag((f5['v1_snr_series'][()])))
             
-            h1_real_6 = abs(f6['h1_snr_series'][()] )
-            l1_real_6 = abs(f6['l1_snr_series'][()] )
-            v1_real_6 = abs(f6['v1_snr_series'][()] )
+            h1_real_6 = np.real(f6['h1_snr_series'][()] )
+            l1_real_6 = np.real(f6['l1_snr_series'][()] )
+            v1_real_6 = np.real(f6['v1_snr_series'][()] )
     
-            h1_imag_6 = abs(np.imag((f6['h1_snr_series'][()])))
-            l1_imag_6 = abs(np.imag((f6['l1_snr_series'][()])))
-            v1_imag_6 = abs(np.imag((f6['v1_snr_series'][()])))
+            h1_imag_6 = np.real(np.imag((f6['h1_snr_series'][()])))
+            l1_imag_6 = np.real(np.imag((f6['l1_snr_series'][()])))
+            v1_imag_6 = np.real(np.imag((f6['v1_snr_series'][()])))
                 
-            h1_real_7 = abs(f7['h1_snr_series'][()] )
-            l1_real_7 = abs(f7['l1_snr_series'][()] )
-            v1_real_7 = abs(f7['v1_snr_series'][()] )
+            h1_real_7 = np.real(f7['h1_snr_series'][()] )
+            l1_real_7 = np.real(f7['l1_snr_series'][()] )
+            v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
-            h1_imag_7 = abs(np.imag((f7['h1_snr_series'][()])))
-            l1_imag_7 = abs(np.imag((f7['l1_snr_series'][()])))
-            v1_imag_7 = abs(np.imag((f7['v1_snr_series'][()])))
+            h1_imag_7 = np.real(np.imag((f7['h1_snr_series'][()])))
+            l1_imag_7 = np.real(np.imag((f7['l1_snr_series'][()])))
+            v1_imag_7 = np.real(np.imag((f7['v1_snr_series'][()])))
             
-            h1_real_8 = abs(f8['h1_snr_series'][()] )
-            l1_real_8 = abs(f8['l1_snr_series'][()] )
-            v1_real_8 = abs(f8['v1_snr_series'][()] )
+            h1_real_8 = np.real(f8['h1_snr_series'][()] )
+            l1_real_8 = np.real(f8['l1_snr_series'][()] )
+            v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
-            h1_imag_8 = abs(np.imag((f8['h1_snr_series'][()])))
-            l1_imag_8 = abs(np.imag((f8['l1_snr_series'][()])))
-            v1_imag_8 = abs(np.imag((f8['v1_snr_series'][()])))
+            h1_imag_8 = np.real(np.imag((f8['h1_snr_series'][()])))
+            l1_imag_8 = np.real(np.imag((f8['l1_snr_series'][()])))
+            v1_imag_8 = np.real(np.imag((f8['v1_snr_series'][()])))
                 
-            h1_real_9 = abs(f9['h1_snr_series'][()] )
-            l1_real_9 = abs(f9['l1_snr_series'][()] )
-            v1_real_9 = abs(f9['v1_snr_series'][()] )
+            h1_real_9 = np.real(f9['h1_snr_series'][()] )
+            l1_real_9 = np.real(f9['l1_snr_series'][()] )
+            v1_real_9 = np.real(f9['v1_snr_series'][()] )
     
-            h1_imag_9 = abs(np.imag((f9['h1_snr_series'][()])))
-            l1_imag_9 = abs(np.imag((f9['l1_snr_series'][()])))
-            v1_imag_9 = abs(np.imag((f9['v1_snr_series'][()])))
+            h1_imag_9 = np.real(np.imag((f9['h1_snr_series'][()])))
+            l1_imag_9 = np.real(np.imag((f9['l1_snr_series'][()])))
+            v1_imag_9 = np.real(np.imag((f9['v1_snr_series'][()])))
             
             
             h1_real = np.concatenate([h1_real_1, h1_real_2, h1_real_3, h1_real_4, h1_real_5, h1_real_6, h1_real_7, h1_real_8, h1_real_9], axis=0) 
@@ -566,34 +573,34 @@ class DataLoader:
             f3 = h5py.File(data_config.data.BBH.path_train_O3_noise_3, 'r')
             f4 = h5py.File(data_config.data.BBH.path_train_O3_noise_4, 'r')
             
-            h1_real_1 = abs(f1['h1_snr_series'][()] )
-            l1_real_1 = abs(f1['l1_snr_series'][()] )
-            v1_real_1 = abs(f1['v1_snr_series'][()] )
+            h1_real_1 = np.real(f1['h1_snr_series'][()] )
+            l1_real_1 = np.real(f1['l1_snr_series'][()] )
+            v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
             h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
             l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
             v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-            h1_real_2 = abs(f2['h1_snr_series'][()] )
-            l1_real_2 = abs(f2['l1_snr_series'][()] )
-            v1_real_2 = abs(f2['v1_snr_series'][()] )
+            h1_real_2 = np.real(f2['h1_snr_series'][()] )
+            l1_real_2 = np.real(f2['l1_snr_series'][()] )
+            v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
             h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
             v1_imag_2 = np.imag((f2['v1_snr_series'][()]))    
             
             
-            h1_real_3 = abs(f3['h1_snr_series'][()] )
-            l1_real_3 = abs(f3['l1_snr_series'][()] )
-            v1_real_3 = abs(f3['v1_snr_series'][()] )
+            h1_real_3 = np.real(f3['h1_snr_series'][()] )
+            l1_real_3 = np.real(f3['l1_snr_series'][()] )
+            v1_real_3 = np.real(f3['v1_snr_series'][()] )
 
             h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
             l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
             v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
             
-            h1_real_4 = abs(f4['h1_snr_series'][()] )
-            l1_real_4 = abs(f4['l1_snr_series'][()] )
-            v1_real_4 = abs(f4['v1_snr_series'][()] )
+            h1_real_4 = np.real(f4['h1_snr_series'][()] )
+            l1_real_4 = np.real(f4['l1_snr_series'][()] )
+            v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
             h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
             l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
@@ -620,17 +627,17 @@ class DataLoader:
                 f1 = h5py.File(data_config.data.BNS.path_train_1, 'r')
                 f2 = h5py.File(data_config.data.BNS.path_train_2, 'r')
 
-                h1_real_22k = abs(f1['h1_snr_series'][0:22000][()] )
-                l1_real_22k = abs(f1['l1_snr_series'][0:22000][()] )
-                v1_real_22k = abs(f1['v1_snr_series'][0:22000][()] )
+                h1_real_22k = np.real(f1['h1_snr_series'][0:22000][()] )
+                l1_real_22k = np.real(f1['l1_snr_series'][0:22000][()] )
+                v1_real_22k = np.real(f1['v1_snr_series'][0:22000][()] )
 
                 h1_imag_22k = np.imag((f1['h1_snr_series'][0:22000][()]))
                 l1_imag_22k = np.imag((f1['l1_snr_series'][0:22000][()]))
                 v1_imag_22k = np.imag((f1['v1_snr_series'][0:22000][()]))
             
-                h1_real_86k = abs(f2['h1_snr_series'][0:86000][()] )
-                l1_real_86k = abs(f2['l1_snr_series'][0:86000][()] )
-                v1_real_86k = abs(f2['v1_snr_series'][0:86000][()] )
+                h1_real_86k = np.real(f2['h1_snr_series'][0:86000][()] )
+                l1_real_86k = np.real(f2['l1_snr_series'][0:86000][()] )
+                v1_real_86k = np.real(f2['v1_snr_series'][0:86000][()] )
     
                 h1_imag_86k = np.imag((f2['h1_snr_series'][0:86000][()]))
                 l1_imag_86k = np.imag((f2['l1_snr_series'][0:86000][()]))
@@ -654,25 +661,25 @@ class DataLoader:
                 f2 = h5py.File(data_config.data.BNS.path_train_low_snr_2, 'r')
                 f3 = h5py.File(data_config.data.BNS.path_train_low_snr_3, 'r')
 
-                h1_real_12k = abs(f1['h1_snr_series'][0:12000][()] )
-                l1_real_12k = abs(f1['l1_snr_series'][0:12000][()] )
-                v1_real_12k = abs(f1['v1_snr_series'][0:12000][()] )
+                h1_real_12k = np.real(f1['h1_snr_series'][0:12000][()] )
+                l1_real_12k = np.real(f1['l1_snr_series'][0:12000][()] )
+                v1_real_12k = np.real(f1['v1_snr_series'][0:12000][()] )
 
                 h1_imag_12k = np.imag(f1['h1_snr_series'][0:12000][()] )
                 l1_imag_12k = np.imag(f1['l1_snr_series'][0:12000][()] )
                 v1_imag_12k = np.imag(f1['v1_snr_series'][0:12000][()] )
             
-                h1_real_36k = abs(f2['h1_snr_series'][0:36000][()] )
-                l1_real_36k = abs(f2['l1_snr_series'][0:36000][()] )
-                v1_real_36k = abs(f2['v1_snr_series'][0:36000][()] )
+                h1_real_36k = np.real(f2['h1_snr_series'][0:36000][()] )
+                l1_real_36k = np.real(f2['l1_snr_series'][0:36000][()] )
+                v1_real_36k = np.real(f2['v1_snr_series'][0:36000][()] )
     
                 h1_imag_36k = np.imag(f2['h1_snr_series'][0:36000][()] )
                 l1_imag_36k = np.imag(f2['l1_snr_series'][0:36000][()] )
                 v1_imag_36k = np.imag(f2['v1_snr_series'][0:36000][()] )
                 
-                h1_real_52k = abs(f3['h1_snr_series'][0:52000][()] )
-                l1_real_52k = abs(f3['l1_snr_series'][0:52000][()] )
-                v1_real_52k = abs(f3['v1_snr_series'][0:52000][()] )
+                h1_real_52k = np.real(f3['h1_snr_series'][0:52000][()] )
+                l1_real_52k = np.real(f3['l1_snr_series'][0:52000][()] )
+                v1_real_52k = np.real(f3['v1_snr_series'][0:52000][()] )
     
                 h1_imag_52k = np.imag(f3['h1_snr_series'][0:52000][()] )
                 l1_imag_52k = np.imag(f3['l1_snr_series'][0:52000][()] )
@@ -709,113 +716,113 @@ class DataLoader:
                 f13 = h5py.File(data_config.data.BNS.path_train_design_high_SNR_1, 'r')
                 f14 = h5py.File(data_config.data.BNS.path_train_design_high_SNR_2, 'r')
 
-                h1_real_11 = abs(f11['h1_snr_series'][()] )
-                l1_real_11 = abs(f11['l1_snr_series'][()] )
-                v1_real_11 = abs(f11['v1_snr_series'][()] )
+                h1_real_11 = np.real(f11['h1_snr_series'][()] )
+                l1_real_11 = np.real(f11['l1_snr_series'][()] )
+                v1_real_11 = np.real(f11['v1_snr_series'][()] )
 
                 h1_imag_11 = np.imag((f11['h1_snr_series'][()]))
                 l1_imag_11 = np.imag((f11['l1_snr_series'][()]))
                 v1_imag_11 = np.imag((f11['v1_snr_series'][()]))
             
-                h1_real_12 = abs(f12['h1_snr_series'][()] )
-                l1_real_12 = abs(f12['l1_snr_series'][()] )
-                v1_real_12 = abs(f12['v1_snr_series'][()] )
+                h1_real_12 = np.real(f12['h1_snr_series'][()] )
+                l1_real_12 = np.real(f12['l1_snr_series'][()] )
+                v1_real_12 = np.real(f12['v1_snr_series'][()] )
     
                 h1_imag_12 = np.imag((f12['h1_snr_series'][()]))
                 l1_imag_12 = np.imag((f12['l1_snr_series'][()]))
                 v1_imag_12 = np.imag((f12['v1_snr_series'][()]))
 
-                h1_real_1 = abs(f1['h1_snr_series'][()] )
-                l1_real_1 = abs(f1['l1_snr_series'][()] )
-                v1_real_1 = abs(f1['v1_snr_series'][()] )
+                h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
                 h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                 l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
                 v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-                h1_real_2 = abs(f2['h1_snr_series'][()] )
-                l1_real_2 = abs(f2['l1_snr_series'][()] )
-                v1_real_2 = abs(f2['v1_snr_series'][()] )
+                h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
                 h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
                 l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
                 v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-                h1_real_3 = abs(f3['h1_snr_series'][()] )
-                l1_real_3 = abs(f3['l1_snr_series'][()] )
-                v1_real_3 = abs(f3['v1_snr_series'][()] )
+                h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
                 h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
                 l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
                 v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-                h1_real_4 = abs(f4['h1_snr_series'][()] )
-                l1_real_4 = abs(f4['l1_snr_series'][()] )
-                v1_real_4 = abs(f4['v1_snr_series'][()] )
+                h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                l1_real_4 = np.real(f4['l1_snr_series'][()] )
+                v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
                 h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
                 l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
                 v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
                 
-                h1_real_5 = abs(f5['h1_snr_series'][()] )
-                l1_real_5 = abs(f5['l1_snr_series'][()] )
-                v1_real_5 = abs(f5['v1_snr_series'][()] )
+                h1_real_5 = np.real(f5['h1_snr_series'][()] )
+                l1_real_5 = np.real(f5['l1_snr_series'][()] )
+                v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
                 h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
                 l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
                 v1_imag_5 = np.imag((f5['v1_snr_series'][()]))
                 
-                h1_real_6 = abs(f6['h1_snr_series'][()] )
-                l1_real_6 = abs(f6['l1_snr_series'][()] )
-                v1_real_6 = abs(f6['v1_snr_series'][()] )
+                h1_real_6 = np.real(f6['h1_snr_series'][()] )
+                l1_real_6 = np.real(f6['l1_snr_series'][()] )
+                v1_real_6 = np.real(f6['v1_snr_series'][()] )
     
                 h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
                 l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
                 v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
                 
-                h1_real_7 = abs(f7['h1_snr_series'][()] )
-                l1_real_7 = abs(f7['l1_snr_series'][()] )
-                v1_real_7 = abs(f7['v1_snr_series'][()] )
+                h1_real_7 = np.real(f7['h1_snr_series'][()] )
+                l1_real_7 = np.real(f7['l1_snr_series'][()] )
+                v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
                 h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
                 l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
                 v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
                 
-                h1_real_8 = abs(f8['h1_snr_series'][()] )
-                l1_real_8 = abs(f8['l1_snr_series'][()] )
-                v1_real_8 = abs(f8['v1_snr_series'][()] )
+                h1_real_8 = np.real(f8['h1_snr_series'][()] )
+                l1_real_8 = np.real(f8['l1_snr_series'][()] )
+                v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
                 h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
                 l1_imag_8 = np.imag((f8['l1_snr_series'][()]))
                 v1_imag_8 = np.imag((f8['v1_snr_series'][()]))
                 
-                h1_real_9 = abs(f9['h1_snr_series'][()] )
-                l1_real_9 = abs(f9['l1_snr_series'][()] )
-                v1_real_9 = abs(f9['v1_snr_series'][()] )
+                h1_real_9 = np.real(f9['h1_snr_series'][()] )
+                l1_real_9 = np.real(f9['l1_snr_series'][()] )
+                v1_real_9 = np.real(f9['v1_snr_series'][()] )
     
                 h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
                 l1_imag_9 = np.imag((f9['l1_snr_series'][()]))
                 v1_imag_9 = np.imag((f9['v1_snr_series'][()]))
                 
-                h1_real_10 = abs(f10['h1_snr_series'][()] )
-                l1_real_10 = abs(f10['l1_snr_series'][()] )
-                v1_real_10 = abs(f10['v1_snr_series'][()] )
+                h1_real_10 = np.real(f10['h1_snr_series'][()] )
+                l1_real_10 = np.real(f10['l1_snr_series'][()] )
+                v1_real_10 = np.real(f10['v1_snr_series'][()] )
     
                 h1_imag_10 = np.imag((f10['h1_snr_series'][()]))
                 l1_imag_10 = np.imag((f10['l1_snr_series'][()]))
                 v1_imag_10 = np.imag((f10['v1_snr_series'][()]))
                 
-                h1_real_13 = abs(f13['h1_snr_series'][()] )
-                l1_real_13 = abs(f13['l1_snr_series'][()] )
-                v1_real_13 = abs(f13['v1_snr_series'][()] )
+                h1_real_13 = np.real(f13['h1_snr_series'][()] )
+                l1_real_13 = np.real(f13['l1_snr_series'][()] )
+                v1_real_13 = np.real(f13['v1_snr_series'][()] )
     
                 h1_imag_13 = np.imag((f13['h1_snr_series'][()]))
                 l1_imag_13 = np.imag((f13['l1_snr_series'][()]))
                 v1_imag_13 = np.imag((f13['v1_snr_series'][()]))
                 
-                h1_real_14 = abs(f14['h1_snr_series'][()] )
-                l1_real_14 = abs(f14['l1_snr_series'][()] )
-                v1_real_14 = abs(f14['v1_snr_series'][()] )
+                h1_real_14 = np.real(f14['h1_snr_series'][()] )
+                l1_real_14 = np.real(f14['l1_snr_series'][()] )
+                v1_real_14 = np.real(f14['v1_snr_series'][()] )
     
                 h1_imag_14 = np.imag((f14['h1_snr_series'][()]))
                 l1_imag_14 = np.imag((f14['l1_snr_series'][()]))
@@ -854,13 +861,13 @@ class DataLoader:
                 
                     f1 = h5py.File(data_config.data.BNS.path_train_5_sec, 'r')
 
-                    h1_real = abs(f1['h1_snr_series'][()] )
-                    l1_real = abs(f1['l1_snr_series'][()] )
-                    v1_real = abs(f1['v1_snr_series'][()] )
+                    h1_real = np.real(f1['h1_snr_series'][()] )
+                    l1_real = np.real(f1['l1_snr_series'][()] )
+                    v1_real = np.real(f1['v1_snr_series'][()] )
 
-                    h1_imag = absnp.imag((f1['h1_snr_series'][()]))
-                    l1_imag = absnp.imag((f1['l1_snr_series'][()]))
-                    v1_imag = absnp.imag((f1['v1_snr_series'][()]))
+                    h1_imag = np.realnp.imag((f1['h1_snr_series'][()]))
+                    l1_imag = np.realnp.imag((f1['l1_snr_series'][()]))
+                    v1_imag = np.realnp.imag((f1['v1_snr_series'][()]))
             
                     f1.close()
                 
@@ -868,13 +875,13 @@ class DataLoader:
                 
                     f1 = h5py.File(data_config.data.BNS.path_train_10_sec, 'r')
 
-                    h1_real = abs(f1['h1_snr_series'][()] )
-                    l1_real = abs(f1['l1_snr_series'][()] )
-                    v1_real = abs(f1['v1_snr_series'][()] )
+                    h1_real = np.real(f1['h1_snr_series'][()] )
+                    l1_real = np.real(f1['l1_snr_series'][()] )
+                    v1_real = np.real(f1['v1_snr_series'][()] )
 
-                    h1_imag = absnp.imag((f1['h1_snr_series'][()]))
-                    l1_imag = absnp.imag((f1['l1_snr_series'][()]))
-                    v1_imag = absnp.imag((f1['v1_snr_series'][()]))
+                    h1_imag = np.realnp.imag((f1['h1_snr_series'][()]))
+                    l1_imag = np.realnp.imag((f1['l1_snr_series'][()]))
+                    v1_imag = np.realnp.imag((f1['v1_snr_series'][()]))
             
                     f1.close()
                 
@@ -900,113 +907,113 @@ class DataLoader:
                     f13 = h5py.File(data_config.data.BNS.path_train_design_high_SNR_1, 'r')
                     f14 = h5py.File(data_config.data.BNS.path_train_design_high_SNR_2, 'r')
 
-                    h1_real_11 = abs(f11['h1_snr_series'][()] )
-                    l1_real_11 = abs(f11['l1_snr_series'][()] )
-                    v1_real_11 = abs(f11['v1_snr_series'][()] )
+                    h1_real_11 = np.real(f11['h1_snr_series'][()] )
+                    l1_real_11 = np.real(f11['l1_snr_series'][()] )
+                    v1_real_11 = np.real(f11['v1_snr_series'][()] )
 
                     h1_imag_11 = np.imag((f11['h1_snr_series'][()]))
                     l1_imag_11 = np.imag((f11['l1_snr_series'][()]))
                     v1_imag_11 = np.imag((f11['v1_snr_series'][()]))
             
-                    h1_real_12 = abs(f12['h1_snr_series'][()] )
-                    l1_real_12 = abs(f12['l1_snr_series'][()] )
-                    v1_real_12 = abs(f12['v1_snr_series'][()] )
+                    h1_real_12 = np.real(f12['h1_snr_series'][()] )
+                    l1_real_12 = np.real(f12['l1_snr_series'][()] )
+                    v1_real_12 = np.real(f12['v1_snr_series'][()] )
     
                     h1_imag_12 = np.imag((f12['h1_snr_series'][()]))
                     l1_imag_12 = np.imag((f12['l1_snr_series'][()]))
                     v1_imag_12 = np.imag((f12['v1_snr_series'][()]))
 
-                    h1_real_1 = abs(f1['h1_snr_series'][()] )
-                    l1_real_1 = abs(f1['l1_snr_series'][()] )
-                    v1_real_1 = abs(f1['v1_snr_series'][()] )
+                    h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                    l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                    v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
                     h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                     l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
                     v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-                    h1_real_2 = abs(f2['h1_snr_series'][()] )
-                    l1_real_2 = abs(f2['l1_snr_series'][()] )
-                    v1_real_2 = abs(f2['v1_snr_series'][()] )
+                    h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                    l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                    v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
                     h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
                     l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
                     v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-                    h1_real_3 = abs(f3['h1_snr_series'][()] )
-                    l1_real_3 = abs(f3['l1_snr_series'][()] )
-                    v1_real_3 = abs(f3['v1_snr_series'][()] )
+                    h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                    l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                    v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
                     h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
                     l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
                     v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-                    h1_real_4 = abs(f4['h1_snr_series'][()] )
-                    l1_real_4 = abs(f4['l1_snr_series'][()] )
-                    v1_real_4 = abs(f4['v1_snr_series'][()] )
+                    h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                    l1_real_4 = np.real(f4['l1_snr_series'][()] )
+                    v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
                     h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
                     l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
                     v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
                 
-                    h1_real_5 = abs(f5['h1_snr_series'][()] )
-                    l1_real_5 = abs(f5['l1_snr_series'][()] )
-                    v1_real_5 = abs(f5['v1_snr_series'][()] )
+                    h1_real_5 = np.real(f5['h1_snr_series'][()] )
+                    l1_real_5 = np.real(f5['l1_snr_series'][()] )
+                    v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
                     h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
                     l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
                     v1_imag_5 = np.imag((f5['v1_snr_series'][()]))
                 
-                    h1_real_6 = abs(f6['h1_snr_series'][()] )
-                    l1_real_6 = abs(f6['l1_snr_series'][()] )
-                    v1_real_6 = abs(f6['v1_snr_series'][()] )
+                    h1_real_6 = np.real(f6['h1_snr_series'][()] )
+                    l1_real_6 = np.real(f6['l1_snr_series'][()] )
+                    v1_real_6 = np.real(f6['v1_snr_series'][()] )
     
                     h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
                     l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
                     v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
                 
-                    h1_real_7 = abs(f7['h1_snr_series'][()] )
-                    l1_real_7 = abs(f7['l1_snr_series'][()] )
-                    v1_real_7 = abs(f7['v1_snr_series'][()] )
+                    h1_real_7 = np.real(f7['h1_snr_series'][()] )
+                    l1_real_7 = np.real(f7['l1_snr_series'][()] )
+                    v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
                     h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
                     l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
                     v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
                 
-                    h1_real_8 = abs(f8['h1_snr_series'][()] )
-                    l1_real_8 = abs(f8['l1_snr_series'][()] )
-                    v1_real_8 = abs(f8['v1_snr_series'][()] )
+                    h1_real_8 = np.real(f8['h1_snr_series'][()] )
+                    l1_real_8 = np.real(f8['l1_snr_series'][()] )
+                    v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
                     h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
                     l1_imag_8 = np.imag((f8['l1_snr_series'][()]))
                     v1_imag_8 = np.imag((f8['v1_snr_series'][()]))
                 
-                    h1_real_9 = abs(f9['h1_snr_series'][()] )
-                    l1_real_9 = abs(f9['l1_snr_series'][()] )
-                    v1_real_9 = abs(f9['v1_snr_series'][()] )
+                    h1_real_9 = np.real(f9['h1_snr_series'][()] )
+                    l1_real_9 = np.real(f9['l1_snr_series'][()] )
+                    v1_real_9 = np.real(f9['v1_snr_series'][()] )
     
                     h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
                     l1_imag_9 = np.imag((f9['l1_snr_series'][()]))
                     v1_imag_9 = np.imag((f9['v1_snr_series'][()]))
                 
-                    h1_real_10 = abs(f10['h1_snr_series'][()] )
-                    l1_real_10 = abs(f10['l1_snr_series'][()] )
-                    v1_real_10 = abs(f10['v1_snr_series'][()] )
+                    h1_real_10 = np.real(f10['h1_snr_series'][()] )
+                    l1_real_10 = np.real(f10['l1_snr_series'][()] )
+                    v1_real_10 = np.real(f10['v1_snr_series'][()] )
     
                     h1_imag_10 = np.imag((f10['h1_snr_series'][()]))
                     l1_imag_10 = np.imag((f10['l1_snr_series'][()]))
                     v1_imag_10 = np.imag((f10['v1_snr_series'][()]))
                 
-                    h1_real_13 = abs(f13['h1_snr_series'][()] )
-                    l1_real_13 = abs(f13['l1_snr_series'][()] )
-                    v1_real_13 = abs(f13['v1_snr_series'][()] )
+                    h1_real_13 = np.real(f13['h1_snr_series'][()] )
+                    l1_real_13 = np.real(f13['l1_snr_series'][()] )
+                    v1_real_13 = np.real(f13['v1_snr_series'][()] )
     
                     h1_imag_13 = np.imag((f13['h1_snr_series'][()]))
                     l1_imag_13 = np.imag((f13['l1_snr_series'][()]))
                     v1_imag_13 = np.imag((f13['v1_snr_series'][()]))
                 
-                    h1_real_14 = abs(f14['h1_snr_series'][()] )
-                    l1_real_14 = abs(f14['l1_snr_series'][()] )
-                    v1_real_14 = abs(f14['v1_snr_series'][()] )
+                    h1_real_14 = np.real(f14['h1_snr_series'][()] )
+                    l1_real_14 = np.real(f14['l1_snr_series'][()] )
+                    v1_real_14 = np.real(f14['v1_snr_series'][()] )
     
                     h1_imag_14 = np.imag((f14['h1_snr_series'][()]))
                     l1_imag_14 = np.imag((f14['l1_snr_series'][()]))
@@ -1063,89 +1070,89 @@ class DataLoader:
                     f19 = h5py.File(data_config.data.BNS.path_train_design_10_sec_19, 'r')
                     f20 = h5py.File(data_config.data.BNS.path_train_design_10_sec_20, 'r')
 
-                    h1_real_1 = abs(f1['h1_snr_series'][0:50000][()] )
-                    l1_real_1 = abs(f1['l1_snr_series'][0:50000][()] )
-                    v1_real_1 = abs(f1['v1_snr_series'][0:50000][()] )
+                    h1_real_1 = np.real(f1['h1_snr_series'][0:50000][()] )
+                    l1_real_1 = np.real(f1['l1_snr_series'][0:50000][()] )
+                    v1_real_1 = np.real(f1['v1_snr_series'][0:50000][()] )
 
                     h1_imag_1 = np.imag((f1['h1_snr_series'][0:50000][()]))
                     l1_imag_1 = np.imag((f1['l1_snr_series'][0:50000][()]))
                     v1_imag_1 = np.imag((f1['v1_snr_series'][0:50000][()]))
             
-                    h1_real_2 = abs(f2['h1_snr_series'][0:50000][()] )
-                    l1_real_2 = abs(f2['l1_snr_series'][0:50000][()] )
-                    v1_real_2 = abs(f2['v1_snr_series'][0:50000][()] )
+                    h1_real_2 = np.real(f2['h1_snr_series'][0:50000][()] )
+                    l1_real_2 = np.real(f2['l1_snr_series'][0:50000][()] )
+                    v1_real_2 = np.real(f2['v1_snr_series'][0:50000][()] )
     
                     h1_imag_2 = np.imag((f2['h1_snr_series'][0:50000][()]))
                     l1_imag_2 = np.imag((f2['l1_snr_series'][0:50000][()]))
                     v1_imag_2 = np.imag((f2['v1_snr_series'][0:50000][()]))
                 
-                    h1_real_3 = abs(f3['h1_snr_series'][0:50000][()] )
-                    l1_real_3 = abs(f3['l1_snr_series'][0:50000][()] )
-                    v1_real_3 = abs(f3['v1_snr_series'][0:50000][()] )
+                    h1_real_3 = np.real(f3['h1_snr_series'][0:50000][()] )
+                    l1_real_3 = np.real(f3['l1_snr_series'][0:50000][()] )
+                    v1_real_3 = np.real(f3['v1_snr_series'][0:50000][()] )
     
                     h1_imag_3 = np.imag((f3['h1_snr_series'][0:50000][()]))
                     l1_imag_3 = np.imag((f3['l1_snr_series'][0:50000][()]))
                     v1_imag_3 = np.imag((f3['v1_snr_series'][0:50000][()]))
                 
-                    h1_real_4 = abs(f4['h1_snr_series'][()] )
-                    l1_real_4 = abs(f4['l1_snr_series'][()] )
-                    v1_real_4 = abs(f4['v1_snr_series'][()] )
+                    h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                    l1_real_4 = np.real(f4['l1_snr_series'][()] )
+                    v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
                     h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
                     l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
                     v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
                 
-                    h1_real_5 = abs(f5['h1_snr_series'][()] )
-                    l1_real_5 = abs(f5['l1_snr_series'][()] )
-                    v1_real_5 = abs(f5['v1_snr_series'][()] )
+                    h1_real_5 = np.real(f5['h1_snr_series'][()] )
+                    l1_real_5 = np.real(f5['l1_snr_series'][()] )
+                    v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
                     h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
                     l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
                     v1_imag_5 = np.imag((f5['v1_snr_series'][()]))
                 
-                    h1_real_6 = abs(f6['h1_snr_series'][()] )
-                    l1_real_6 = abs(f6['l1_snr_series'][()] )
-                    v1_real_6 = abs(f6['v1_snr_series'][()] )
+                    h1_real_6 = np.real(f6['h1_snr_series'][()] )
+                    l1_real_6 = np.real(f6['l1_snr_series'][()] )
+                    v1_real_6 = np.real(f6['v1_snr_series'][()] )
     
                     h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
                     l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
                     v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
             
-                    h1_real_7 = abs(f7['h1_snr_series'][()] )
-                    l1_real_7 = abs(f7['l1_snr_series'][()] )
-                    v1_real_7 = abs(f7['v1_snr_series'][()] )
+                    h1_real_7 = np.real(f7['h1_snr_series'][()] )
+                    l1_real_7 = np.real(f7['l1_snr_series'][()] )
+                    v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
                     h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
                     l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
                     v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
                 
-                    h1_real_8 = abs(f8['h1_snr_series'][()] )
-                    l1_real_8 = abs(f8['l1_snr_series'][()] )
-                    v1_real_8 = abs(f8['v1_snr_series'][()] )
+                    h1_real_8 = np.real(f8['h1_snr_series'][()] )
+                    l1_real_8 = np.real(f8['l1_snr_series'][()] )
+                    v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
                     h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
                     l1_imag_8 = np.imag((f8['l1_snr_series'][()]))
                     v1_imag_8 = np.imag((f8['v1_snr_series'][()]))
                 
-                    h1_real_9 = abs(f9['h1_snr_series'][()] )
-                    l1_real_9 = abs(f9['l1_snr_series'][()] )
-                    v1_real_9 = abs(f9['v1_snr_series'][()] )
+                    h1_real_9 = np.real(f9['h1_snr_series'][()] )
+                    l1_real_9 = np.real(f9['l1_snr_series'][()] )
+                    v1_real_9 = np.real(f9['v1_snr_series'][()] )
     
                     h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
                     l1_imag_9 = np.imag((f9['l1_snr_series'][()]))
                     v1_imag_9 = np.imag((f9['v1_snr_series'][()]))
                 
-                    h1_real_10 = abs(f10['h1_snr_series'][()] )
-                    l1_real_10 = abs(f10['l1_snr_series'][()] )
-                    v1_real_10 = abs(f10['v1_snr_series'][()] )
+                    h1_real_10 = np.real(f10['h1_snr_series'][()] )
+                    l1_real_10 = np.real(f10['l1_snr_series'][()] )
+                    v1_real_10 = np.real(f10['v1_snr_series'][()] )
     
                     h1_imag_10 = np.imag((f10['h1_snr_series'][()]))
                     l1_imag_10 = np.imag((f10['l1_snr_series'][()]))
                     v1_imag_10 = np.imag((f10['v1_snr_series'][()]))
                 
-                    h1_real_11 = abs(f11['h1_snr_series'][()] )
-                    l1_real_11 = abs(f11['l1_snr_series'][()] )
-                    v1_real_11 = abs(f11['v1_snr_series'][()] )
+                    h1_real_11 = np.real(f11['h1_snr_series'][()] )
+                    l1_real_11 = np.real(f11['l1_snr_series'][()] )
+                    v1_real_11 = np.real(f11['v1_snr_series'][()] )
     
                     h1_imag_11 = np.imag((f11['h1_snr_series'][()]))
                     l1_imag_11 = np.imag((f11['l1_snr_series'][()]))
@@ -1212,97 +1219,97 @@ class DataLoader:
                     f11 = h5py.File(data_config.data.BNS.path_train_design_15_sec_11, 'r')
                     f12 = h5py.File(data_config.data.BNS.path_train_design_15_sec_12, 'r')
 
-                    h1_real_1 = abs(f1['h1_snr_series'][()] )
-                    l1_real_1 = abs(f1['l1_snr_series'][()] )
-                    v1_real_1 = abs(f1['v1_snr_series'][()] )
+                    h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                    l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                    v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
                     h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                     l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
                     v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-                    h1_real_2 = abs(f2['h1_snr_series'][()] )
-                    l1_real_2 = abs(f2['l1_snr_series'][()] )
-                    v1_real_2 = abs(f2['v1_snr_series'][()] )
+                    h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                    l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                    v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
                     h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
                     l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
                     v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-                    h1_real_3 = abs(f3['h1_snr_series'][()] )
-                    l1_real_3 = abs(f3['l1_snr_series'][()] )
-                    v1_real_3 = abs(f3['v1_snr_series'][()] )
+                    h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                    l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                    v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
                     h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
                     l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
                     v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-                    h1_real_4 = abs(f4['h1_snr_series'][()] )
-                    l1_real_4 = abs(f4['l1_snr_series'][()] )
-                    v1_real_4 = abs(f4['v1_snr_series'][()] )
+                    h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                    l1_real_4 = np.real(f4['l1_snr_series'][()] )
+                    v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
                     h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
                     l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
                     v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
             
-                    h1_real_5 = abs(f5['h1_snr_series'][0:12000][()] ) # 12000
-                    l1_real_5 = abs(f5['l1_snr_series'][0:12000][()] ) # 12000
-                    v1_real_5 = abs(f5['v1_snr_series'][0:12000][()] ) # 12000
+                    h1_real_5 = np.real(f5['h1_snr_series'][0:12000][()] ) # 12000
+                    l1_real_5 = np.real(f5['l1_snr_series'][0:12000][()] ) # 12000
+                    v1_real_5 = np.real(f5['v1_snr_series'][0:12000][()] ) # 12000
     
                     h1_imag_5 = np.imag((f5['h1_snr_series'][0:12000][()])) # 12000
                     l1_imag_5 = np.imag((f5['l1_snr_series'][0:12000][()])) # 12000
                     v1_imag_5 = np.imag((f5['v1_snr_series'][0:12000][()])) # 12000
                 
-                    h1_real_6 = abs(f6['h1_snr_series'][()] )
-                    l1_real_6 = abs(f6['l1_snr_series'][()] )
-                    v1_real_6 = abs(f6['v1_snr_series'][()] )
+                    h1_real_6 = np.real(f6['h1_snr_series'][()] )
+                    l1_real_6 = np.real(f6['l1_snr_series'][()] )
+                    v1_real_6 = np.real(f6['v1_snr_series'][()] )
     
                     h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
                     l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
                     v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
                 
-                    h1_real_7 = abs(f7['h1_snr_series'][()] )
-                    l1_real_7 = abs(f7['l1_snr_series'][()] )
-                    v1_real_7 = abs(f7['v1_snr_series'][()] )
+                    h1_real_7 = np.real(f7['h1_snr_series'][()] )
+                    l1_real_7 = np.real(f7['l1_snr_series'][()] )
+                    v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
                     h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
                     l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
                     v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
                 
-                    h1_real_8 = abs(f8['h1_snr_series'][()] )
-                    l1_real_8 = abs(f8['l1_snr_series'][()] )
-                    v1_real_8 = abs(f8['v1_snr_series'][()] )
+                    h1_real_8 = np.real(f8['h1_snr_series'][()] )
+                    l1_real_8 = np.real(f8['l1_snr_series'][()] )
+                    v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
                     h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
                     l1_imag_8 = np.imag((f8['l1_snr_series'][()]))
                     v1_imag_8 = np.imag((f8['v1_snr_series'][()]))
                 
-                    h1_real_9 = abs(f9['h1_snr_series'][()] )
-                    l1_real_9 = abs(f9['l1_snr_series'][()] )
-                    v1_real_9 = abs(f9['v1_snr_series'][()] )
+                    h1_real_9 = np.real(f9['h1_snr_series'][()] )
+                    l1_real_9 = np.real(f9['l1_snr_series'][()] )
+                    v1_real_9 = np.real(f9['v1_snr_series'][()] )
     
                     h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
                     l1_imag_9 = np.imag((f9['l1_snr_series'][()]))
                     v1_imag_9 = np.imag((f9['v1_snr_series'][()]))
                 
-                    h1_real_10 = abs(f10['h1_snr_series'][()] )
-                    l1_real_10 = abs(f10['l1_snr_series'][()] )
-                    v1_real_10 = abs(f10['v1_snr_series'][()] )
+                    h1_real_10 = np.real(f10['h1_snr_series'][()] )
+                    l1_real_10 = np.real(f10['l1_snr_series'][()] )
+                    v1_real_10 = np.real(f10['v1_snr_series'][()] )
     
                     h1_imag_10 = np.imag((f10['h1_snr_series'][()]))
                     l1_imag_10 = np.imag((f10['l1_snr_series'][()]))
                     v1_imag_10 = np.imag((f10['v1_snr_series'][()]))
                 
-                    h1_real_11 = abs(f11['h1_snr_series'][()] )
-                    l1_real_11 = abs(f11['l1_snr_series'][()] )
-                    v1_real_11 = abs(f11['v1_snr_series'][()] )
+                    h1_real_11 = np.real(f11['h1_snr_series'][()] )
+                    l1_real_11 = np.real(f11['l1_snr_series'][()] )
+                    v1_real_11 = np.real(f11['v1_snr_series'][()] )
     
                     h1_imag_11 = np.imag((f11['h1_snr_series'][()]))
                     l1_imag_11 = np.imag((f11['l1_snr_series'][()]))
                     v1_imag_11 = np.imag((f11['v1_snr_series'][()]))
                 
-                    h1_real_12 = abs(f12['h1_snr_series'][()] )
-                    l1_real_12 = abs(f12['l1_snr_series'][()] )
-                    v1_real_12 = abs(f12['v1_snr_series'][()] )
+                    h1_real_12 = np.real(f12['h1_snr_series'][()] )
+                    l1_real_12 = np.real(f12['l1_snr_series'][()] )
+                    v1_real_12 = np.real(f12['v1_snr_series'][()] )
     
                     h1_imag_12 = np.imag((f12['h1_snr_series'][()]))
                     l1_imag_12 = np.imag((f12['l1_snr_series'][()]))
@@ -1347,97 +1354,97 @@ class DataLoader:
                     f11 = h5py.File(data_config.data.BNS.path_train_design_30_sec_11, 'r')
                     f12 = h5py.File(data_config.data.BNS.path_train_design_30_sec_12, 'r')
 
-                    h1_real_1 = abs(f1['h1_snr_series'][()] )
-                    l1_real_1 = abs(f1['l1_snr_series'][()] )
-                    v1_real_1 = abs(f1['v1_snr_series'][()] )
+                    h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                    l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                    v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
                     h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                     l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
                     v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-                    h1_real_2 = abs(f2['h1_snr_series'][()] )
-                    l1_real_2 = abs(f2['l1_snr_series'][()] )
-                    v1_real_2 = abs(f2['v1_snr_series'][()] )
+                    h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                    l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                    v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
                     h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
                     l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
                     v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-                    h1_real_3 = abs(f3['h1_snr_series'][()] )
-                    l1_real_3 = abs(f3['l1_snr_series'][()] )
-                    v1_real_3 = abs(f3['v1_snr_series'][()] )
+                    h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                    l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                    v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
                     h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
                     l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
                     v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-                    h1_real_4 = abs(f4['h1_snr_series'][()] )
-                    l1_real_4 = abs(f4['l1_snr_series'][()] )
-                    v1_real_4 = abs(f4['v1_snr_series'][()] )
+                    h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                    l1_real_4 = np.real(f4['l1_snr_series'][()] )
+                    v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
                     h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
                     l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
                     v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
             
-                    h1_real_5 = abs(f5['h1_snr_series'][0:26000][()] )
-                    l1_real_5 = abs(f5['l1_snr_series'][0:26000][()] )
-                    v1_real_5 = abs(f5['v1_snr_series'][0:26000][()] )
+                    h1_real_5 = np.real(f5['h1_snr_series'][0:26000][()] )
+                    l1_real_5 = np.real(f5['l1_snr_series'][0:26000][()] )
+                    v1_real_5 = np.real(f5['v1_snr_series'][0:26000][()] )
     
                     h1_imag_5 = np.imag((f5['h1_snr_series'][0:26000][()]))
                     l1_imag_5 = np.imag((f5['l1_snr_series'][0:26000][()]))
                     v1_imag_5 = np.imag((f5['v1_snr_series'][0:26000][()]))
                 
-                    h1_real_6 = abs(f6['h1_snr_series'][()] )
-                    l1_real_6 = abs(f6['l1_snr_series'][()] )
-                    v1_real_6 = abs(f6['v1_snr_series'][()] )
+                    h1_real_6 = np.real(f6['h1_snr_series'][()] )
+                    l1_real_6 = np.real(f6['l1_snr_series'][()] )
+                    v1_real_6 = np.real(f6['v1_snr_series'][()] )
     
                     h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
                     l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
                     v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
                 
-                    h1_real_7 = abs(f7['h1_snr_series'][()] )
-                    l1_real_7 = abs(f7['l1_snr_series'][()] )
-                    v1_real_7 = abs(f7['v1_snr_series'][()] )
+                    h1_real_7 = np.real(f7['h1_snr_series'][()] )
+                    l1_real_7 = np.real(f7['l1_snr_series'][()] )
+                    v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
                     h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
                     l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
                     v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
                 
-                    h1_real_8 = abs(f8['h1_snr_series'][()] )
-                    l1_real_8 = abs(f8['l1_snr_series'][()] )
-                    v1_real_8 = abs(f8['v1_snr_series'][()] )
+                    h1_real_8 = np.real(f8['h1_snr_series'][()] )
+                    l1_real_8 = np.real(f8['l1_snr_series'][()] )
+                    v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
                     h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
                     l1_imag_8 = np.imag((f8['l1_snr_series'][()]))
                     v1_imag_8 = np.imag((f8['v1_snr_series'][()]))
                 
-                    h1_real_9 = abs(f9['h1_snr_series'][()] )
-                    l1_real_9 = abs(f9['l1_snr_series'][()] )
-                    v1_real_9 = abs(f9['v1_snr_series'][()] )
+                    h1_real_9 = np.real(f9['h1_snr_series'][()] )
+                    l1_real_9 = np.real(f9['l1_snr_series'][()] )
+                    v1_real_9 = np.real(f9['v1_snr_series'][()] )
     
                     h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
                     l1_imag_9 = np.imag((f9['l1_snr_series'][()]))
                     v1_imag_9 = np.imag((f9['v1_snr_series'][()]))
                 
-                    h1_real_10 = abs(f10['h1_snr_series'][()] )
-                    l1_real_10 = abs(f10['l1_snr_series'][()] )
-                    v1_real_10 = abs(f10['v1_snr_series'][()] )
+                    h1_real_10 = np.real(f10['h1_snr_series'][()] )
+                    l1_real_10 = np.real(f10['l1_snr_series'][()] )
+                    v1_real_10 = np.real(f10['v1_snr_series'][()] )
     
                     h1_imag_10 = np.imag((f10['h1_snr_series'][()]))
                     l1_imag_10 = np.imag((f10['l1_snr_series'][()]))
                     v1_imag_10 = np.imag((f10['v1_snr_series'][()]))
                 
-                    h1_real_11 = abs(f11['h1_snr_series'][()] )
-                    l1_real_11 = abs(f11['l1_snr_series'][()] )
-                    v1_real_11 = abs(f11['v1_snr_series'][()] )
+                    h1_real_11 = np.real(f11['h1_snr_series'][()] )
+                    l1_real_11 = np.real(f11['l1_snr_series'][()] )
+                    v1_real_11 = np.real(f11['v1_snr_series'][()] )
     
                     h1_imag_11 = np.imag((f11['h1_snr_series'][()]))
                     l1_imag_11 = np.imag((f11['l1_snr_series'][()]))
                     v1_imag_11 = np.imag((f11['v1_snr_series'][()]))
                 
-                    h1_real_12 = abs(f12['h1_snr_series'][()] )
-                    l1_real_12 = abs(f12['l1_snr_series'][()] )
-                    v1_real_12 = abs(f12['v1_snr_series'][()] )
+                    h1_real_12 = np.real(f12['h1_snr_series'][()] )
+                    l1_real_12 = np.real(f12['l1_snr_series'][()] )
+                    v1_real_12 = np.real(f12['v1_snr_series'][()] )
     
                     h1_imag_12 = np.imag((f12['h1_snr_series'][()]))
                     l1_imag_12 = np.imag((f12['l1_snr_series'][()]))
@@ -1484,137 +1491,137 @@ class DataLoader:
                     f15 = h5py.File(data_config.data.BNS.path_train_design_45_sec_15, 'r')
                     f16 = h5py.File(data_config.data.BNS.path_train_design_45_sec_16, 'r')
 
-                    h1_real_1 = abs(f1['h1_snr_series'][()] )
-                    l1_real_1 = abs(f1['l1_snr_series'][()] )
-                    v1_real_1 = abs(f1['v1_snr_series'][()] )
+                    h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                    l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                    v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
                     h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                     l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
                     v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-                    h1_real_2 = abs(f2['h1_snr_series'][()] )
-                    l1_real_2 = abs(f2['l1_snr_series'][()] )
-                    v1_real_2 = abs(f2['v1_snr_series'][()] )
+                    h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                    l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                    v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
                     h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
                     l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
                     v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-                    h1_real_3 = abs(f3['h1_snr_series'][()] )
-                    l1_real_3 = abs(f3['l1_snr_series'][()] )
-                    v1_real_3 = abs(f3['v1_snr_series'][()] )
+                    h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                    l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                    v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
                     h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
                     l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
                     v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-                    h1_real_4 = abs(f4['h1_snr_series'][()] )
-                    l1_real_4 = abs(f4['l1_snr_series'][()] )
-                    v1_real_4 = abs(f4['v1_snr_series'][()] )
+                    h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                    l1_real_4 = np.real(f4['l1_snr_series'][()] )
+                    v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
                     h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
                     l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
                     v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
                 
-#                    h1_real_5 = abs(f5['h1_snr_series'][()] )
-#                    l1_real_5 = abs(f5['l1_snr_series'][()] )
-#                    v1_real_5 = abs(f5['v1_snr_series'][()] )
+#                    h1_real_5 = np.real(f5['h1_snr_series'][()] )
+#                    l1_real_5 = np.real(f5['l1_snr_series'][()] )
+#                    v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
 #                    h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
 #                    l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
 #                    v1_imag_5 = np.imag((f5['v1_snr_series'][()]))
             
-                    h1_real_5 = abs(f5['h1_snr_series'][0:42000][()] )
-                    l1_real_5 = abs(f5['l1_snr_series'][0:42000][()] )
-                    v1_real_5 = abs(f5['v1_snr_series'][0:42000][()] )
+                    h1_real_5 = np.real(f5['h1_snr_series'][0:42000][()] )
+                    l1_real_5 = np.real(f5['l1_snr_series'][0:42000][()] )
+                    v1_real_5 = np.real(f5['v1_snr_series'][0:42000][()] )
     
                     h1_imag_5 = np.imag((f5['h1_snr_series'][0:42000][()]))
                     l1_imag_5 = np.imag((f5['l1_snr_series'][0:42000][()]))
                     v1_imag_5 = np.imag((f5['v1_snr_series'][0:42000][()]))
                 
-                    h1_real_6 = abs(f6['h1_snr_series'][()] )
-                    l1_real_6 = abs(f6['l1_snr_series'][()] )
-                    v1_real_6 = abs(f6['v1_snr_series'][()] )
+                    h1_real_6 = np.real(f6['h1_snr_series'][()] )
+                    l1_real_6 = np.real(f6['l1_snr_series'][()] )
+                    v1_real_6 = np.real(f6['v1_snr_series'][()] )
 
                     h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
                     l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
                     v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
             
-                    h1_real_7 = abs(f7['h1_snr_series'][()] )
-                    l1_real_7 = abs(f7['l1_snr_series'][()] )
-                    v1_real_7 = abs(f7['v1_snr_series'][()] )
+                    h1_real_7 = np.real(f7['h1_snr_series'][()] )
+                    l1_real_7 = np.real(f7['l1_snr_series'][()] )
+                    v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
                     h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
                     l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
                     v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
                 
-                    h1_real_8 = abs(f8['h1_snr_series'][()] )
-                    l1_real_8 = abs(f8['l1_snr_series'][()] )
-                    v1_real_8 = abs(f8['v1_snr_series'][()] )
+                    h1_real_8 = np.real(f8['h1_snr_series'][()] )
+                    l1_real_8 = np.real(f8['l1_snr_series'][()] )
+                    v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
                     h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
                     l1_imag_8 = np.imag((f8['l1_snr_series'][()]))
                     v1_imag_8 = np.imag((f8['v1_snr_series'][()]))
                 
-                    h1_real_9 = abs(f9['h1_snr_series'][()] )
-                    l1_real_9 = abs(f9['l1_snr_series'][()] )
-                    v1_real_9 = abs(f9['v1_snr_series'][()] )
+                    h1_real_9 = np.real(f9['h1_snr_series'][()] )
+                    l1_real_9 = np.real(f9['l1_snr_series'][()] )
+                    v1_real_9 = np.real(f9['v1_snr_series'][()] )
                     
                     h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
                     l1_imag_9 = np.imag((f9['l1_snr_series'][()]))
                     v1_imag_9 = np.imag((f9['v1_snr_series'][()]))
                     
-                    h1_real_10 = abs(f10['h1_snr_series'][()] )
-                    l1_real_10 = abs(f10['l1_snr_series'][()] )
-                    v1_real_10 = abs(f10['v1_snr_series'][()] )
+                    h1_real_10 = np.real(f10['h1_snr_series'][()] )
+                    l1_real_10 = np.real(f10['l1_snr_series'][()] )
+                    v1_real_10 = np.real(f10['v1_snr_series'][()] )
 
                     h1_imag_10 = np.imag((f10['h1_snr_series'][()]))
                     l1_imag_10 = np.imag((f10['l1_snr_series'][()]))
                     v1_imag_10 = np.imag((f10['v1_snr_series'][()]))
             
-                    h1_real_11 = abs(f11['h1_snr_series'][()] )
-                    l1_real_11 = abs(f11['l1_snr_series'][()] )
-                    v1_real_11 = abs(f11['v1_snr_series'][()] )
+                    h1_real_11 = np.real(f11['h1_snr_series'][()] )
+                    l1_real_11 = np.real(f11['l1_snr_series'][()] )
+                    v1_real_11 = np.real(f11['v1_snr_series'][()] )
     
                     h1_imag_11 = np.imag((f11['h1_snr_series'][()]))
                     l1_imag_11 = np.imag((f11['l1_snr_series'][()]))
                     v1_imag_11 = np.imag((f11['v1_snr_series'][()]))
                 
-                    h1_real_12 = abs(f12['h1_snr_series'][()] )
-                    l1_real_12 = abs(f12['l1_snr_series'][()] )
-                    v1_real_12 = abs(f12['v1_snr_series'][()] )
+                    h1_real_12 = np.real(f12['h1_snr_series'][()] )
+                    l1_real_12 = np.real(f12['l1_snr_series'][()] )
+                    v1_real_12 = np.real(f12['v1_snr_series'][()] )
     
                     h1_imag_12 = np.imag((f12['h1_snr_series'][()]))
                     l1_imag_12 = np.imag((f12['l1_snr_series'][()]))
                     v1_imag_12 = np.imag((f12['v1_snr_series'][()]))
                 
-                    h1_real_13 = abs(f13['h1_snr_series'][()] )
-                    l1_real_13 = abs(f13['l1_snr_series'][()] )
-                    v1_real_13 = abs(f13['v1_snr_series'][()] )
+                    h1_real_13 = np.real(f13['h1_snr_series'][()] )
+                    l1_real_13 = np.real(f13['l1_snr_series'][()] )
+                    v1_real_13 = np.real(f13['v1_snr_series'][()] )
    
                     h1_imag_13 = np.imag((f13['h1_snr_series'][()]))
                     l1_imag_13 = np.imag((f13['l1_snr_series'][()]))
                     v1_imag_13 = np.imag((f13['v1_snr_series'][()]))
             
-                    h1_real_14 = abs(f14['h1_snr_series'][()] )
-                    l1_real_14 = abs(f14['l1_snr_series'][()] )
-                    v1_real_14 = abs(f14['v1_snr_series'][()] )
+                    h1_real_14 = np.real(f14['h1_snr_series'][()] )
+                    l1_real_14 = np.real(f14['l1_snr_series'][()] )
+                    v1_real_14 = np.real(f14['v1_snr_series'][()] )
     
                     h1_imag_14 = np.imag((f14['h1_snr_series'][()]))
                     l1_imag_14 = np.imag((f14['l1_snr_series'][()]))
                     v1_imag_14 = np.imag((f14['v1_snr_series'][()]))
                 
-                    h1_real_15 = abs(f15['h1_snr_series'][()] )
-                    l1_real_15 = abs(f15['l1_snr_series'][()] )
-                    v1_real_15 = abs(f15['v1_snr_series'][()] )
+                    h1_real_15 = np.real(f15['h1_snr_series'][()] )
+                    l1_real_15 = np.real(f15['l1_snr_series'][()] )
+                    v1_real_15 = np.real(f15['v1_snr_series'][()] )
     
                     h1_imag_15 = np.imag((f15['h1_snr_series'][()]))
                     l1_imag_15 = np.imag((f15['l1_snr_series'][()]))
                     v1_imag_15 = np.imag((f15['v1_snr_series'][()]))
                 
-                    h1_real_16 = abs(f16['h1_snr_series'][()] )
-                    l1_real_16 = abs(f16['l1_snr_series'][()] )
-                    v1_real_16 = abs(f16['v1_snr_series'][()] )
+                    h1_real_16 = np.real(f16['h1_snr_series'][()] )
+                    l1_real_16 = np.real(f16['l1_snr_series'][()] )
+                    v1_real_16 = np.real(f16['v1_snr_series'][()] )
     
                     h1_imag_16 = np.imag((f16['h1_snr_series'][()]))
                     l1_imag_16 = np.imag((f16['l1_snr_series'][()]))
@@ -1657,73 +1664,73 @@ class DataLoader:
                     f8 = h5py.File(data_config.data.BNS.path_train_design_58_sec_8, 'r')
                     f9 = h5py.File(data_config.data.BNS.path_train_design_58_sec_9, 'r')
 
-                    h1_real_1 = abs(f1['h1_snr_series'][()] )
-                    l1_real_1 = abs(f1['l1_snr_series'][()] )
-                    v1_real_1 = abs(f1['v1_snr_series'][()] )
+                    h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                    l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                    v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
                     h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                     l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
                     v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-                    h1_real_2 = abs(f2['h1_snr_series'][()] )
-                    l1_real_2 = abs(f2['l1_snr_series'][()] )
-                    v1_real_2 = abs(f2['v1_snr_series'][()] )
+                    h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                    l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                    v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
                     h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
                     l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
                     v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-                    h1_real_3 = abs(f3['h1_snr_series'][()] )
-                    l1_real_3 = abs(f3['l1_snr_series'][()] )
-                    v1_real_3 = abs(f3['v1_snr_series'][()] )
+                    h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                    l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                    v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
                     h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
                     l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
                     v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-                    h1_real_4 = abs(f4['h1_snr_series'][0:62000][()] )
-                    l1_real_4 = abs(f4['l1_snr_series'][0:62000][()] )
-                    v1_real_4 = abs(f4['v1_snr_series'][0:62000][()] )
+                    h1_real_4 = np.real(f4['h1_snr_series'][0:62000][()] )
+                    l1_real_4 = np.real(f4['l1_snr_series'][0:62000][()] )
+                    v1_real_4 = np.real(f4['v1_snr_series'][0:62000][()] )
     
                     h1_imag_4 = np.imag((f4['h1_snr_series'][0:62000][()]))
                     l1_imag_4 = np.imag((f4['l1_snr_series'][0:62000][()]))
                     v1_imag_4 = np.imag((f4['v1_snr_series'][0:62000][()]))
                 
-                    h1_real_5 = abs(f5['h1_snr_series'][()] )
-                    l1_real_5 = abs(f5['l1_snr_series'][()] )
-                    v1_real_5 = abs(f5['v1_snr_series'][()] )
+                    h1_real_5 = np.real(f5['h1_snr_series'][()] )
+                    l1_real_5 = np.real(f5['l1_snr_series'][()] )
+                    v1_real_5 = np.real(f5['v1_snr_series'][()] )
 
                     h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
                     l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
                     v1_imag_5 = np.imag((f5['v1_snr_series'][()]))
             
-                    h1_real_6 = abs(f6['h1_snr_series'][()] )
-                    l1_real_6 = abs(f6['l1_snr_series'][()] )
-                    v1_real_6 = abs(f6['v1_snr_series'][()] )
+                    h1_real_6 = np.real(f6['h1_snr_series'][()] )
+                    l1_real_6 = np.real(f6['l1_snr_series'][()] )
+                    v1_real_6 = np.real(f6['v1_snr_series'][()] )
     
                     h1_imag_6 = np.imag((f6['h1_snr_series'][()]))
                     l1_imag_6 = np.imag((f6['l1_snr_series'][()]))
                     v1_imag_6 = np.imag((f6['v1_snr_series'][()]))
                 
-                    h1_real_7 = abs(f7['h1_snr_series'][()] )
-                    l1_real_7 = abs(f7['l1_snr_series'][()] )
-                    v1_real_7 = abs(f7['v1_snr_series'][()] )
+                    h1_real_7 = np.real(f7['h1_snr_series'][()] )
+                    l1_real_7 = np.real(f7['l1_snr_series'][()] )
+                    v1_real_7 = np.real(f7['v1_snr_series'][()] )
     
                     h1_imag_7 = np.imag((f7['h1_snr_series'][()]))
                     l1_imag_7 = np.imag((f7['l1_snr_series'][()]))
                     v1_imag_7 = np.imag((f7['v1_snr_series'][()]))
                 
-                    h1_real_8 = abs(f8['h1_snr_series'][()] )
-                    l1_real_8 = abs(f8['l1_snr_series'][()] )
-                    v1_real_8 = abs(f8['v1_snr_series'][()] )
+                    h1_real_8 = np.real(f8['h1_snr_series'][()] )
+                    l1_real_8 = np.real(f8['l1_snr_series'][()] )
+                    v1_real_8 = np.real(f8['v1_snr_series'][()] )
     
                     h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
                     l1_imag_8 = np.imag((f8['l1_snr_series'][()]))
                     v1_imag_8 = np.imag((f8['v1_snr_series'][()]))
                 
-                    h1_real_9 = abs(f9['h1_snr_series'][()] )
-                    l1_real_9 = abs(f9['l1_snr_series'][()] )
-                    v1_real_9 = abs(f9['v1_snr_series'][()] )
+                    h1_real_9 = np.real(f9['h1_snr_series'][()] )
+                    l1_real_9 = np.real(f9['l1_snr_series'][()] )
+                    v1_real_9 = np.real(f9['v1_snr_series'][()] )
     
                     h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
                     l1_imag_9 = np.imag((f9['l1_snr_series'][()]))
@@ -1757,41 +1764,41 @@ class DataLoader:
                 f4 = h5py.File(data_config.data.BNS.path_train_O2_noise_4, 'r')
                 f5 = h5py.File(data_config.data.BNS.path_train_O2_noise_5, 'r')
 
-                h1_real_1 = abs(f1['h1_snr_series'][()] )
-                l1_real_1 = abs(f1['l1_snr_series'][()] )
-                v1_real_1 = abs(f1['v1_snr_series'][()] )
+                h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
                 h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                 l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
                 v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
             
-                h1_real_2 = abs(f2['h1_snr_series'][()] )
-                l1_real_2 = abs(f2['l1_snr_series'][()] )
-                v1_real_2 = abs(f2['v1_snr_series'][()] )
+                h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
                 h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
                 l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
                 v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                 
-                h1_real_3 = abs(f3['h1_snr_series'][()] )
-                l1_real_3 = abs(f3['l1_snr_series'][()] )
-                v1_real_3 = abs(f3['v1_snr_series'][()] )
+                h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                v1_real_3 = np.real(f3['v1_snr_series'][()] )
     
                 h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
                 l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
                 v1_imag_3 = np.imag((f3['v1_snr_series'][()]))
                 
-                h1_real_4 = abs(f4['h1_snr_series'][()] )
-                l1_real_4 = abs(f4['l1_snr_series'][()] )
-                v1_real_4 = abs(f4['v1_snr_series'][()] )
+                h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                l1_real_4 = np.real(f4['l1_snr_series'][()] )
+                v1_real_4 = np.real(f4['v1_snr_series'][()] )
     
                 h1_imag_4 = np.imag((f4['h1_snr_series'][()]))
                 l1_imag_4 = np.imag((f4['l1_snr_series'][()]))
                 v1_imag_4 = np.imag((f4['v1_snr_series'][()]))
                 
-                h1_real_5 = abs(f5['h1_snr_series'][()] )
-                l1_real_5 = abs(f5['l1_snr_series'][()] )
-                v1_real_5 = abs(f5['v1_snr_series'][()] )
+                h1_real_5 = np.real(f5['h1_snr_series'][()] )
+                l1_real_5 = np.real(f5['l1_snr_series'][()] )
+                v1_real_5 = np.real(f5['v1_snr_series'][()] )
     
                 h1_imag_5 = np.imag((f5['h1_snr_series'][()]))
                 l1_imag_5 = np.imag((f5['l1_snr_series'][()]))
@@ -1821,29 +1828,29 @@ class DataLoader:
                 f2 = h5py.File(data_config.data.BNS.path_train_O4_PSD_2, 'r')
                 f3 = h5py.File(data_config.data.BNS.path_train_O4_PSD_3, 'r')
 
-                h1_real_1 = abs(f1['h1_snr_series'][()] )
-                l1_real_1 = abs(f1['l1_snr_series'][()] )
-                v1_real_1 = abs(f1['v1_snr_series'][()] )
+                h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
-                h1_imag_1 = absnp.imag((f1['h1_snr_series'][()]))
-                l1_imag_1 = absnp.imag((f1['l1_snr_series'][()]))
-                v1_imag_1 = absnp.imag((f1['v1_snr_series'][()]))
+                h1_imag_1 = np.realnp.imag((f1['h1_snr_series'][()]))
+                l1_imag_1 = np.realnp.imag((f1['l1_snr_series'][()]))
+                v1_imag_1 = np.realnp.imag((f1['v1_snr_series'][()]))
             
-                h1_real_2 = abs(f2['h1_snr_series'][()] )
-                l1_real_2 = abs(f2['l1_snr_series'][()] )
-                v1_real_2 = abs(f2['v1_snr_series'][()] )
+                h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
-                h1_imag_2 = absnp.imag((f2['h1_snr_series'][()]))
-                l1_imag_2 = absnp.imag((f2['l1_snr_series'][()]))
-                v1_imag_2 = absnp.imag((f2['v1_snr_series'][()]))
+                h1_imag_2 = np.realnp.imag((f2['h1_snr_series'][()]))
+                l1_imag_2 = np.realnp.imag((f2['l1_snr_series'][()]))
+                v1_imag_2 = np.realnp.imag((f2['v1_snr_series'][()]))
                 
-                h1_real_3 = abs(f3['h1_snr_series'][()] )
-                l1_real_3 = abs(f3['l1_snr_series'][()] )
-                v1_real_3 = abs(f3['v1_snr_series'][()] )
+                h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                v1_real_3 = np.real(f3['v1_snr_series'][()] )
         
-                h1_imag_3 = absnp.imag((f3['h1_snr_series'][()]))
-                l1_imag_3 = absnp.imag((f3['l1_snr_series'][()]))
-                v1_imag_3 = absnp.imag((f3['v1_snr_series'][()]))
+                h1_imag_3 = np.realnp.imag((f3['h1_snr_series'][()]))
+                l1_imag_3 = np.realnp.imag((f3['l1_snr_series'][()]))
+                v1_imag_3 = np.realnp.imag((f3['v1_snr_series'][()]))
             
                 h1_real = np.concatenate([h1_real_1, h1_real_2, h1_real_3], axis=0)
                 l1_real = np.concatenate([l1_real_1, l1_real_2, l1_real_3], axis=0)
@@ -1867,45 +1874,45 @@ class DataLoader:
                     f4 = h5py.File(data_config.data.BNS.path_train_O4_PSD_5_sec_4, 'r')
                     f5 = h5py.File(data_config.data.BNS.path_train_O4_PSD_5_sec_5, 'r')
 
-                    h1_real_1 = abs(f1['h1_snr_series'][()] )
-                    l1_real_1 = abs(f1['l1_snr_series'][()] )
-                    v1_real_1 = abs(f1['v1_snr_series'][()] )
+                    h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                    l1_real_1 = np.real(f1['l1_snr_series'][()] )
+                    v1_real_1 = np.real(f1['v1_snr_series'][()] )
 
-                    h1_imag_1 = absnp.imag((f1['h1_snr_series'][()]))
-                    l1_imag_1 = absnp.imag((f1['l1_snr_series'][()]))
-                    v1_imag_1 = absnp.imag((f1['v1_snr_series'][()]))
+                    h1_imag_1 = np.realnp.imag((f1['h1_snr_series'][()]))
+                    l1_imag_1 = np.realnp.imag((f1['l1_snr_series'][()]))
+                    v1_imag_1 = np.realnp.imag((f1['v1_snr_series'][()]))
             
-                    h1_real_2 = abs(f2['h1_snr_series'][()] )
-                    l1_real_2 = abs(f2['l1_snr_series'][()] )
-                    v1_real_2 = abs(f2['v1_snr_series'][()] )
+                    h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                    l1_real_2 = np.real(f2['l1_snr_series'][()] )
+                    v1_real_2 = np.real(f2['v1_snr_series'][()] )
     
-                    h1_imag_2 = absnp.imag((f2['h1_snr_series'][()]))
-                    l1_imag_2 = absnp.imag((f2['l1_snr_series'][()]))
-                    v1_imag_2 = absnp.imag((f2['v1_snr_series'][()]))
+                    h1_imag_2 = np.realnp.imag((f2['h1_snr_series'][()]))
+                    l1_imag_2 = np.realnp.imag((f2['l1_snr_series'][()]))
+                    v1_imag_2 = np.realnp.imag((f2['v1_snr_series'][()]))
                 
-                    h1_real_3 = abs(f3['h1_snr_series'][()] )
-                    l1_real_3 = abs(f3['l1_snr_series'][()] )
-                    v1_real_3 = abs(f3['v1_snr_series'][()] )
+                    h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                    l1_real_3 = np.real(f3['l1_snr_series'][()] )
+                    v1_real_3 = np.real(f3['v1_snr_series'][()] )
         
-                    h1_imag_3 = absnp.imag((f3['h1_snr_series'][()]))
-                    l1_imag_3 = absnp.imag((f3['l1_snr_series'][()]))
-                    v1_imag_3 = absnp.imag((f3['v1_snr_series'][()]))
+                    h1_imag_3 = np.realnp.imag((f3['h1_snr_series'][()]))
+                    l1_imag_3 = np.realnp.imag((f3['l1_snr_series'][()]))
+                    v1_imag_3 = np.realnp.imag((f3['v1_snr_series'][()]))
                     
-                    h1_real_4 = abs(f4['h1_snr_series'][()] )
-                    l1_real_4 = abs(f4['l1_snr_series'][()] )
-                    v1_real_4 = abs(f4['v1_snr_series'][()] )
+                    h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                    l1_real_4 = np.real(f4['l1_snr_series'][()] )
+                    v1_real_4 = np.real(f4['v1_snr_series'][()] )
         
-                    h1_imag_4 = absnp.imag((f4['h1_snr_series'][()]))
-                    l1_imag_4 = absnp.imag((f4['l1_snr_series'][()]))
-                    v1_imag_4 = absnp.imag((f4['v1_snr_series'][()]))
+                    h1_imag_4 = np.realnp.imag((f4['h1_snr_series'][()]))
+                    l1_imag_4 = np.realnp.imag((f4['l1_snr_series'][()]))
+                    v1_imag_4 = np.realnp.imag((f4['v1_snr_series'][()]))
                     
-                    h1_real_5 = abs(f5['h1_snr_series'][()] )
-                    l1_real_5 = abs(f5['l1_snr_series'][()] )
-                    v1_real_5 = abs(f5['v1_snr_series'][()] )
+                    h1_real_5 = np.real(f5['h1_snr_series'][()] )
+                    l1_real_5 = np.real(f5['l1_snr_series'][()] )
+                    v1_real_5 = np.real(f5['v1_snr_series'][()] )
         
-                    h1_imag_5 = absnp.imag((f5['h1_snr_series'][()]))
-                    l1_imag_5 = absnp.imag((f5['l1_snr_series'][()]))
-                    v1_imag_5 = absnp.imag((f5['v1_snr_series'][()]))
+                    h1_imag_5 = np.realnp.imag((f5['h1_snr_series'][()]))
+                    l1_imag_5 = np.realnp.imag((f5['l1_snr_series'][()]))
+                    v1_imag_5 = np.realnp.imag((f5['v1_snr_series'][()]))
             
                     h1_real = np.concatenate([h1_real_1, h1_real_2, h1_real_3, h1_real_4, h1_real_5], axis=0)
                     l1_real = np.concatenate([l1_real_1, l1_real_2, l1_real_3, l1_real_4, l1_real_5], axis=0)
@@ -1951,56 +1958,56 @@ class DataLoader:
                 f8 = h5py.File(data_config.data.BNS.path_train_2_det_high_SNR_1, 'r')
                 f9 = h5py.File(data_config.data.BNS.path_train_2_det_high_SNR_2, 'r')
             
-                h1_real = abs(f1['h1_snr_series'][()])
-                l1_real = abs(f1['l1_snr_series'][()])
+                h1_real = np.real(f1['h1_snr_series'][()])
+                l1_real = np.real(f1['l1_snr_series'][()])
             
                 h1_imag = np.imag((f1['h1_snr_series'][()]))
                 l1_imag = np.imag((f1['l1_snr_series'][()]))
 
-                h1_real_12k = abs(f2['h1_snr_series'][0:12000][()])
-                l1_real_12k = abs(f2['l1_snr_series'][0:12000][()])
+                h1_real_12k = np.real(f2['h1_snr_series'][0:12000][()])
+                l1_real_12k = np.real(f2['l1_snr_series'][0:12000][()])
 
                 h1_imag_12k = np.imag((f2['h1_snr_series'][0:12000][()]))
                 l1_imag_12k = np.imag((f2['l1_snr_series'][0:12000][()]))
             
-                h1_real_36k = abs(f3['h1_snr_series'][0:36000][()] )
-                l1_real_36k = abs(f3['l1_snr_series'][0:36000][()] )
+                h1_real_36k = np.real(f3['h1_snr_series'][0:36000][()] )
+                l1_real_36k = np.real(f3['l1_snr_series'][0:36000][()] )
     
                 h1_imag_36k = np.imag((f3['h1_snr_series'][0:36000][()]))
                 l1_imag_36k = np.imag((f3['l1_snr_series'][0:36000][()]))
                 
-                h1_real_52k = abs(f4['h1_snr_series'][0:52000][()] )
-                l1_real_52k = abs(f4['l1_snr_series'][0:52000][()] )
+                h1_real_52k = np.real(f4['h1_snr_series'][0:52000][()] )
+                l1_real_52k = np.real(f4['l1_snr_series'][0:52000][()] )
               
                 h1_imag_52k = np.imag((f4['h1_snr_series'][0:52000][()]))
                 l1_imag_52k = np.imag((f4['l1_snr_series'][0:52000][()]))
             
-                h1_real_22k = abs(f5['h1_snr_series'][()])
-                l1_real_22k = abs(f5['l1_snr_series'][()])
+                h1_real_22k = np.real(f5['h1_snr_series'][()])
+                l1_real_22k = np.real(f5['l1_snr_series'][()])
     
                 h1_imag_22k = np.imag((f5['h1_snr_series'][()]))
                 l1_imag_22k = np.imag((f5['l1_snr_series'][()]))
             
-                h1_real_86k = abs(f6['h1_snr_series'][()])
-                l1_real_86k = abs(f6['l1_snr_series'][()])
+                h1_real_86k = np.real(f6['h1_snr_series'][()])
+                l1_real_86k = np.real(f6['l1_snr_series'][()])
     
                 h1_imag_86k = np.imag((f6['h1_snr_series'][()]))
                 l1_imag_86k = np.imag((f6['l1_snr_series'][()]))
             
-                h1_real_102k = abs(f7['h1_snr_series'][()])
-                l1_real_102k = abs(f7['l1_snr_series'][()])
+                h1_real_102k = np.real(f7['h1_snr_series'][()])
+                l1_real_102k = np.real(f7['l1_snr_series'][()])
     
                 h1_imag_102k = np.imag((f7['h1_snr_series'][()]))
                 l1_imag_102k = np.imag((f7['l1_snr_series'][()]))
             
-                h1_real_high_1 = abs(f8['h1_snr_series'][()])
-                l1_real_high_1 = abs(f8['l1_snr_series'][()])
+                h1_real_high_1 = np.real(f8['h1_snr_series'][()])
+                l1_real_high_1 = np.real(f8['l1_snr_series'][()])
             
                 h1_imag_high_1 = np.imag((f8['h1_snr_series'][()]))
                 l1_imag_high_1 = np.imag((f8['l1_snr_series'][()]))
             
-                h1_real_high_2 = abs(f9['h1_snr_series'][()])
-                l1_real_high_2 = abs(f9['l1_snr_series'][()])
+                h1_real_high_2 = np.real(f9['h1_snr_series'][()])
+                l1_real_high_2 = np.real(f9['l1_snr_series'][()])
             
                 h1_imag_high_2 = np.imag((f9['h1_snr_series'][()]))
                 l1_imag_high_2 = np.imag((f9['l1_snr_series'][()]))
@@ -2032,26 +2039,26 @@ class DataLoader:
                 f6 = h5py.File(data_config.data.NSBH.path_train_low_snr_2, 'r')
                 f7 = h5py.File(data_config.data.NSBH.path_train_low_snr_3, 'r')
             
-                h1_real_52k = abs(f1['h1_snr_series'][()])
-                l1_real_52k = abs(f1['l1_snr_series'][()])
+                h1_real_52k = np.real(f1['h1_snr_series'][()])
+                l1_real_52k = np.real(f1['l1_snr_series'][()])
         
-                h1_real_30k = abs(f2['h1_snr_series'][()])
-                l1_real_30k = abs(f2['l1_snr_series'][()])
+                h1_real_30k = np.real(f2['h1_snr_series'][()])
+                l1_real_30k = np.real(f2['l1_snr_series'][()])
             
-                h1_real_12k = abs(f3['h1_snr_series'][()])
-                l1_real_12k = abs(f3['l1_snr_series'][()])
+                h1_real_12k = np.real(f3['h1_snr_series'][()])
+                l1_real_12k = np.real(f3['l1_snr_series'][()])
         
-                h1_real_6k = abs(f4['h1_snr_series'][()])
-                l1_real_6k = abs(f4['l1_snr_series'][()])
+                h1_real_6k = np.real(f4['h1_snr_series'][()])
+                l1_real_6k = np.real(f4['l1_snr_series'][()])
             
-                h1_real_60k = abs(f5['h1_snr_series'][0:60000][()] )
-                l1_real_60k = abs(f5['l1_snr_series'][0:60000][()] )
+                h1_real_60k = np.real(f5['h1_snr_series'][0:60000][()] )
+                l1_real_60k = np.real(f5['l1_snr_series'][0:60000][()] )
             
-                h1_real_40k = abs(f6['h1_snr_series'][0:40000][()] )
-                l1_real_40k = abs(f6['l1_snr_series'][0:40000][()] )
+                h1_real_40k = np.real(f6['h1_snr_series'][0:40000][()] )
+                l1_real_40k = np.real(f6['l1_snr_series'][0:40000][()] )
             
-                h1_real_72k = abs(f7['h1_snr_series'][()] )
-                l1_real_72k = abs(f7['l1_snr_series'][()] )
+                h1_real_72k = np.real(f7['h1_snr_series'][()] )
+                l1_real_72k = np.real(f7['l1_snr_series'][()] )
                 
                 h1_imag_52k = np.imag((f1['h1_snr_series'][()]))
                 l1_imag_52k = np.imag((f1['l1_snr_series'][()]))
@@ -2095,11 +2102,11 @@ class DataLoader:
                 f1 = h5py.File(data_config.BBH.path_train, 'r')
                 f2 = h5py.File(data_config.BBH.path_train_low_SNR, 'r')
             
-                h1_real_1 = abs(f1['h1_snr_series'][2000:200000][()])
-                l1_real_1 = abs(f1['l1_snr_series'][2000:200000][()])
+                h1_real_1 = np.real(f1['h1_snr_series'][2000:200000][()])
+                l1_real_1 = np.real(f1['l1_snr_series'][2000:200000][()])
         
-                h1_real_2 = abs(f2['h1_snr_series'][()])
-                l1_real_2 = abs(f2['l1_snr_series'][()])
+                h1_real_2 = np.real(f2['h1_snr_series'][()])
+                l1_real_2 = np.real(f2['l1_snr_series'][()])
                 
                 h1_imag_1 = np.imag((f1['h1_snr_series'][2000:200000][()]))
                 l1_imag_1 = np.imag((f1['l1_snr_series'][2000:200000][()]))
@@ -2133,82 +2140,82 @@ class DataLoader:
                 f12 = h5py.File(data_config.data.NSBH.path_train_real_noise_5, 'r')
                
                 
-                h1_real_1 = abs(f1['h1_snr_series'][()] )
-                l1_real_1 = abs(f1['l1_snr_series'][()] )
+                h1_real_1 = np.real(f1['h1_snr_series'][()] )
+                l1_real_1 = np.real(f1['l1_snr_series'][()] )
                 
                 h1_imag_1 = (np.imag((f1['h1_snr_series'][()])))
                 l1_imag_1 = (np.imag((f1['l1_snr_series'][()])))
            
-                h1_real_2 = abs(f2['h1_snr_series'][()] )
-                l1_real_2 = abs(f2['l1_snr_series'][()] )
+                h1_real_2 = np.real(f2['h1_snr_series'][()] )
+                l1_real_2 = np.real(f2['l1_snr_series'][()] )
          
                 h1_imag_2 = (np.imag((f2['h1_snr_series'][()])))
                 l1_imag_2 = (np.imag((f2['l1_snr_series'][()])))
             
                 
-                h1_real_3 = abs(f3['h1_snr_series'][()] )
-                l1_real_3 = abs(f3['l1_snr_series'][()] )
+                h1_real_3 = np.real(f3['h1_snr_series'][()] )
+                l1_real_3 = np.real(f3['l1_snr_series'][()] )
            
                 h1_imag_3 = (np.imag((f3['h1_snr_series'][()])))
                 l1_imag_3 = (np.imag((f3['l1_snr_series'][()])))
           
                 
-                h1_real_4 = abs(f4['h1_snr_series'][()] )
-                l1_real_4 = abs(f4['l1_snr_series'][()] )
+                h1_real_4 = np.real(f4['h1_snr_series'][()] )
+                l1_real_4 = np.real(f4['l1_snr_series'][()] )
             
     
                 h1_imag_4 = (np.imag((f4['h1_snr_series'][()])))
                 l1_imag_4 = (np.imag((f4['l1_snr_series'][()])))
             
                 
-                h1_real_5 = abs(f5['h1_snr_series'][()] )
-                l1_real_5 = abs(f5['l1_snr_series'][()] )
+                h1_real_5 = np.real(f5['h1_snr_series'][()] )
+                l1_real_5 = np.real(f5['l1_snr_series'][()] )
             
                 h1_imag_5 = (np.imag((f5['h1_snr_series'][()])))
                 l1_imag_5 = (np.imag((f5['l1_snr_series'][()])))
             
             
-                h1_real_6 = abs(f6['h1_snr_series'][()] )
-                l1_real_6 = abs(f6['l1_snr_series'][()] )
+                h1_real_6 = np.real(f6['h1_snr_series'][()] )
+                l1_real_6 = np.real(f6['l1_snr_series'][()] )
             
                 h1_imag_6 = (np.imag((f6['h1_snr_series'][()])))
                 l1_imag_6 = (np.imag((f6['l1_snr_series'][()])))
             
                 
-                h1_real_7 = abs(f7['h1_snr_series'][()] )
-                l1_real_7 = abs(f7['l1_snr_series'][()] )
+                h1_real_7 = np.real(f7['h1_snr_series'][()] )
+                l1_real_7 = np.real(f7['l1_snr_series'][()] )
           
         
                 h1_imag_7 = (np.imag((f7['h1_snr_series'][()])))
                 l1_imag_7 = (np.imag((f7['l1_snr_series'][()])))
                 
                 
-                h1_real_8 = abs(f8['h1_snr_series'][()] )
-                l1_real_8 = abs(f8['l1_snr_series'][()] )
+                h1_real_8 = np.real(f8['h1_snr_series'][()] )
+                l1_real_8 = np.real(f8['l1_snr_series'][()] )
 
                 h1_imag_8 = np.imag((f8['h1_snr_series'][()]))
                 l1_imag_8 = np.imag((f8['l1_snr_series'][()]))                
             
-                h1_real_9 = abs(f9['h1_snr_series'][()] )
-                l1_real_9 = abs(f9['l1_snr_series'][()] )
+                h1_real_9 = np.real(f9['h1_snr_series'][()] )
+                l1_real_9 = np.real(f9['l1_snr_series'][()] )
     
                 h1_imag_9 = np.imag((f9['h1_snr_series'][()]))
                 l1_imag_9 = np.imag((f9['l1_snr_series'][()]))                
                 
-                h1_real_10 = abs(f10['h1_snr_series'][()] )
-                l1_real_10 = abs(f10['l1_snr_series'][()] )
+                h1_real_10 = np.real(f10['h1_snr_series'][()] )
+                l1_real_10 = np.real(f10['l1_snr_series'][()] )
     
                 h1_imag_10 = np.imag((f10['h1_snr_series'][()]))
                 l1_imag_10 = np.imag((f10['l1_snr_series'][()]))
                 
-                h1_real_11 = abs(f11['h1_snr_series'][()] )
-                l1_real_11 = abs(f11['l1_snr_series'][()] )
+                h1_real_11 = np.real(f11['h1_snr_series'][()] )
+                l1_real_11 = np.real(f11['l1_snr_series'][()] )
                
                 h1_imag_11 = np.imag((f11['h1_snr_series'][()]))
                 l1_imag_11 = np.imag((f11['l1_snr_series'][()]))                
                 
-                h1_real_12 = abs(f12['h1_snr_series'][()] )
-                l1_real_12 = abs(f12['l1_snr_series'][()] )                
+                h1_real_12 = np.real(f12['h1_snr_series'][()] )
+                l1_real_12 = np.real(f12['l1_snr_series'][()] )                
     
                 h1_imag_12 = np.imag((f12['h1_snr_series'][()]))
                 l1_imag_12 = np.imag((f12['l1_snr_series'][()]))
@@ -2241,11 +2248,11 @@ class DataLoader:
                 f1 = h5py.File(data_config.data.BNS.path_train_2_det_negative_latency_5_1, 'r')
                 f2 = h5py.File(data_config.data.BNS.path_train_2_det_negative_latency_5_2, 'r')
                 
-                h1_real_1 = abs(f1['h1_snr_series'][()])
-                l1_real_1 = abs(f1['l1_snr_series'][()])
+                h1_real_1 = np.real(f1['h1_snr_series'][()])
+                l1_real_1 = np.real(f1['l1_snr_series'][()])
         
-                h1_real_2 = abs(f2['h1_snr_series'][()])
-                l1_real_2 = abs(f2['l1_snr_series'][()])
+                h1_real_2 = np.real(f2['h1_snr_series'][()])
+                l1_real_2 = np.real(f2['l1_snr_series'][()])
                 
                 h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                 l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
@@ -2266,8 +2273,8 @@ class DataLoader:
                 
                 f1 = h5py.File(data_config.data.BNS.path_train_2_det_negative_latency_10, 'r')
                 
-                h1_real = abs(f1['h1_snr_series'][()])
-                l1_real = abs(f1['l1_snr_series'][()])
+                h1_real = np.real(f1['h1_snr_series'][()])
+                l1_real = np.real(f1['l1_snr_series'][()])
                 
                 h1_imag = np.imag((f1['h1_snr_series'][()]))
                 l1_imag = np.imag((f1['l1_snr_series'][()]))
@@ -2321,7 +2328,7 @@ class DataLoader:
             f3.close()
             f4.close()
             
-        elif((data_config.train.dataset == 'NSBH') and (data_config.train.train_real == False) and (data_config.train.train_negative_latency == False) and (data_config.train.psd == 'design')):
+        elif((data_config.train.dataset == 'NSBH') and (data_config.train.train_real == False) and (data_config.train.train_negative_latency == False) and (data_config.train.PSD == 'design')):
                 
             f1 = h5py.File(data_config.parameters.NSBH.path_train_design_1, 'r')
             f2 = h5py.File(data_config.parameters.NSBH.path_train_design_2, 'r')
@@ -2683,17 +2690,25 @@ class DataLoader:
             spin_1_7 = f7['spin1z'][()]
             spin_2_7 = f7['spin2z'][()]                          
         
-            ra = np.concatenate([ra_6, ra_7], axis=0)
-            mass_1 = np.concatenate([mass_1_6, mass_1_7], axis=0)
-            mass_2 = np.concatenate([mass_2_6, mass_2_7], axis=0)
-            spin_1 = np.concatenate([spin_1_6, spin_1_7], axis=0)
-            spin_2 = np.concatenate([spin_2_6, spin_2_7], axis=0)
-                
+#            ra = np.concatenate([ra_1, ra_2, ra_3, ra_6, ra_7], axis=0)
+#            dec = np.concatenate([dec_1, dec_2, dec_3, dec_6, dec_7], axis=0)
+#            mass_1 = np.concatenate([mass_1_1, mass_1_2, mass_1_3, mass_1_6, mass_1_7], axis=0)
+#            mass_2 = np.concatenate([mass_2_1, mass_2_2, mass_2_3, mass_2_6, mass_2_7], axis=0)
+#            spin_1 = np.concatenate([spin_1_1, spin_1_2, spin_1_3, spin_1_6, spin_1_7], axis=0)
+#            spin_2 = np.concatenate([spin_2_1, spin_2_2, spin_2_3, spin_2_6, spin_2_7], axis=0)
+            
+            ra = ra_6
+            dec = dec_6
+            mass_1 = mass_1_6
+            mass_2 = mass_2_6
+            spin_1 = spin_1_6
+            spin_2 = spin_2_6
+        
             ra = ra - np.pi
             ra_x = np.cos(ra)
             ra_y = np.sin(ra)
             
-            dec = np.concatenate([dec_6, dec_7], axis=0)
+            
                 
         elif((data_config.train.dataset == 'BBH') and (data_config.train.train_real == True) and (data_config.train.train_negative_latency == False) and (data_config.train.PSD == 'O2')):
                 
@@ -4685,13 +4700,13 @@ class DataLoader:
                     
                     f1 = h5py.File(data_config.data.NSBH.path_test_GW190917, 'r')
                     
-                    h1_test_real = abs(f1['h1_snr_series'][()])
-                    l1_test_real = abs(f1['l1_snr_series'][()])
-                    v1_test_real = abs(f1['v1_snr_series'][()])
+                    h1_test_real = np.real(f1['h1_snr_series'][()])
+                    l1_test_real = np.real(f1['l1_snr_series'][()])
+                    v1_test_real = np.real(f1['v1_snr_series'][()])
                     
-                    h1_test_imag = absnp.imag((f1['h1_snr_series'][()]))
-                    l1_test_imag = absnp.imag((f1['l1_snr_series'][()]))
-                    v1_test_imag = absnp.imag((f1['v1_snr_series'][()]))
+                    h1_test_imag = np.realnp.imag((f1['h1_snr_series'][()]))
+                    l1_test_imag = np.realnp.imag((f1['l1_snr_series'][()]))
+                    v1_test_imag = np.realnp.imag((f1['v1_snr_series'][()]))
                     
                     f1.close()
                 
@@ -4700,9 +4715,9 @@ class DataLoader:
                     
                     f1 = h5py.File(data_config.data.NSBH.path_test_GW190814, 'r')
                    
-                    h1_real_1 = abs(f1['h1_snr_series'][()])
-                    l1_real_1 = abs(f1['l1_snr_series'][()])
-                    v1_real_1 = abs(f1['v1_snr_series'][()])
+                    h1_real_1 = np.real(f1['h1_snr_series'][()])
+                    l1_real_1 = np.real(f1['l1_snr_series'][()])
+                    v1_real_1 = np.real(f1['v1_snr_series'][()])
                     
                     h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                     l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
@@ -4729,17 +4744,29 @@ class DataLoader:
                 
                 elif((data_config.train.test_real == False) and (data_config.train.PSD == 'design')):
                 
-                    f_test = h5py.File(data_config.data.NSBH.path_test_design_Bayestar_test, 'r')
+#                    f_test = h5py.File(data_config.data.NSBH.path_test_design_Bayestar_test, 'r')
                     
-                    h1_test_real = abs(f_test['h1_snr_series'][1000:3500][()])
-                    l1_test_real = abs(f_test['l1_snr_series'][1000:3500][()])
-                    v1_test_real = abs(f_test['v1_snr_series'][1000:3500][()])
+#                    h1_test_real = np.real(f_test['h1_snr_series'][1000:3500][()])
+#                    l1_test_real = np.real(f_test['l1_snr_series'][1000:3500][()])
+#                    v1_test_real = np.real(f_test['v1_snr_series'][1000:3500][()])
         
-                    h1_test_imag = np.imag((f_test['h1_snr_series'][1000:3500][()]))
-                    l1_test_imag = np.imag((f_test['l1_snr_series'][1000:3500][()]))
-                    v1_test_imag = np.imag((f_test['v1_snr_series'][1000:3500][()]))
+#                    h1_test_imag = np.imag((f_test['h1_snr_series'][1000:3500][()]))
+#                    l1_test_imag = np.imag((f_test['l1_snr_series'][1000:3500][()]))
+#                    v1_test_imag = np.imag((f_test['v1_snr_series'][1000:3500][()]))
                                       
-                    f_test.close()                
+#                    f_test.close() 
+                    
+                    f_test = h5py.File(data_config.data.NSBH.path_test_Bayestar_post_merger, 'r')
+                    
+                    h1_test_real = np.real(f_test['h1_snr_series'][()])
+                    l1_test_real = np.real(f_test['l1_snr_series'][()])
+                    v1_test_real = np.real(f_test['v1_snr_series'][()])
+        
+                    h1_test_imag = np.imag((f_test['h1_snr_series'][()]))
+                    l1_test_imag = np.imag((f_test['l1_snr_series'][()]))
+                    v1_test_imag = np.imag((f_test['v1_snr_series'][()]))
+                                      
+                    f_test.close() 
                 
                 
                 elif((data_config.train.test_real == False) and (data_config.train.snr_range_test == 'low') and (data_config.train.PSD == 'aLIGO')):
@@ -4762,13 +4789,13 @@ class DataLoader:
         
                     for i in range(data_config.train.num_test):
                 
-                        h1_test_real[i] = abs(data_h1_test[str(i)][()][1840:2250] )
-                        l1_test_real[i] = abs(data_l1_test[str(i)][()][1840:2250] )
-                        v1_test_real[i] = abs(data_v1_test[str(i)][()][1840:2250] )
+                        h1_test_real[i] = np.real(data_h1_test[str(i)][()][1840:2250] )
+                        l1_test_real[i] = np.real(data_l1_test[str(i)][()][1840:2250] )
+                        v1_test_real[i] = np.real(data_v1_test[str(i)][()][1840:2250] )
     
-                        h1_test_imag[i] = absnp.imag((data_h1_test[str(i)][()][1840:2250]))
-                        l1_test_imag[i] = absnp.imag((data_l1_test[str(i)][()][1840:2250]))
-                        v1_test_imag[i] = absnp.imag((data_v1_test[str(i)][()][1840:2250]))
+                        h1_test_imag[i] = np.realnp.imag((data_h1_test[str(i)][()][1840:2250]))
+                        l1_test_imag[i] = np.realnp.imag((data_l1_test[str(i)][()][1840:2250]))
+                        v1_test_imag[i] = np.realnp.imag((data_v1_test[str(i)][()][1840:2250]))
         
                     f_test.close()
             
@@ -4781,21 +4808,21 @@ class DataLoader:
                     f3 = h5py.File(data_config.data.BBH.path_test_GW170814, 'r')
                     f4 = h5py.File(data_config.data.BBH.path_test_GW170818, 'r')
                     
-                    h1_real_1 = abs(f1['h1_snr_series'][()])
-                    l1_real_1 = abs(f1['l1_snr_series'][()])
-                    v1_real_1 = abs(f1['v1_snr_series'][()])
+                    h1_real_1 = np.real(f1['h1_snr_series'][()])
+                    l1_real_1 = np.real(f1['l1_snr_series'][()])
+                    v1_real_1 = np.real(f1['v1_snr_series'][()])
         
-                    h1_real_2 = abs(f2['h1_snr_series'][()])
-                    l1_real_2 = abs(f2['l1_snr_series'][()])
-                    v1_real_2 = abs(f2['v1_snr_series'][()])
+                    h1_real_2 = np.real(f2['h1_snr_series'][()])
+                    l1_real_2 = np.real(f2['l1_snr_series'][()])
+                    v1_real_2 = np.real(f2['v1_snr_series'][()])
                     
-                    h1_real_3 = abs(f3['h1_snr_series'][()])
-                    l1_real_3 = abs(f3['l1_snr_series'][()])
-                    v1_real_3 = abs(f3['v1_snr_series'][()])
+                    h1_real_3 = np.real(f3['h1_snr_series'][()])
+                    l1_real_3 = np.real(f3['l1_snr_series'][()])
+                    v1_real_3 = np.real(f3['v1_snr_series'][()])
         
-                    h1_real_4 = abs(f4['h1_snr_series'][()])
-                    l1_real_4 = abs(f4['l1_snr_series'][()])
-                    v1_real_4 = abs(f4['v1_snr_series'][()])
+                    h1_real_4 = np.real(f4['h1_snr_series'][()])
+                    l1_real_4 = np.real(f4['l1_snr_series'][()])
+                    v1_real_4 = np.real(f4['v1_snr_series'][()])
                     
                     
                     h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
@@ -4864,25 +4891,25 @@ class DataLoader:
                     f2 = h5py.File(data_config.data.BBH.path_test_GW190412, 'r')
                     f3 = h5py.File(data_config.data.BBH.path_test_GW200224_22223, 'r')
                     
-                    h1_real_1 = abs(f1['h1_snr_series'][()])
-                    l1_real_1 = abs(f1['l1_snr_series'][()])
-                    v1_real_1 = abs(f1['v1_snr_series'][()])
+                    h1_real_1 = np.real(f1['h1_snr_series'][()])
+                    l1_real_1 = np.real(f1['l1_snr_series'][()])
+                    v1_real_1 = np.real(f1['v1_snr_series'][()])
                     
                     h1_imag_1 = np.imag((f1['h1_snr_series'][()]))
                     l1_imag_1 = np.imag((f1['l1_snr_series'][()]))
                     v1_imag_1 = np.imag((f1['v1_snr_series'][()]))
                     
-                    h1_real_2 = abs(f2['h1_snr_series'][()])
-                    l1_real_2 = abs(f2['l1_snr_series'][()])
-                    v1_real_2 = abs(f2['v1_snr_series'][()])
+                    h1_real_2 = np.real(f2['h1_snr_series'][()])
+                    l1_real_2 = np.real(f2['l1_snr_series'][()])
+                    v1_real_2 = np.real(f2['v1_snr_series'][()])
                     
                     h1_imag_2 = np.imag((f2['h1_snr_series'][()]))
                     l1_imag_2 = np.imag((f2['l1_snr_series'][()]))
                     v1_imag_2 = np.imag((f2['v1_snr_series'][()]))
                     
-                    h1_real_3 = abs(f3['h1_snr_series'][()])
-                    l1_real_3 = abs(f3['l1_snr_series'][()])
-                    v1_real_3 = abs(f3['v1_snr_series'][()])
+                    h1_real_3 = np.real(f3['h1_snr_series'][()])
+                    l1_real_3 = np.real(f3['l1_snr_series'][()])
+                    v1_real_3 = np.real(f3['v1_snr_series'][()])
                     
                     h1_imag_3 = np.imag((f3['h1_snr_series'][()]))
                     l1_imag_3 = np.imag((f3['l1_snr_series'][()]))
@@ -4931,9 +4958,9 @@ class DataLoader:
                     
                     f1 = h5py.File(data_config.data.BBH.path_test_low_SNR, 'r')
 
-                    h1_test_real = abs(f1['h1_snr_series'][0:2000][()])
-                    l1_test_real = abs(f1['l1_snr_series'][0:2000][()])
-                    v1_test_real = abs(f1['v1_snr_series'][0:2000][()])
+                    h1_test_real = np.real(f1['h1_snr_series'][0:2000][()])
+                    l1_test_real = np.real(f1['l1_snr_series'][0:2000][()])
+                    v1_test_real = np.real(f1['v1_snr_series'][0:2000][()])
        
                     h1_test_imag = np.imag((f1['h1_snr_series'][0:2000][()]))
                     l1_test_imag = np.imag((f1['l1_snr_series'][0:2000][()]))
@@ -4944,11 +4971,12 @@ class DataLoader:
                 elif((data_config.train.test_real == False) and (data_config.train.PSD == 'design')):
                     
 
-                    f_test = h5py.File(data_config.data.BBH.path_test_design_Bayestar_test, 'r')
+#                    f_test = h5py.File(data_config.data.BBH.path_test_design_Bayestar_test, 'r')
+                    f_test = h5py.File(data_config.data.BBH.path_test_Bayestar_post_merger, 'r')
                    
-                    h1_test_real = abs(f_test['h1_snr_series'][()])
-                    l1_test_real = abs(f_test['l1_snr_series'][()])
-                    v1_test_real = abs(f_test['v1_snr_series'][()])
+                    h1_test_real = np.real(f_test['h1_snr_series'][()])
+                    l1_test_real = np.real(f_test['l1_snr_series'][()])
+                    v1_test_real = np.real(f_test['v1_snr_series'][()])
         
                     h1_test_imag = np.imag((f_test['h1_snr_series'][()]))
                     l1_test_imag = np.imag((f_test['l1_snr_series'][()]))
@@ -4962,9 +4990,9 @@ class DataLoader:
             
                     f_test_GW170817 = h5py.File(data_config.data.BNS.path_test_GW170817, 'r')
                 
-                    h1_test_real_GW170817 = abs(f_test_GW170817['h1_snr_series'][()])
-                    l1_test_real_GW170817 = abs(f_test_GW170817['l1_snr_series'][()])
-                    v1_test_real_GW170817 = abs(f_test_GW170817['v1_snr_series'][()])
+                    h1_test_real_GW170817 = np.real(f_test_GW170817['h1_snr_series'][()])
+                    l1_test_real_GW170817 = np.real(f_test_GW170817['l1_snr_series'][()])
+                    v1_test_real_GW170817 = np.real(f_test_GW170817['v1_snr_series'][()])
         
                     h1_test_imag_GW170817 = np.imag((f_test_GW170817['h1_snr_series'][()]))
                     l1_test_imag_GW170817 = np.imag((f_test_GW170817['l1_snr_series'][()]))
@@ -4997,9 +5025,9 @@ class DataLoader:
 #                    f_test = h5py.File(data_config.data.BNS.path_test_design_Bayestar_test, 'r')
                     f_test = h5py.File(data_config.data.BNS.path_test_Bayestar_post_merger, 'r')
 
-                    h1_test_real = abs(f_test['h1_snr_series'][0:10][()])
-                    l1_test_real = abs(f_test['l1_snr_series'][0:10][()])
-                    v1_test_real = abs(f_test['v1_snr_series'][0:10][()])
+                    h1_test_real = np.real(f_test['h1_snr_series'][0:10][()])
+                    l1_test_real = np.real(f_test['l1_snr_series'][0:10][()])
+                    v1_test_real = np.real(f_test['v1_snr_series'][0:10][()])
         
                     h1_test_imag = np.imag((f_test['h1_snr_series'][0:10][()]))
                     l1_test_imag = np.imag((f_test['l1_snr_series'][0:10][()]))
@@ -5029,13 +5057,13 @@ class DataLoader:
         
                     for i in range(data_config.train.num_test):
                 
-                        h1_test_real[i] = abs(data_h1_test[str(i)][()][1840:2250] )
-                        l1_test_real[i] = abs(data_l1_test[str(i)][()][1840:2250] )
-                        v1_test_real[i] = abs(data_v1_test[str(i)][()][1840:2250] )
+                        h1_test_real[i] = np.real(data_h1_test[str(i)][()][1840:2250] )
+                        l1_test_real[i] = np.real(data_l1_test[str(i)][()][1840:2250] )
+                        v1_test_real[i] = np.real(data_v1_test[str(i)][()][1840:2250] )
     
-                        h1_test_imag[i] = absnp.imag((data_h1_test[str(i)][()][1840:2250]))
-                        l1_test_imag[i] = absnp.imag((data_l1_test[str(i)][()][1840:2250]))
-                        v1_test_imag[i] = absnp.imag((data_v1_test[str(i)][()][1840:2250]))
+                        h1_test_imag[i] = np.realnp.imag((data_h1_test[str(i)][()][1840:2250]))
+                        l1_test_imag[i] = np.realnp.imag((data_l1_test[str(i)][()][1840:2250]))
+                        v1_test_imag[i] = np.realnp.imag((data_v1_test[str(i)][()][1840:2250]))
         
                     f_test.close()
         
@@ -5046,13 +5074,13 @@ class DataLoader:
                 
                 f1 = h5py.File(data_config.data.BNS.path_test_3_det_0_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][()])
-                l1_test_real = abs(f1['l1_snr_series'][()])
-                v1_test_real = abs(f1['v1_snr_series'][()])
+                h1_test_real = np.real(f1['h1_snr_series'][()])
+                l1_test_real = np.real(f1['l1_snr_series'][()])
+                v1_test_real = np.real(f1['v1_snr_series'][()])
         
-                h1_test_imag = absnp.imag((f1['h1_snr_series'][()]))
-                l1_test_imag = absnp.imag((f1['l1_snr_series'][()]))
-                v1_test_imag = absnp.imag((f1['v1_snr_series'][()]))
+                h1_test_imag = np.realnp.imag((f1['h1_snr_series'][()]))
+                l1_test_imag = np.realnp.imag((f1['l1_snr_series'][()]))
+                v1_test_imag = np.realnp.imag((f1['v1_snr_series'][()]))
                         
                 f1.close()
                 
@@ -5060,9 +5088,9 @@ class DataLoader:
                 
                 f1 = h5py.File(data_config.data.BNS.path_test_3_det_5_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][()])
-                l1_test_real = abs(f1['l1_snr_series'][()])
-                v1_test_real = abs(f1['v1_snr_series'][()])
+                h1_test_real = np.real(f1['h1_snr_series'][()])
+                l1_test_real = np.real(f1['l1_snr_series'][()])
+                v1_test_real = np.real(f1['v1_snr_series'][()])
         
                 h1_test_imag = np.imag((f1['h1_snr_series'][()]))
                 l1_test_imag = np.imag((f1['l1_snr_series'][()]))
@@ -5074,9 +5102,9 @@ class DataLoader:
                 
                 f1 = h5py.File(data_config.data.BNS.path_test_3_det_10_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][()])
-                l1_test_real = abs(f1['l1_snr_series'][()])
-                v1_test_real = abs(f1['v1_snr_series'][()])
+                h1_test_real = np.real(f1['h1_snr_series'][()])
+                l1_test_real = np.real(f1['l1_snr_series'][()])
+                v1_test_real = np.real(f1['v1_snr_series'][()])
         
                 h1_test_imag = np.imag((f1['h1_snr_series'][()]))
                 l1_test_imag = np.imag((f1['l1_snr_series'][()]))
@@ -5088,9 +5116,9 @@ class DataLoader:
                 
                 f1 = h5py.File(data_config.data.BNS.path_test_3_det_15_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][()])
-                l1_test_real = abs(f1['l1_snr_series'][()])
-                v1_test_real = abs(f1['v1_snr_series'][()])
+                h1_test_real = np.real(f1['h1_snr_series'][()])
+                l1_test_real = np.real(f1['l1_snr_series'][()])
+                v1_test_real = np.real(f1['v1_snr_series'][()])
         
                 h1_test_imag = np.imag((f1['h1_snr_series'][()]))
                 l1_test_imag = np.imag((f1['l1_snr_series'][()]))
@@ -5105,17 +5133,17 @@ class DataLoader:
                 f_test = h5py.File(data_config.data.BNS.path_test_design, 'r')
                 f_test_GW170817 = h5py.File(data_config.data.BNS.path_test_GW170817, 'r')
                    
-                h1_test_real = abs(f_test['h1_snr_series'][()])
-                l1_test_real = abs(f_test['l1_snr_series'][()])
-                v1_test_real = abs(f_test['v1_snr_series'][()])
+                h1_test_real = np.real(f_test['h1_snr_series'][()])
+                l1_test_real = np.real(f_test['l1_snr_series'][()])
+                v1_test_real = np.real(f_test['v1_snr_series'][()])
         
                 h1_test_imag = np.imag((f_test['h1_snr_series'][()]))
                 l1_test_imag = np.imag((f_test['l1_snr_series'][()]))
                 v1_test_imag = np.imag((f_test['v1_snr_series'][()]))
                 
-                h1_test_real_GW170817 = abs(f_test_GW170817['h1_snr_series'][()])
-                l1_test_real_GW170817 = abs(f_test_GW170817['l1_snr_series'][()])
-                v1_test_real_GW170817 = abs(f_test_GW170817['v1_snr_series'][()])
+                h1_test_real_GW170817 = np.real(f_test_GW170817['h1_snr_series'][()])
+                l1_test_real_GW170817 = np.real(f_test_GW170817['l1_snr_series'][()])
+                v1_test_real_GW170817 = np.real(f_test_GW170817['v1_snr_series'][()])
         
                 h1_test_imag_GW170817 = np.imag((f_test_GW170817['h1_snr_series'][()]))
                 l1_test_imag_GW170817 = np.imag((f_test_GW170817['l1_snr_series'][()]))
@@ -5159,17 +5187,17 @@ class DataLoader:
                 f1 = h5py.File(data_config.data.BNS.path_test_design_10_secs, 'r')
                 f2 = h5py.File(data_config.data.BNS.path_test_GW170817_10_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][0:2500][()]) # 35000
-                l1_test_real = abs(f1['l1_snr_series'][0:2500][()])
-                v1_test_real = abs(f1['v1_snr_series'][0:2500][()])
+                h1_test_real = np.real(f1['h1_snr_series'][0:2500][()]) # 35000
+                l1_test_real = np.real(f1['l1_snr_series'][0:2500][()])
+                v1_test_real = np.real(f1['v1_snr_series'][0:2500][()])
         
                 h1_test_imag = np.imag((f1['h1_snr_series'][0:2500][()]))
                 l1_test_imag = np.imag((f1['l1_snr_series'][0:2500][()]))
                 v1_test_imag = np.imag((f1['v1_snr_series'][0:2500][()]))                
             
-                h1_test_real_GW170817 = abs(f2['h1_snr_series'][()]) # 35000
-                l1_test_real_GW170817 = abs(f2['l1_snr_series'][()])
-                v1_test_real_GW170817 = abs(f2['v1_snr_series'][()])
+                h1_test_real_GW170817 = np.real(f2['h1_snr_series'][()]) # 35000
+                l1_test_real_GW170817 = np.real(f2['l1_snr_series'][()])
+                v1_test_real_GW170817 = np.real(f2['v1_snr_series'][()])
         
                 h1_test_imag_GW170817 = np.imag((f2['h1_snr_series'][()]))
                 l1_test_imag_GW170817 = np.imag((f2['l1_snr_series'][()]))
@@ -5192,17 +5220,17 @@ class DataLoader:
                 f1 = h5py.File(data_config.data.BNS.path_test_design_15_secs, 'r')
                 f2 = h5py.File(data_config.data.BNS.path_test_GW170817_15_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][0:3000][()]) # 28000
-                l1_test_real = abs(f1['l1_snr_series'][0:3000][()])
-                v1_test_real = abs(f1['v1_snr_series'][0:3000][()])
+                h1_test_real = np.real(f1['h1_snr_series'][0:3000][()]) # 28000
+                l1_test_real = np.real(f1['l1_snr_series'][0:3000][()])
+                v1_test_real = np.real(f1['v1_snr_series'][0:3000][()])
         
                 h1_test_imag = np.imag((f1['h1_snr_series'][0:3000][()]))
                 l1_test_imag = np.imag((f1['l1_snr_series'][0:3000][()]))
                 v1_test_imag = np.imag((f1['v1_snr_series'][0:3000][()]))
                 
-                h1_test_real_GW170817 = abs(f2['h1_snr_series'][()]) # 35000
-                l1_test_real_GW170817 = abs(f2['l1_snr_series'][()])
-                v1_test_real_GW170817 = abs(f2['v1_snr_series'][()])
+                h1_test_real_GW170817 = np.real(f2['h1_snr_series'][()]) # 35000
+                l1_test_real_GW170817 = np.real(f2['l1_snr_series'][()])
+                v1_test_real_GW170817 = np.real(f2['v1_snr_series'][()])
         
                 h1_test_imag_GW170817 = np.imag((f2['h1_snr_series'][()]))
                 l1_test_imag_GW170817 = np.imag((f2['l1_snr_series'][()]))
@@ -5225,17 +5253,17 @@ class DataLoader:
                 f1 = h5py.File(data_config.data.BNS.path_test_design_30_secs, 'r')
                 f2 = h5py.File(data_config.data.BNS.path_test_GW170817_30_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][0:3000][()]) # 12000
-                l1_test_real = abs(f1['l1_snr_series'][0:3000][()])
-                v1_test_real = abs(f1['v1_snr_series'][0:3000][()])
+                h1_test_real = np.real(f1['h1_snr_series'][0:3000][()]) # 12000
+                l1_test_real = np.real(f1['l1_snr_series'][0:3000][()])
+                v1_test_real = np.real(f1['v1_snr_series'][0:3000][()])
        
                 h1_test_imag = np.imag((f1['h1_snr_series'][0:3000][()]))
                 l1_test_imag = np.imag((f1['l1_snr_series'][0:3000][()]))
                 v1_test_imag = np.imag((f1['v1_snr_series'][0:3000][()]))
                 
-                h1_test_real_GW170817 = abs(f2['h1_snr_series'][()]) # 35000
-                l1_test_real_GW170817 = abs(f2['l1_snr_series'][()])
-                v1_test_real_GW170817 = abs(f2['v1_snr_series'][()])
+                h1_test_real_GW170817 = np.real(f2['h1_snr_series'][()]) # 35000
+                l1_test_real_GW170817 = np.real(f2['l1_snr_series'][()])
+                v1_test_real_GW170817 = np.real(f2['v1_snr_series'][()])
         
                 h1_test_imag_GW170817 = np.imag((f2['h1_snr_series'][()]))
                 l1_test_imag_GW170817 = np.imag((f2['l1_snr_series'][()]))
@@ -5257,17 +5285,17 @@ class DataLoader:
                 f1 = h5py.File(data_config.data.BNS.path_test_design_45_secs, 'r')
                 f2 = h5py.File(data_config.data.BNS.path_test_GW170817_45_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][0:3000][()]) # 8000
-                l1_test_real = abs(f1['l1_snr_series'][0:3000][()])
-                v1_test_real = abs(f1['v1_snr_series'][0:3000][()])
+                h1_test_real = np.real(f1['h1_snr_series'][0:3000][()]) # 8000
+                l1_test_real = np.real(f1['l1_snr_series'][0:3000][()])
+                v1_test_real = np.real(f1['v1_snr_series'][0:3000][()])
         
                 h1_test_imag = np.imag((f1['h1_snr_series'][0:3000][()]))
                 l1_test_imag = np.imag((f1['l1_snr_series'][0:3000][()]))
                 v1_test_imag = np.imag((f1['v1_snr_series'][0:3000][()]))
                 
-                h1_test_real_GW170817 = abs(f2['h1_snr_series'][()]) # 35000
-                l1_test_real_GW170817 = abs(f2['l1_snr_series'][()])
-                v1_test_real_GW170817 = abs(f2['v1_snr_series'][()])
+                h1_test_real_GW170817 = np.real(f2['h1_snr_series'][()]) # 35000
+                l1_test_real_GW170817 = np.real(f2['l1_snr_series'][()])
+                v1_test_real_GW170817 = np.real(f2['v1_snr_series'][()])
         
                 h1_test_imag_GW170817 = np.imag((f2['h1_snr_series'][()]))
                 l1_test_imag_GW170817 = np.imag((f2['l1_snr_series'][()]))
@@ -5289,17 +5317,17 @@ class DataLoader:
                 f1 = h5py.File(data_config.data.BNS.path_test_design_58_secs, 'r')
                 f2 = h5py.File(data_config.data.BNS.path_test_GW170817_58_secs, 'r')
             
-                h1_test_real = abs(f1['h1_snr_series'][0:3000][()]) # 7000
-                l1_test_real = abs(f1['l1_snr_series'][0:3000][()])
-                v1_test_real = abs(f1['v1_snr_series'][0:3000][()])
+                h1_test_real = np.real(f1['h1_snr_series'][0:3000][()]) # 7000
+                l1_test_real = np.real(f1['l1_snr_series'][0:3000][()])
+                v1_test_real = np.real(f1['v1_snr_series'][0:3000][()])
         
                 h1_test_imag = np.imag((f1['h1_snr_series'][0:3000][()]))
                 l1_test_imag = np.imag((f1['l1_snr_series'][0:3000][()]))
                 v1_test_imag = np.imag((f1['v1_snr_series'][0:3000][()]))
                 
-                h1_test_real_GW170817 = abs(f2['h1_snr_series'][()]) # 35000
-                l1_test_real_GW170817 = abs(f2['l1_snr_series'][()])
-                v1_test_real_GW170817 = abs(f2['v1_snr_series'][()])
+                h1_test_real_GW170817 = np.real(f2['h1_snr_series'][()]) # 35000
+                l1_test_real_GW170817 = np.real(f2['l1_snr_series'][()])
+                v1_test_real_GW170817 = np.real(f2['v1_snr_series'][()])
         
                 h1_test_imag_GW170817 = np.imag((f2['h1_snr_series'][()]))
                 l1_test_imag_GW170817 = np.imag((f2['l1_snr_series'][()]))
@@ -5324,13 +5352,13 @@ class DataLoader:
                     
                     f_test = h5py.File(data_config.data.BNS.path_test_O4_PSD_0_sec, 'r')
                     
-                    h1_test_real = abs(f_test['h1_snr_series'][()])
-                    l1_test_real = abs(f_test['l1_snr_series'][()])
-                    v1_test_real = abs(f_test['v1_snr_series'][()])
+                    h1_test_real = np.real(f_test['h1_snr_series'][()])
+                    l1_test_real = np.real(f_test['l1_snr_series'][()])
+                    v1_test_real = np.real(f_test['v1_snr_series'][()])
         
-                    h1_test_imag = absnp.imag((f_test['h1_snr_series'][()]))
-                    l1_test_imag = absnp.imag((f_test['l1_snr_series'][()]))
-                    v1_test_imag = absnp.imag((f_test['v1_snr_series'][()]))
+                    h1_test_imag = np.realnp.imag((f_test['h1_snr_series'][()]))
+                    l1_test_imag = np.realnp.imag((f_test['l1_snr_series'][()]))
+                    v1_test_imag = np.realnp.imag((f_test['v1_snr_series'][()]))
                     
                     f_test.close()
                 
@@ -5338,13 +5366,13 @@ class DataLoader:
                     
                     f_test = h5py.File(data_config.data.BNS.path_test_O4_PSD_5_sec, 'r')
                     
-                    h1_test_real = abs(f_test['h1_snr_series'][()])
-                    l1_test_real = abs(f_test['l1_snr_series'][()])
-                    v1_test_real = abs(f_test['v1_snr_series'][()])
+                    h1_test_real = np.real(f_test['h1_snr_series'][()])
+                    l1_test_real = np.real(f_test['l1_snr_series'][()])
+                    v1_test_real = np.real(f_test['v1_snr_series'][()])
         
-                    h1_test_imag = absnp.imag((f_test['h1_snr_series'][()]))
-                    l1_test_imag = absnp.imag((f_test['l1_snr_series'][()]))
-                    v1_test_imag = absnp.imag((f_test['v1_snr_series'][()]))
+                    h1_test_imag = np.realnp.imag((f_test['h1_snr_series'][()]))
+                    l1_test_imag = np.realnp.imag((f_test['l1_snr_series'][()]))
+                    v1_test_imag = np.realnp.imag((f_test['v1_snr_series'][()]))
                     
                     f_test.close()
                     
@@ -5352,13 +5380,13 @@ class DataLoader:
                     
                     f_test = h5py.File(data_config.data.BNS.path_test_O4_PSD_10_sec, 'r')
                     
-                    h1_test_real = abs(f_test['h1_snr_series'][()])
-                    l1_test_real = abs(f_test['l1_snr_series'][()])
-                    v1_test_real = abs(f_test['v1_snr_series'][()])
+                    h1_test_real = np.real(f_test['h1_snr_series'][()])
+                    l1_test_real = np.real(f_test['l1_snr_series'][()])
+                    v1_test_real = np.real(f_test['v1_snr_series'][()])
         
-                    h1_test_imag = absnp.imag((f_test['h1_snr_series'][()]))
-                    l1_test_imag = absnp.imag((f_test['l1_snr_series'][()]))
-                    v1_test_imag = absnp.imag((f_test['v1_snr_series'][()]))
+                    h1_test_imag = np.realnp.imag((f_test['h1_snr_series'][()]))
+                    l1_test_imag = np.realnp.imag((f_test['l1_snr_series'][()]))
+                    v1_test_imag = np.realnp.imag((f_test['v1_snr_series'][()]))
                     
                     f_test.close()
                     
@@ -5387,20 +5415,20 @@ class DataLoader:
             f2 = h5py.File(data_config.data.BNS.path_test, 'r')
             f3 = h5py.File(data_config.data.BNS.path_test_2_det_high_SNR, 'r')
 
-            h1_test_real_1 = abs(f1['h1_snr_series'][()])
-            l1_test_real_1 = abs(f1['l1_snr_series'][()])
+            h1_test_real_1 = np.real(f1['h1_snr_series'][()])
+            l1_test_real_1 = np.real(f1['l1_snr_series'][()])
         
             h1_test_imag_1 = np.imag((f1['h1_snr_series'][()]))
             l1_test_imag_1 = np.imag((f1['l1_snr_series'][()]))
                         
-            h1_test_real_2 = abs(f2['h1_snr_series'][()])
-            l1_test_real_2 = abs(f2['l1_snr_series'][()])
+            h1_test_real_2 = np.real(f2['h1_snr_series'][()])
+            l1_test_real_2 = np.real(f2['l1_snr_series'][()])
         
             h1_test_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_test_imag_2 = np.imag((f2['l1_snr_series'][()]))
             
-            h1_test_real_3 = abs(f3['h1_snr_series'][()])
-            l1_test_real_3 = abs(f3['l1_snr_series'][()])
+            h1_test_real_3 = np.real(f3['h1_snr_series'][()])
+            l1_test_real_3 = np.real(f3['l1_snr_series'][()])
         
             h1_test_imag_3 = np.imag((f3['h1_snr_series'][()]))
             l1_test_imag_3 = np.imag((f3['l1_snr_series'][()]))
@@ -5422,26 +5450,26 @@ class DataLoader:
             f3 = h5py.File(data_config.data.BNS.path_test_2_det_10_secs, 'r')
             f4 = h5py.File(data_config.data.BNS.path_test_2_det_15_secs, 'r')
             
-#            h1_test_real_1 = abs(f1['h1_snr_series'][()])
-#            l1_test_real_1 = abs(f1['l1_snr_series'][()])
+#            h1_test_real_1 = np.real(f1['h1_snr_series'][()])
+#            l1_test_real_1 = np.real(f1['l1_snr_series'][()])
         
-#            h1_test_imag_1 = absnp.imag((f1['h1_snr_series'][()]))
-#            l1_test_imag_1 = absnp.imag((f1['l1_snr_series'][()]))
+#            h1_test_imag_1 = np.realnp.imag((f1['h1_snr_series'][()]))
+#            l1_test_imag_1 = np.realnp.imag((f1['l1_snr_series'][()]))
                         
-            h1_test_real_2 = abs(f2['h1_snr_series'][()])
-            l1_test_real_2 = abs(f2['l1_snr_series'][()])
+            h1_test_real_2 = np.real(f2['h1_snr_series'][()])
+            l1_test_real_2 = np.real(f2['l1_snr_series'][()])
         
             h1_test_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_test_imag_2 = np.imag((f2['l1_snr_series'][()]))
             
-            h1_test_real_3 = abs(f3['h1_snr_series'][()])
-            l1_test_real_3 = abs(f3['l1_snr_series'][()])
+            h1_test_real_3 = np.real(f3['h1_snr_series'][()])
+            l1_test_real_3 = np.real(f3['l1_snr_series'][()])
         
             h1_test_imag_3 = np.imag((f3['h1_snr_series'][()]))
             l1_test_imag_3 = np.imag((f3['l1_snr_series'][()]))
                         
-            h1_test_real_4 = abs(f4['h1_snr_series'][()])
-            l1_test_real_4 = abs(f4['l1_snr_series'][()])
+            h1_test_real_4 = np.real(f4['h1_snr_series'][()])
+            l1_test_real_4 = np.real(f4['l1_snr_series'][()])
         
             h1_test_imag_4 = np.imag((f4['h1_snr_series'][()]))
             l1_test_imag_4 = np.imag((f4['l1_snr_series'][()]))
@@ -5464,14 +5492,14 @@ class DataLoader:
             f1 = h5py.File(data_config.data.NSBH.path_test, 'r')
             f2 = h5py.File(data_config.data.NSBH.path_test_low_snr, 'r')
 
-            h1_test_real_1 = abs(f1['h1_snr_series'][()])
-            l1_test_real_1 = abs(f1['l1_snr_series'][()])
+            h1_test_real_1 = np.real(f1['h1_snr_series'][()])
+            l1_test_real_1 = np.real(f1['l1_snr_series'][()])
         
             h1_test_imag_1 = np.imag((f1['h1_snr_series'][()]))
             l1_test_imag_1 = np.imag((f1['l1_snr_series'][()]))
                         
-            h1_test_real_2 = abs(f2['h1_snr_series'][()])
-            l1_test_real_2 = abs(f2['l1_snr_series'][()])
+            h1_test_real_2 = np.real(f2['h1_snr_series'][()])
+            l1_test_real_2 = np.real(f2['l1_snr_series'][()])
         
             h1_test_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_test_imag_2 = np.imag((f2['l1_snr_series'][()]))
@@ -5491,14 +5519,14 @@ class DataLoader:
             f1 = h5py.File(data_config.data.BBH.path_train, 'r')
             f2 = h5py.File(data_config.data.BBH.path_test_low_SNR, 'r')
 
-            h1_test_real_1 = abs(f1['h1_snr_series'][0:2000][()])
-            l1_test_real_1 = abs(f1['l1_snr_series'][0:2000][()])
+            h1_test_real_1 = np.real(f1['h1_snr_series'][0:2000][()])
+            l1_test_real_1 = np.real(f1['l1_snr_series'][0:2000][()])
        
             h1_test_imag_1 = np.imag((f1['h1_snr_series'][0:2000][()]))
             l1_test_imag_1 = np.imag((f1['l1_snr_series'][0:2000][()]))
                         
-            h1_test_real_2 = abs(f2['h1_snr_series'][()])
-            l1_test_real_2 = abs(f2['l1_snr_series'][()])
+            h1_test_real_2 = np.real(f2['h1_snr_series'][()])
+            l1_test_real_2 = np.real(f2['l1_snr_series'][()])
         
             h1_test_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_test_imag_2 = np.imag((f2['l1_snr_series'][()]))
@@ -5518,8 +5546,8 @@ class DataLoader:
             f1 = h5py.File(data_config.data.BBH.path_test_GW150914, 'r')
             f2 = h5py.File(data_config.data.BBH.path_test_GW170104, 'r')
 
-            h1_test_real_1 = abs(f1['h1_snr_series'][()])
-            l1_test_real_1 = abs(f1['l1_snr_series'][()])
+            h1_test_real_1 = np.real(f1['h1_snr_series'][()])
+            l1_test_real_1 = np.real(f1['l1_snr_series'][()])
        
             h1_test_imag_1 = np.imag((f1['h1_snr_series'][()]))
             l1_test_imag_1 = np.imag((f1['l1_snr_series'][()]))
@@ -5530,8 +5558,8 @@ class DataLoader:
             h1_test_imag_1 = h1_test_imag_1[None,:]
             l1_test_imag_1 = l1_test_imag_1[None,:]
                                     
-            h1_test_real_2 = abs(f2['h1_snr_series'][()])
-            l1_test_real_2 = abs(f2['l1_snr_series'][()])
+            h1_test_real_2 = np.real(f2['h1_snr_series'][()])
+            l1_test_real_2 = np.real(f2['l1_snr_series'][()])
         
             h1_test_imag_2 = np.imag((f2['h1_snr_series'][()]))
             l1_test_imag_2 = np.imag((f2['l1_snr_series'][()]))
@@ -5645,10 +5673,35 @@ class DataLoader:
         
                     # For CBC-SkyNet:
         
-                    f_test = h5py.File(data_config.parameters.NSBH.path_test_design_Bayestar_test, 'r')
+#                    f_test = h5py.File(data_config.parameters.NSBH.path_test_design_Bayestar_test, 'r')
                     
-                    data_ra = f_test['ra'][1000:3500][()]
-                    data_dec = f_test['dec'][1000:3500][()]
+#                    data_ra = f_test['ra'][1000:3500][()]
+#                    data_dec = f_test['dec'][1000:3500][()]
+        
+#                    ra_test = 2.0*np.pi*data_ra
+#                    ra_test = ra_test - np.pi
+#                    ra_test_x = np.cos(ra_test)
+#                    ra_test_y = np.sin(ra_test)
+        
+#                    dec_test = np.arcsin(1.0 - 2.0*data_dec)
+            
+#                    mass_1 = f_test['mass2'][1000:3500][()]
+#                    mass_2 = f_test['mass1'][1000:3500][()]
+#                    spin_1 = f_test['spin1z'][1000:3500][()]
+#                    spin_2 = f_test['spin2z'][1000:3500][()]
+##                    inc = f_test['inclination'][()]
+#                    inj_snr = f_test['Injection_SNR'][1000:3500][()]
+    
+#                    gps_time = [1187008882.4]
+#                    gps_time = np.repeat(gps_time, 2500)
+
+#                    f_test.close()
+                
+                
+                    f_test = h5py.File(data_config.parameters.NSBH.path_test_Bayestar_post_merger, 'r')
+                    
+                    data_ra = f_test['ra'][()]
+                    data_dec = f_test['dec'][()]
         
                     ra_test = 2.0*np.pi*data_ra
                     ra_test = ra_test - np.pi
@@ -5657,19 +5710,15 @@ class DataLoader:
         
                     dec_test = np.arcsin(1.0 - 2.0*data_dec)
             
-                    mass_1 = f_test['mass2'][1000:3500][()]
-                    mass_2 = f_test['mass1'][1000:3500][()]
-                    spin_1 = f_test['spin1z'][1000:3500][()]
-                    spin_2 = f_test['spin2z'][1000:3500][()]
+                    mass_1 = f_test['mass2'][()]
+                    mass_2 = f_test['mass1'][()]
+                    spin_1 = f_test['spin1z'][()]
+                    spin_2 = f_test['spin2z'][()]
 #                    inc = f_test['inclination'][()]
-                    inj_snr = f_test['Injection_SNR'][1000:3500][()]
+                    inj_snr = f_test['Injection_SNR'][()]
     
-                    gps_time = [1187008882.4]
-                    gps_time = np.repeat(gps_time, 2500)
-
-                    f_test.close()
-                
-                
+                    gps_time = f_test['gps_time'][()]
+        
             
             elif(data_config.train.dataset == 'BBH'):
                 if((data_config.train.test_real == True) and (data_config.train.PSD == 'aLIGO')):
@@ -5794,7 +5843,8 @@ class DataLoader:
                 
                 elif((data_config.train.test_real == False) and (data_config.train.PSD == 'design')):
         
-                    f_test = h5py.File(data_config.parameters.BBH.path_test_design_Bayestar_test, 'r')
+#                    f_test = h5py.File(data_config.parameters.BBH.path_test_design_Bayestar_test, 'r')
+                    f_test = h5py.File(data_config.parameters.BBH.path_test_Bayestar_post_merger, 'r')
                    
                     data_ra = f_test['ra'][()]
                     data_dec = f_test['dec'][()]
@@ -5813,8 +5863,10 @@ class DataLoader:
 #                    inc = f_test['inclination'][()]
 #                    inj_snr = f_test['Injection_SNR'][()]
 
-                    gps_time = [1187008882.4]
-                    gps_time = np.repeat(gps_time, len(ra_test))
+#                    gps_time = [1187008882.4]
+#                    gps_time = np.repeat(gps_time, len(ra_test))
+
+                    gps_time = f_test['gps_time'][()]
 
                     f_test.close()
                 
@@ -6433,9 +6485,9 @@ class DataLoader:
                 valid_l1 = max_snr_l1 >= 3  # 4
                 
                 if(data_config.train.num_detectors == 3):
-                    valid_v1 = max_snr_v1 >= 3   # 4
+                    valid_v1 = max_snr_v1 >= 1   # 4
                     
-                valid_net_snr = ((net_snr >= data_config.train.min_snr) & (net_snr <= 50))  # 40
+                valid_net_snr = ((net_snr >= data_config.train.min_snr) & (net_snr <= 100))  # 40
 
                 if(data_config.train.num_detectors == 3):
                     h1l1 = np.bitwise_and(valid_h1, valid_l1)
@@ -6490,13 +6542,14 @@ class DataLoader:
                 
 ########################################### For everything except 0 sec pre-merger #############################################
 
-                valid_h1 = max_snr_h1 > 3   # 4
-                valid_l1 = max_snr_l1 > 3   # 4
+                valid_h1 = max_snr_h1 > 0.0   # 3
+                valid_l1 = max_snr_l1 > 0.0   # 3
         
                 if(data_config.train.num_detectors == 3):
-                    valid_v1 = max_snr_v1 > 1   # 4
+                    valid_v1 = max_snr_v1 > 0.0   # 1
                 
-                valid_net_snr = ((net_snr >= 8) & (net_snr <= 50))  # 40
+#                valid_net_snr = ((net_snr >= 8) & (net_snr <= 50))  # 40
+                valid_net_snr = net_snr >= 0.0  # 40
 
             
                 if(data_config.train.num_detectors == 3):
