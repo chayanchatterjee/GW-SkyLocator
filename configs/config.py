@@ -611,10 +611,8 @@ CFG = {
             },
     },
     "model": { 
-            "num_bijectors": 3,
             "num_bijectors": 5,
-            "num_bijectors": 3,
-            "MAF_hidden_units": [256, 256, 256, 256, 256],
+            "MAF_hidden_units": [512, 512, 512, 512, 512],
         
             "WaveNet": {
                         "filters": 16,
@@ -634,9 +632,9 @@ CFG = {
             "ResNet_34": {
                         "filters_real":32, 
                         "filters_imag":32,
-                        "kernel_size" : (2,7),
+                        "kernel_size" : 7,
                         "strides": 2,
-                        "pool_size": (1,3),
+                        "pool_size": 3,
                         "prev_filters_real":32,
                         "prev_filters_imag":32 
             },    
