@@ -23,7 +23,7 @@ class BaseModel(ABC):
         pass
 
     @abstractmethod
-    def obtain_samples(self):
+    def obtain_probability_density(self):
         pass
     
     
