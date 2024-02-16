@@ -199,8 +199,8 @@ class GW_SkyLocator(BaseModel):
         X_train_real_std = np.std(X_train, axis=1)
         X_test_real_std = np.std(X_test, axis=1)
         
-        X_train_standardized = X_train/ X_train_std[:,None,:]
-        X_test_standardized = X_test/ X_test_std[:,None,:]
+        X_train_standardized = X_train/ X_train_real_std[:,None,:]
+        X_test_standardized = X_test/ X_test_real_std[:,None,:]
     
         return X_train_standardized, X_test_standardized
     
