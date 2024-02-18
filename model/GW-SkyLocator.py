@@ -313,7 +313,7 @@ class GW_SkyLocator(BaseModel):
             
             self.input1 = tf.keras.layers.Input([self.config.train.n_samples, self.config.train.num_detectors])
             self.input2 = tf.keras.layers.Input(self.intrinsic_train.shape[-1]) 
-            self.x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float32)
+            self.x_ = tf.keras.layers.Input(shape=self.y_train.shape[-1], dtype=tf.float64)
             
             if(self.config.train.network == 'WaveNet'):
             
@@ -380,7 +380,7 @@ class GW_SkyLocator(BaseModel):
             flow_bijector = tfb.Chain(list(reversed(bijectors[:-1])))
             
                 # Define the trainable distribution
-            self.trainable_distribution = tfd.TransformedDistribution(distribution=tfd.MultivariateNormalDiag(loc=np.zeros(3).astype(dtype=np.float32)), bijector = flow_bijector)
+            self.trainable_distribution = tfd.TransformedDistribution(distribution=tfd.MultivariateNormalDiag(loc=np.zeros(3).astype(dtype=np.float64)), bijector = flow_bijector)
         
             return self.trainable_distribution
         
@@ -479,7 +479,7 @@ class GW_SkyLocator(BaseModel):
                   conditional=True,
                   kernel_initializer = tf.keras.initializers.VarianceScaling(scale=0.1),
                   conditional_event_shape=conditional_event_shape,
-                  dtype=np.float32)
+                  dtype=np.float64)
     
         return tfp.bijectors.MaskedAutoregressiveFlow(shift_and_log_scale_fn = made, name='maf'+str(index))
 
