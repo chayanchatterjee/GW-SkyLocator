@@ -599,7 +599,7 @@ CFG = {
             "num_train": 546000, 
             "num_test": 40000,
             "min_snr": 8,
-            "n_samples": 410,
+            "n_samples": 820,
             "batch_size": 4000,
             "output_filename": 'Adaptive_NSIDE/Negative_latency/Injection_run_BNS_3_det_O4_PSD_test.hdf',
             "checkpoint_restore": False,
