@@ -694,7 +694,7 @@ class GW_SkyLocator(BaseModel):
             
                        
             # Test with Bayestar SNR time series
-            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyLocator/evaluation/skymaps/CPU/Bayestar_test/Test_Bayestar_coinc_BNS_prob_density_'+str(i)+'.fits', hpmap, nest=True)
+            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyLocator/evaluation/skymaps/Test_Bayestar_coinc_BNS_prob_density_'+str(i)+'.fits', hpmap, nest=True)
    
 
         probs_nf = np.array(probs_nf)
