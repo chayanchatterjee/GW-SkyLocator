@@ -451,7 +451,7 @@ class GW_SkyLocator(BaseModel):
 
             ckpt.write(self.checkpoint_prefix)
           
-            self.encoder.save_weights('/fred/oz016/Chayan/GW-SkyNet_pre-merger/model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20_test')
+            self.encoder.save_weights('/fred/oz016/Chayan/GW-SkyLocator/model/encoder_models/'+str(self.config.train.network)+'_'+str(self.config.train.dataset)+'_encoder_'+str(self.config.train.num_detectors)+'_det_adaptive_snr-10to20_test')
           
             self.plot_loss_curves(model_history.history['loss'], model_history.history['val_loss'])        
         
@@ -622,7 +622,7 @@ class GW_SkyLocator(BaseModel):
     def obtain_probability_density(self):
         """Obtain probability density from trained distribution"""
         
-        self.encoder.load_weights('/fred/oz016/Chayan/GW-SkyNet_pre-merger/model/encoder_models/'+str(self.network)+'_'+str(self.dataset)+'_encoder_'+str(self.n_det)+'_det_adaptive_snr-10to20_test')
+        self.encoder.load_weights('/fred/oz016/Chayan/GW-SkyLocator/model/encoder_models/'+str(self.config.train.network)+'_'+str(self.config.train.dataset)+'_encoder_'+str(self.config.train.num_detectors)+'_det_adaptive_snr-10to20_test')
 
         flow = self.construct_flow(training=False)
         checkpoint = tf.train.Checkpoint(flow)
@@ -694,7 +694,7 @@ class GW_SkyLocator(BaseModel):
             
                        
             # Test with Bayestar SNR time series
-            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyNet_test/evaluation/skymaps/CPU/Bayestar_test/Test_Bayestar_coinc_BNS_prob_density_'+str(i)+'.fits', hpmap, nest=True)
+            io.fits.write_sky_map('/fred/oz016/Chayan/GW-SkyLocator/evaluation/skymaps/CPU/Bayestar_test/Test_Bayestar_coinc_BNS_prob_density_'+str(i)+'.fits', hpmap, nest=True)
    
 
         probs_nf = np.array(probs_nf)
@@ -702,7 +702,7 @@ class GW_SkyLocator(BaseModel):
         dec_preds = np.array(dec_preds)
                                                  
         if(self.n_det == 3):
-            f1 = h5py.File('/fred/oz016/Chayan/GW-SkyNet_pre-merger/evaluation/'+self.output_filename, 'w')
+            f1 = h5py.File('/fred/oz016/Chayan/GW-SkyLocator/evaluation/'+self.output_filename, 'w')
             f1.create_dataset('Probabilities', data = probs)
             f1.create_dataset('Probabilities_NF', data = probs_nf)
             f1.create_dataset('RA_samples', data= ra_preds)
@@ -715,7 +715,7 @@ class GW_SkyLocator(BaseModel):
         
         elif(self.n_det == 2):
             
-            f1 = h5py.File('/fred/oz016/Chayan/GW-SkyNet_pre-merger/evaluation/'+self.output_filename, 'w')
+            f1 = h5py.File('/fred/oz016/Chayan/GW-SkyLocator/evaluation/'+self.output_filename, 'w')
             f1.create_dataset('Probabilities', data = probs)
     #            f1.create_dataset('RA_samples', data = ra_preds)
     #            f1.create_dataset('Dec_samples', data = dec_preds)
