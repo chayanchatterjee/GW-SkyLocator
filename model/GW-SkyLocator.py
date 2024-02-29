@@ -421,7 +421,7 @@ class GW_SkyLocator(BaseModel):
             if(self.config.train.checkpoint_restore):
                 
                 self.checkpoint.restore(self.checkpoint_prefix)
-                self.encoder.load_weights("/fred/oz016/Chayan/GW-SkyNet_pre-merger/model/encoder_models/"+str(self.config.train.network)+"_"+str(self.config.train.dataset)+"_encoder_"+str(self.config.train.num_detectors)+"_det_adaptive_snr-10to20_test.hdf5")
+                self.encoder.load_weights("/fred/oz016/Chayan/GW-SkyLocator/model/encoder_models/"+str(self.config.train.network)+"_"+str(self.config.train.dataset)+"_encoder_"+str(self.config.train.num_detectors)+"_det_adaptive_snr-10to20_test.hdf5")
 
         
             trainingStopCallback = haltCallback(self.model)
